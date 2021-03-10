@@ -1,0 +1,49 @@
+{
+    "name": "pagecrypt",
+    "version": "0.1.0",
+    "description": "A CLI to add client-side password-protection for HTML files",
+    "main": "index.js",
+    "scripts": {
+        "cli": "node index.js",
+        "web-start": "snowpack dev --polyfill-node",
+        "web-build": "snowpack build --polyfill-node",
+        "preserve": "npm run web-build",
+        "serve": "python3 -m http.server --directory web/build 3000"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Greenheart/pagecrypt.git"
+    },
+    "bin": {
+        "pagecrypt": "./index.js"
+    },
+    "author": "Samuel Plumppu",
+    "license": "MIT",
+    "keywords": [
+        "encryption",
+        "password",
+        "clientside",
+        "password-protection",
+        "cli",
+        "commandline",
+        "html",
+        "crypto",
+        "hidden webpage"
+    ],
+    "bugs": {
+        "url": "https://github.com/Greenheart/pagecrypt/issues"
+    },
+    "homepage": "https://github.com/Greenheart/pagecrypt#readme",
+    "dependencies": {
+        "crypto-js": "^4.0.0",
+        "yargs": "^16.2.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.2.5",
+        "postcss": "^8.2.7",
+        "postcss-cli": "^8.3.1",
+        "snowpack": "^3.0.1",
+        "tailwindcss": "^2.0.3",
+        "@snowpack/plugin-postcss": "^1.1.0"
+    }
+}
