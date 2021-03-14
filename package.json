@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "cli": "node cli.js",
-        "test": "npm pack && cd test && npm run test && cd .. && echo 'Verify test output in `test/out-js.html` and `test/out-cli.html`'",
+        "test": "npm pack && cd test && npm i ../pagecrypt-*.tgz && npm run test && cd .. && echo 'Verify test output in `test/out-js.html` and `test/out-cli.html`'",
         "web-start": "snowpack dev --polyfill-node",
         "web-build": "snowpack build --polyfill-node",
         "preserve": "npm run web-build",

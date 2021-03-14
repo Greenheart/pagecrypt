@@ -38,10 +38,34 @@ package.json:
 
 You can use `pagecrypt` in your Node.js scripts:
 
+#### `encrypt(inputFile: string, outputFile: string, password: string): Promise<void>`
+
 ```js
 import { encrypt } from 'pagecrypt'
 
+// Encrypt a HTML file and write to the filesystem
 await encrypt('input.html', 'output.html', 'strong password')
+```
+
+#### `encryptHTML(inputHTML: string, password: string): string`
+
+```js
+import { encryptHTML } from 'pagecrypt'
+
+// Encrypt a HTML string and return an encrypted HTML string that can be written to a file or sent in a HTTPS response to a browser.
+const encryptedHTML = await encryptHTML(
+    `<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+        </head>
+        <body>
+            Secret
+        </body>
+    </html>
+`,
+    'strong password',
+)
 ```
 
 ---

@@ -1,5 +1,19 @@
 # Changelog for `pagecrypt`
 
+## 1.2.0 - 2021-03-15
+
+### Features
+
+-   Expose new `encryptHTML()` function to easily get the encrypted HTML file contents when using the JS API.
+-   Improved documentation
+
+### Fixes
+
+-   Cleanup code and move into separate smaller functions
+-   dev: Improve test command to always install latest package build
+
+---
+
 ## 1.1.0 - 2021-03-14
 
 ### Features
@@ -21,9 +35,13 @@ await encrypt('input.html', 'output.html', 'strong password')
 
 -   Updated how `decrypt-template.html` is loaded to allow JS API to work from any directory, and not just project root.
 
+---
+
 ## 1.0.1 - 2021-03-11
 
 -   Improved `test.html` sample page.
+
+---
 
 ## 1.0.0 - 2021-03-10
 
