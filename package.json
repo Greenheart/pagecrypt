@@ -4,7 +4,8 @@
     "description": "A CLI to add client-side password-protection for HTML files",
     "main": "index.js",
     "scripts": {
-        "cli": "node index.js",
+        "cli": "node cli.js",
+        "test": "npm pack && cd test && npm run test && cd .. && echo 'Verify test output in `test/out-js.html` and `test/out-cli.html`'",
         "web-start": "snowpack dev --polyfill-node",
         "web-build": "snowpack build --polyfill-node",
         "preserve": "npm run web-build",
@@ -15,7 +16,7 @@
         "url": "git+https://github.com/Greenheart/pagecrypt.git"
     },
     "bin": {
-        "pagecrypt": "./index.js"
+        "pagecrypt": "./cli.js"
     },
     "author": "Samuel Plumppu",
     "license": "MIT",

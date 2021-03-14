@@ -1,7 +1,15 @@
 node_modules
 .snowpack
 build
-test
+
+test/package-lock.json
+test/node_modules
+test/out-cli.html
+test/out-js.html
+
+
+# npm pack test output
+*.tgz
 
 .DS_Store
 .DS_Store?

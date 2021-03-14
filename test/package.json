@@ -1,0 +1,13 @@
+{
+    "name": "test",
+    "private": true,
+    "version": "1.0.0",
+    "scripts": {
+        "test": "npm run test:js && npm run test:cli",
+        "test:js": "node test.js",
+        "test:cli": "pagecrypt test.html out-cli.html asd"
+    },
+    "dependencies": {
+        "pagecrypt": "file:../pagecrypt-1.1.0.tgz"
+    }
+}

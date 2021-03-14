@@ -6,4 +6,3 @@ prettier.config.js
 *.tgz
 
 test/
-test.html

@@ -1,13 +1,8 @@
-#!/usr/bin/env node
-
 const CryptoJS = require('crypto-js')
-const { promises } = require('fs')
-const { mkdir, readFile, writeFile } = promises
-const { resolve, dirname } = require('path')
-const yargs = require('yargs')
-const { hideBin } = require('yargs/helpers')
+const { mkdir, readFile, writeFile } = require('fs/promises')
+const { resolve, dirname, basename } = require('path')
 
-const packageRootDir = dirname(require.main.filename)
+const packageRootDir = dirname(__filename)
 
 function getEncryptedFile(contents, password) {
     const salt = CryptoJS.lib.WordArray.random(256 / 8)
@@ -20,10 +15,10 @@ function getEncryptedFile(contents, password) {
     return { salt: salt, iv: iv, data: encrypted }
 }
 
-async function encryptFile(inputFilename, password) {
+async function encryptFile(inputFile, password) {
     let content
     try {
-        content = await readFile(resolve(process.cwd(), inputFilename), {
+        content = await readFile(resolve(process.cwd(), inputFile), {
             encoding: 'utf-8',
         })
     } catch (e) {
@@ -33,7 +28,7 @@ async function encryptFile(inputFilename, password) {
 
     const templateHTML = await readFile(
         resolve(packageRootDir, 'decrypt-template.html'),
-        { encoding: 'utf8' },
+        { encoding: 'utf-8' },
     )
 
     const encryptedFile = getEncryptedFile(content, password)
@@ -55,41 +50,23 @@ async function encryptFile(inputFilename, password) {
 async function saveFile(outputFile, content) {
     await mkdir(dirname(outputFile), { recursive: true })
 
-    return writeFile(resolve(process.cwd(), outputFile), content)
+    return writeFile(resolve(process.cwd(), outputFile), content, {
+        encoding: 'utf8',
+    })
 }
 
-const argv = yargs(hideBin(process.argv))
-    .scriptName('pagecrypt')
-    .usage('🔐 Usage: $0 [input-file] [output-file] [password]')
-    .example('$0 input.html out.html strong-password')
-    .command('[input-file]', false)
-    .help('[input-file]', 'Input HTML file to encrypt.')
-    .command('[output-file]', false)
-    .help(
-        '[output-file]',
-        'Output HTML file where you want to save the encrypted result.',
-    )
-    .command('[password]', false)
-    .help(
-        '[password]',
-        'Password to decrypt the your output HTML file. Use a strong password.',
-    )
-    .demandCommand(3, 3)
-    .alias('h', 'help')
-    .alias('v', 'version')
-    .help().argv
-
-async function cli() {
-    if (argv._?.length === 3) {
-        const [inputFile, outputFile, password] = argv._
-        console.log(`🔐 Encrypting ${inputFile} → ${outputFile}`)
-        const encrypted = await encryptFile(inputFile, password)
-        saveFile(outputFile, encrypted)
-    }
+/**
+ * Encrypt a file with a given password.
+ * This page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
+ *
+ * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
+ * @param {string} outputFile The filename (or path) where the encrypted HTML file will be saved.
+ * @param {string} password The password which will be used to encrypt + decrypt the content.
+ * @returns A promise that will resolve when the encrypted file has been saved.
+ */
+async function encrypt(inputFile, outputFile, password) {
+    const encrypted = await encryptFile(inputFile, password)
+    return await saveFile(outputFile, encrypted)
 }
 
-exports.saveFile = saveFile
-exports.encryptFile = encryptFile
-exports.cli = cli
-
-cli()
+exports.encrypt = encrypt
