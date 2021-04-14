@@ -37,12 +37,19 @@
     </main>
 
     <script type="module">
-        import CryptoJS from 'crypto-js'
+        import forge from 'node-forge'
 
         // Testing:
-        const pl = { "salt": "FecHK+PExiCscrZ9SDW667kpR/HiayN6kaB5oo/fKIk=", "iv": "+4FDx+36B4HpB0JwL5i0XQ==", "data": "VcXyVUi8A4/UOTOGg9XCn/cFdMUpg60JKSvOo7M8qTc9e4XaiGXmaOFwYtFbqwegbB1uANylaey42R3P8dAa4KRIUoTD4NSnC/YTmfo6huIb1BR6HqW6ejGm8liGhqlKblbYzsmIkHI5gs8gjs/LNu07t7QDg1ym2mCiMjBVuthRrxe0BtNBc57PCwBELPE59PL98ytECOlLeO+4FHppgGUYifVOJN0HtHkQ1W3VI5tCk3utolTRSECY07MgcH4oK8qH026HYFuynlvl9EfuWi/Ll4gbRXVJnkN0WhAmJHPYasdLfC0IRX8RgtusPNNeHLFuBDoE+J7AsAcGX5EsVm97XbRnwys5S3QFtok6bDHajulYB6rh4Aoly/bz6gdyc4OYVdhT2rgpOxTckg3atg==" }
+        // const pl = {
+        //     iv: 'ASvFwFAu+NTqSSNg/HWVcA==',
+        //     tag: 'PYPZ4iEfWFxxrXuNxG8dvw==',
+        //     salt: 'ax2oMu4ULtwV+5sJq0cgHl9ybbQENFNHq9eGDT5yT92hcykgRHYqpmxkzB4zpOel2D/7EL/kpxrSQhVB/cYTfZ4vC9xQLmWMZGYNfvOwTl26b4G6nV0hf3J4b7VW7uuY69S2V+Oh5TW60o6JDGCSTAzKLFO9DAP4ZvsS6XFOtsEQ4XVcVnklLD1R54XEPr+njQZ3pR0VCPRUcq24SMK10Owc2CfCu3D5pzJQjcHNKqOv8rCocu7k9T57RIHyVd1hRlXCfSarUuJtZ9ktjlhcpUm0Jyp1FSoz6R3akiBlY+dEOKVddONNvj7a3MpIlfeQJZdgkIrLl1vYRJUPcnaU/w==',
+        //     data: 'LkMl6vI4VmcbF7z4Sm7AaZBeb+ZN1InN4FulSghuYSvPwngfdwpxDpNZHTNTi0lo8uS3/xyikA=='
+        // }
+        // pwd.value = 'WWxDBceX5IKTj55IZes7qPr1ucX1eyUEMBCC1IJka8tN64ACFQKLRumcsqMbEXNmJAZHBRonfBomoYWcLXwsujp4pdcul8BzIZy9Yccf5xY6lmibSkZqha4ppojabdMU6xkIph9YQCCeCrJsEfSspGdpFYLvtxXM5b7XNA0wfsV0fl0hNPbupifb1UaBXAReFepiz4rgpTOrQkJNkbetrNHKYiYhgxon2yT7twXSkv2qwRaGAV1GoHw48ZEDlaHMZnT138SI7E5BS1mqUzUYwPkIMbfPFCB1qIdfzmiIUan6Gp01wbeVTHtEdMu9sd8PTiHQ136D0SVoTiQErsevGAL2IgZRWAGLFJxFhA0LURZJLNI9gculZy2uKxydhnBAIYKqkWGOmoWTjbU0q76gGqVk85gCtnwvyW82bx3ApmkIl7Fv6y5FQxsBhZs5uSA3ROHmEH6RjSA9m73nZhxSt37bnKmHDGCJuI3DeVJNnman58eXxrGDAyrSnXUVnwQ7'
+
         // Production:
-        // const pl = /*{{ENCRYPTED_PAYLOAD}}*/""
+        const pl = /*{{ENCRYPTED_PAYLOAD}}*/""
 
         const find = document.querySelector.bind(document)
         const [pwd, iframe, header, msg, locked, unlocked] = [
@@ -77,31 +84,39 @@
             hide(locked)
         }
 
-        find('form').addEventListener('submit', (event) => {
+        function status(text) {
+            msg.innerText = text
+            header.classList.toggle('text-green-600', false)
+            header.classList.toggle('text-red-600', false)
+            show(locked)
+            hide(unlocked)
+        }
+
+        async function sleep(milliseconds) {
+            return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
+
+        find('form').addEventListener('submit', async (event) => {
             event.preventDefault()
 
             try {
-                let decrypted = decryptFile(
-                    CryptoJS.enc.Base64.parse(pl.data),
-                    pwd.value,
-                    CryptoJS.enc.Base64.parse(pl.salt),
-                    CryptoJS.enc.Base64.parse(pl.iv),
-                )
+                status('Decrypting...')
+                await sleep(60)
+                const decrypted = decryptFile(pl, pwd.value)
                 if (!decrypted) throw 'Malformed data'
 
                 success('Success!')
 
                 // Set default iframe link targets to _top so all links break out of the iframe
-                decrypted = decrypted.replace(
+                iframe.srcdoc = decrypted.replace(
                     '<head>',
                     '<head><base href="." target="_top">',
                 )
 
-                iframe.srcdoc = decrypted
-
-                window.setTimeout(function () {
+                window.setTimeout(() => {
                     find('main').remove()
                     show(iframe)
+                    find('body > script').remove()
                 }, 1000)
             } catch (e) {
                 error('Wrong password.')
@@ -114,17 +129,21 @@
             error('No encrypted payload.')
         }
 
-        function decryptFile(contents, password, salt, iv) {
-            const _cp = CryptoJS.lib.CipherParams.create({
-                ciphertext: contents,
-            })
-            const key = CryptoJS.PBKDF2(password, salt, {
-                keySize: 256 / 32,
-                iterations: 100,
-            })
-            const decrypted = CryptoJS.AES.decrypt(_cp, key, { iv })
+        function decryptFile(pl, password) {
+            const salt = forge.util.decode64(pl.salt)
+            const key = forge.pkcs5.pbkdf2(password, salt, 1e5, 32)
 
-            return decrypted.toString(CryptoJS.enc.Utf8)
+            const decipher = forge.cipher.createDecipher('AES-GCM', key)
+            decipher.start({
+                iv: forge.util.decode64(pl.iv),
+                tag: new forge.util.ByteStringBuffer(forge.util.decode64(pl.tag)),
+            })
+            decipher.update(forge.util.createBuffer(forge.util.decode64(pl.data)))
+            decipher.finish()
+
+            const decryptedBuffer = forge.util.createBuffer()
+            decryptedBuffer.putBuffer(decipher.output)
+            return decryptedBuffer.toString()
         }
     </script>
 </body>
