@@ -8,7 +8,7 @@ Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt
 
 ### CLI
 
-It's easy to start encrypting a single HTML-file:
+Encrypt a single HTML-file with one command:
 
 ```sh
 npx pagecrypt [input.html] [output.html] [password]
@@ -25,11 +25,11 @@ package.json:
 ```json
 {
     "devDependencies": {
-        "pagecrypt": "^0.1.0"
+        "pagecrypt": "^1.2.0"
     },
     "scripts": {
         "build": "...",
-        "postbuild": "pagecrypt index.html encrypted.html strong-password"
+        "postbuild": "pagecrypt index.html encrypted.html password"
     }
 }
 ```
@@ -44,15 +44,16 @@ You can use `pagecrypt` in your Node.js scripts:
 import { encrypt } from 'pagecrypt'
 
 // Encrypt a HTML file and write to the filesystem
-await encrypt('input.html', 'output.html', 'strong password')
+await encrypt('input.html', 'output.html', 'password')
 ```
 
-#### `encryptHTML(inputHTML: string, password: string): string`
+#### `encryptHTML(inputHTML: string, password: string): Promise<string>`
 
 ```js
 import { encryptHTML } from 'pagecrypt'
 
-// Encrypt a HTML string and return an encrypted HTML string that can be written to a file or sent in a HTTPS response to a browser.
+// Encrypt a HTML string and return an encrypted HTML string.
+// Write it to a file or send as an HTTPS response.
 const encryptedHTML = await encryptHTML(
     `<!DOCTYPE html>
     <html lang="en">
@@ -64,7 +65,7 @@ const encryptedHTML = await encryptHTML(
         </body>
     </html>
 `,
-    'strong password',
+    'password',
 )
 ```
 
@@ -72,10 +73,12 @@ const encryptedHTML = await encryptHTML(
 
 ## Development
 
-The project consists of two parts:
+The project consists of four parts:
 
 -   `/web` - Web frontend for public webpage (`decrypt-template.html`). Built using Snowpack & TailwindCSS.
--   `/index.js` - pagecrypt CLI.
+-   `/index.js` - pagecrypt main library.
+-   `/cli.js` - pagecrypt CLI.
+-   `/test` - testing setup
 
 ## Testing
 
