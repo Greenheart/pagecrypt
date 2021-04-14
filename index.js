@@ -1,18 +1,38 @@
-const CryptoJS = require('crypto-js')
+const forge = require('node-forge')
+
 const { mkdir, readFile, writeFile } = require('fs/promises')
 const { resolve, dirname } = require('path')
 
 const packageRootDir = dirname(__filename)
 
-function getEncryptedContents(contents, password) {
-    const salt = CryptoJS.lib.WordArray.random(256 / 8)
-    const iv = CryptoJS.lib.WordArray.random(128 / 8)
-    const key = CryptoJS.PBKDF2(password, salt, {
-        keySize: 256 / 32,
-        iterations: 100,
-    })
-    const encrypted = CryptoJS.AES.encrypt(contents, key, { iv: iv })
-    return { salt: salt, iv: iv, data: encrypted }
+/**
+ * Encrypt a string and turn it into an encrypted payload.
+ *
+ * @param {string} content The data to encrypt
+ * @param {string} password The password which will be used to encrypt + decrypt the content.
+ * @returns an encrypted payload
+ */
+function getEncryptedPayload(content, password) {
+    const salt = forge.random.getBytesSync(256)
+    const key = forge.pkcs5.pbkdf2(password, salt, 2e5, 32)
+    const iv = forge.random.getBytesSync(16)
+
+    const cipher = forge.cipher.createCipher('AES-GCM', key)
+    cipher.start({ iv })
+    cipher.update(forge.util.createBuffer(content))
+    cipher.finish()
+
+    const tag = cipher.mode.tag
+    const encrypted = forge.util.createBuffer()
+    encrypted.putBuffer(cipher.output)
+    const encryptedBuffer = Buffer.from(encrypted.getBytes(), 'binary')
+
+    return {
+        iv: forge.util.encode64(iv),
+        tag: forge.util.encode64(tag.getBytes()),
+        salt: forge.util.encode64(salt),
+        data: forge.util.encode64(encryptedBuffer.toString('binary')),
+    }
 }
 
 /**
@@ -51,20 +71,10 @@ async function encryptHTML(inputHTML, password) {
         { encoding: 'utf-8' },
     )
 
-    const encryptedFile = getEncryptedContents(inputHTML, password)
-
-    const salt = CryptoJS.enc.Base64.stringify(encryptedFile.salt)
-    const iv = CryptoJS.enc.Base64.stringify(encryptedFile.iv)
-    const cipherText = CryptoJS.enc.Base64.stringify(
-        encryptedFile.data.ciphertext,
+    const encryptedPayload = JSON.stringify(
+        getEncryptedPayload(inputHTML, password),
     )
-    const encryptedJSON = JSON.stringify({
-        salt: salt,
-        iv: iv,
-        data: cipherText,
-    })
-
-    return templateHTML.replace('/*{{ENCRYPTED_PAYLOAD}}*/""', encryptedJSON)
+    return templateHTML.replace('/*{{ENCRYPTED_PAYLOAD}}*/""', encryptedPayload)
 }
 
 /**
