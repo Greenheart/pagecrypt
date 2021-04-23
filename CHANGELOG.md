@@ -1,5 +1,13 @@
 # Changelog for `pagecrypt`
 
+## 2.0.0 - 2021-04-23
+
+### Features
+
+-   Use `node-forge` instead of `cryptojs` for encryption + decryption.
+-   Use `vite` instead of `snowpack` for simplified and more performant web build process.
+-   Small design + UX improvements for the decryption template.
+
 ## 1.2.0 - 2021-03-15
 
 ### Features
