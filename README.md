@@ -75,7 +75,7 @@ const encryptedHTML = await encryptHTML(
 
 The project consists of four parts:
 
--   `/web` - Web frontend for public webpage (`decrypt-template.html`). Built using Snowpack & TailwindCSS.
+-   `/web` - Web frontend for public webpage (`decrypt-template.html`). Built using Vite & Tailwind CSS.
 -   `/index.js` - pagecrypt main library.
 -   `/cli.js` - pagecrypt CLI.
 -   `/test` - testing setup

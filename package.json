@@ -6,10 +6,10 @@
     "scripts": {
         "cli": "node cli.js",
         "test": "npm pack && cd test && npm i ../pagecrypt-*.tgz && npm run test && cd .. && echo 'Verify test output in `test/out-js.html` and `test/out-cli.html`'",
-        "web-start": "snowpack dev --polyfill-node",
-        "web-build": "snowpack build --polyfill-node",
-        "preserve": "npm run web-build",
-        "serve": "python3 -m http.server --directory web/build 3000"
+        "start": "vite",
+        "build": "vite build",
+        "postbuild": "rm -rf web/build/assets",
+        "serve": "vite preview"
     },
     "repository": {
         "type": "git",
@@ -36,15 +36,15 @@
     },
     "homepage": "https://github.com/Greenheart/pagecrypt#readme",
     "dependencies": {
-        "crypto-js": "^4.0.0",
+        "node-forge": "^0.10.0",
         "yargs": "^16.2.0"
     },
     "devDependencies": {
         "autoprefixer": "^10.2.5",
-        "postcss": "^8.2.7",
-        "postcss-cli": "^8.3.1",
-        "snowpack": "^3.0.1",
-        "tailwindcss": "^2.0.3",
-        "@snowpack/plugin-postcss": "^1.1.0"
+        "generate-password": "^1.6.0",
+        "postcss": "^8.2.12",
+        "tailwindcss": "^2.1.1",
+        "vite": "^2.2.1",
+        "vite-plugin-singlefile": "^0.5.1"
     }
 }

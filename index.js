@@ -14,7 +14,7 @@ const packageRootDir = dirname(__filename)
  */
 function getEncryptedPayload(content, password) {
     const salt = forge.random.getBytesSync(256)
-    const key = forge.pkcs5.pbkdf2(password, salt, 2e5, 32)
+    const key = forge.pkcs5.pbkdf2(password, salt, 1e5, 32)
     const iv = forge.random.getBytesSync(16)
 
     const cipher = forge.cipher.createCipher('AES-GCM', key)

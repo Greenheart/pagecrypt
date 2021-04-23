@@ -1,8 +1,8 @@
 web/
+test/
+
 postcss.config.js
-snowpack.config.js
+vite.config.js
 tailwind.config.js
 prettier.config.js
 *.tgz
-
-test/

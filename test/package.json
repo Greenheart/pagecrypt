@@ -8,6 +8,6 @@
         "test:cli": "pagecrypt test.html out-cli.html asd"
     },
     "dependencies": {
-        "pagecrypt": "file:../pagecrypt-1.1.0.tgz"
+        "pagecrypt": "file:../pagecrypt-2.0.0.tgz"
     }
 }

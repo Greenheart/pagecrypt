@@ -1,8 +1,9 @@
 module.exports = {
+    mode: 'jit',
     purge: {
         mode: 'all',
         preserveHtmlElements: false,
-        content: ['./web/src/**/*.html', './web/src/**/*.js'],
+        content: ['./web/**/*.html', './web/**/*.js'],
         options: {
             keyframes: true,
             fontFace: true,
