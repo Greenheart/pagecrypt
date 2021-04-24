@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,23 +14,16 @@
     <main class="bg-yellow-200 w-full h-screen items-start tracking-wide p-4 pt-40 font-light">
         <div class="max-w-sm w-full bg-gray-50 p-4 rounded-sm shadow-2xl mx-auto">
             <header class="flex gap-2 mb-4 items-center">
-                <svg id="locked" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                        clip-rule="evenodd"></path>
+                <svg id="locked" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                 </svg>
-                <svg id="unlocked" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z">
-                    </path>
+                <svg id="unlocked" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"></path>
                 </svg>
                 <p id="msg" class="text-sm">This page is password protected.</p>
             </header>
             <form>
-                <input type="password" id="pwd" name="pwd" aria-label="Password" autofocus placeholder="Password"
-                    class="font-extralight bg-gray-200 flex w-full py-2 px-4 tracking-wider rounded-sm focus:outline-none text-black placeholder-black text-opacity-100 focus:border-black border" />
+                <input type="password" id="pwd" name="pwd" aria-label="Password" autofocus placeholder="Password" class="font-extralight bg-gray-200 flex w-full py-2 px-4 tracking-wider rounded-sm focus:outline-none text-black placeholder-black text-opacity-100 focus:border-black border" />
             </form>
         </div>
     </main>
@@ -54,5 +46,4 @@
         window.pl = /*{{ENCRYPTED_PAYLOAD}}*/""
     </script>
 </body>
-
 </html>
