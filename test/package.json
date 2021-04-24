@@ -5,7 +5,7 @@
     "scripts": {
         "test": "npm run test:js && npm run test:cli",
         "test:js": "node test.js",
-        "test:cli": "pagecrypt test.html out-cli.html asd"
+        "test:cli": "pagecrypt test.html out-cli.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY"
     },
     "dependencies": {
         "pagecrypt": "file:../pagecrypt-2.0.0.tgz"

@@ -5,7 +5,8 @@ const { readFile } = require('fs/promises')
 async function main() {
     const inputFile = 'test.html'
     const outputFile = 'out-js.html'
-    const password = 'asd'
+    const password =
+        'eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY'
 
     const inputHTML = await readFile(resolve(inputFile), { encoding: 'utf-8' })
 
