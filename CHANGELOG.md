@@ -5,6 +5,7 @@
 ### Fixes
 
 -   Clarify test instructions
+-   Fix missing import in code sample
 
 ---
 

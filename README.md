@@ -102,7 +102,7 @@ const encryptedHTML = await encryptHTML(
 #### `generatePassword(length: number): string`
 
 ```js
-import { encrypt, generatePassword } from 'pagecrypt'
+import { generatePassword, encrypt, encryptHTML } from 'pagecrypt'
 
 // Generate a random password without any external dependencies
 const pass = generatePassword(64)
