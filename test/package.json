@@ -8,6 +8,6 @@
         "test:cli": "pagecrypt test.html out-cli.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY"
     },
     "dependencies": {
-        "pagecrypt": "file:../pagecrypt-3.0.0.tgz"
+        "pagecrypt": "file:../pagecrypt-3.1.0.tgz"
     }
 }

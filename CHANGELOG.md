@@ -1,5 +1,16 @@
 # Changelog for `pagecrypt`
 
+## 3.1.0 - 2021-04-24
+
+### Features
+
+-   Replace `yargs` with `sade` and simplify CLI + dependencies. No breaking changes.
+    -   This greatly improves both installation + runtime performance.
+    -   It also simplifies the CLI implementation.
+    -   The CLI API is preserved exactly like in 3.0.0
+
+---
+
 ## 3.0.0 - 2021-04-24
 
 ### Features
