@@ -45,7 +45,7 @@
     "homepage": "https://github.com/Greenheart/pagecrypt#readme",
     "dependencies": {
         "rfc4648": "^1.4.0",
-        "yargs": "^16.2.0"
+        "sade": "^1.7.4"
     },
     "devDependencies": {
         "autoprefixer": "^10.2.5",

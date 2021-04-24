@@ -13,7 +13,7 @@ There are 3 different ways to use `pagecrypt`:
 Encrypt a single HTML-file with one command:
 
 ```sh
-npx pagecrypt [input.html] [output.html] [password]
+npx pagecrypt <src> <dest> <password>
 ```
 
 ### 2. Automate `pagecrypt` in your build process
@@ -48,7 +48,7 @@ You can also use `pagecrypt` in your Node.js scripts:
 import { encrypt } from 'pagecrypt'
 
 // Encrypt a HTML file and write to the filesystem
-await encrypt('input.html', 'output.html', 'password')
+await encrypt('index.html', 'encrypted.html', 'password')
 ```
 
 #### `encryptHTML(inputHTML: string, password: string): Promise<string>`
