@@ -1,5 +1,27 @@
 # Changelog for `pagecrypt`
 
+## 3.0.0 - 2021-04-24
+
+### Features
+
+-   Replace `node-forge` with the standard Web Crypto API - both in Node.js and in browsers.
+
+    -   This greatly improves performance, bundle size and security compared to `v1.x` and `v2.x`.
+    -   This allows using the same native code both for encryption in Node.js and decryption in the browser, simplifying the codebase.
+
+-   `decrypt-template.html` file size reduced from `290 KB` to `10 KB` - (**96 % less boilerplate code**). This ensures the encrypted page will be the clear majority of the code shipped to the user.
+-   PBKDF2 default iteration count increased from `1e5` to `2e6`, greatly improving security.
+
+### Fixes
+
+-   Fix [#6](https://github.com/Greenheart/pagecrypt/issues/6): Replace `vite preview` with `sirv-cli` to fix upstream issue
+-   Upgrade to Tailwind CSS 2.1.2
+-   Cleanup web/index.html to reduce unused characters
+-   Update README with instructions for enabling `https` for localhost
+-   Use stronger test password
+
+---
+
 ## 2.0.0 - 2021-04-23
 
 ### Features
@@ -7,6 +29,8 @@
 -   Use `node-forge` instead of `cryptojs` for encryption + decryption.
 -   Use `vite` instead of `snowpack` for simplified and more performant web build process.
 -   Small design + UX improvements for the decryption template.
+
+---
 
 ## 1.2.0 - 2021-03-15
 
