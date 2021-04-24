@@ -1,12 +1,14 @@
-# PageCrypt - Password Protected HTML Pages
+# PageCrypt - Password Protected Single Page Applications and HTML files
 
-> A CLI to add client-side password-protection for HTML files
+> Easily add client-side password-protection to your Single Page Applications and HTML files.
 
-Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt). Thanks for sharing an excellent starting point to create this CLI!
+Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt). Thanks for sharing an excellent starting point to create this tool!
 
-## Usage
+## Get started
 
-### CLI
+There are 3 different ways to use `pagecrypt`:
+
+### 1. CLI
 
 Encrypt a single HTML-file with one command:
 
@@ -14,7 +16,9 @@ Encrypt a single HTML-file with one command:
 npx pagecrypt [input.html] [output.html] [password]
 ```
 
-### Automate `pagecrypt` in your build process
+### 2. Automate `pagecrypt` in your build process
+
+This allows automated encrypted builds for single page applications
 
 ```sh
 npm i -D pagecrypt
@@ -25,7 +29,7 @@ package.json:
 ```json
 {
     "devDependencies": {
-        "pagecrypt": "^1.2.0"
+        "pagecrypt": "^3.0.0"
     },
     "scripts": {
         "build": "...",
@@ -34,9 +38,9 @@ package.json:
 }
 ```
 
-### Node.js API
+### 3. Node.js API
 
-You can use `pagecrypt` in your Node.js scripts:
+You can also use `pagecrypt` in your Node.js scripts:
 
 #### `encrypt(inputFile: string, outputFile: string, password: string): Promise<void>`
 

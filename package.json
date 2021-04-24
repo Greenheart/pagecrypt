@@ -1,7 +1,7 @@
 {
     "name": "pagecrypt",
     "version": "2.0.0",
-    "description": "A CLI to add client-side password-protection for HTML files",
+    "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
     "main": "index.js",
     "scripts": {
         "cli": "node cli.js",
@@ -25,15 +25,19 @@
     "author": "Samuel Plumppu",
     "license": "MIT",
     "keywords": [
+        "web-crypto",
         "encryption",
         "password",
         "clientside",
         "password-protection",
+        "cryptography",
+        "pbkdf2",
+        "aes",
         "cli",
         "commandline",
         "html",
         "crypto",
-        "hidden webpage"
+        "encrypted webpage"
     ],
     "bugs": {
         "url": "https://github.com/Greenheart/pagecrypt/issues"
