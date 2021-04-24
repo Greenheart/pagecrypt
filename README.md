@@ -84,8 +84,9 @@ The project consists of four parts:
 
 1.  Install Node.js >= 15.0.0
 2.  Run `npm install` in project root.
-3.  Install and use [`mkcert`](https://github.com/FiloSottile/mkcert) to generate local certificates to enable HTTPS for the development server. For example `mkcert localhost 192.168.1.32` to generate a two files named `localhost+1*.pem`.
+3.  Install and use [`mkcert`](https://github.com/FiloSottile/mkcert) to generate local certificates to enable HTTPS for the development server. For example `mkcert localhost 192.168.1.32` to generate a two files ending with `*.pem`.
 4.  Update `vite.config.js` to load the generated `*.pem` files in the `https` section.
+5.  To use `npm run serve`, also update to the correct `*.pem` filenames in the npm script.
 
 ## Testing
 
