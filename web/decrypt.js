@@ -1,4 +1,4 @@
-import forge from 'node-forge'
+import { base64 } from 'rfc4648'
 
 const find = document.querySelector.bind(document)
 const [pwd, iframe, header, msg, locked, unlocked] = [
@@ -9,6 +9,23 @@ const [pwd, iframe, header, msg, locked, unlocked] = [
     '#locked',
     '#unlocked',
 ].map(find)
+
+if (window.pl === '') {
+    pwd.disabled = true
+    error('No encrypted payload.')
+}
+
+const bytes = base64.parse(window.pl)
+const salt = bytes.slice(0, 32)
+const iv = bytes.slice(32, 32 + 16)
+const ciphertext = bytes.slice(32 + 16)
+
+const subtle = window.crypto?.subtle || window.crypto?.webkitSubtle
+
+if (!window.crypto.subtle) {
+    error('Please use a modern browser.')
+    pwd.disabled = true
+}
 
 function show(element) {
     element.classList.remove('hidden')
@@ -51,7 +68,7 @@ find('form').addEventListener('submit', async (event) => {
     try {
         status('Decrypting...')
         await sleep(60)
-        const decrypted = decryptFile(pl, pwd.value)
+        const decrypted = await decryptFile({ salt, iv, ciphertext }, pwd.value)
         if (!decrypted) throw 'Malformed data'
 
         success('Success!')
@@ -73,24 +90,27 @@ find('form').addEventListener('submit', async (event) => {
     }
 })
 
-if (pl === '') {
-    pwd.disabled = true
-    error('No encrypted payload.')
-}
+async function decryptFile({ salt, iv, ciphertext }, password) {
+    const decoder = new TextDecoder()
+    const encoder = new TextEncoder()
 
-function decryptFile(pl, password) {
-    const salt = forge.util.decode64(pl.salt)
-    const key = forge.pkcs5.pbkdf2(password, salt, 1e5, 32)
+    const baseKey = await subtle.importKey(
+        'raw',
+        encoder.encode(password),
+        'PBKDF2',
+        false,
+        ['deriveKey'],
+    )
+    const key = await subtle.deriveKey(
+        { name: 'PBKDF2', salt, iterations: 2e6, hash: 'SHA-256' },
+        baseKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['decrypt'],
+    )
 
-    const decipher = forge.cipher.createDecipher('AES-GCM', key)
-    decipher.start({
-        iv: forge.util.decode64(pl.iv),
-        tag: new forge.util.ByteStringBuffer(forge.util.decode64(pl.tag)),
-    })
-    decipher.update(forge.util.createBuffer(forge.util.decode64(pl.data)))
-    decipher.finish()
-
-    const decryptedBuffer = forge.util.createBuffer()
-    decryptedBuffer.putBuffer(decipher.output)
-    return decryptedBuffer.toString()
+    const data = new Uint8Array(
+        await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
+    )
+    return decoder.decode(data)
 }

@@ -40,7 +40,7 @@
     },
     "homepage": "https://github.com/Greenheart/pagecrypt#readme",
     "dependencies": {
-        "node-forge": "^0.10.0",
+        "rfc4648": "^1.4.0",
         "yargs": "^16.2.0"
     },
     "devDependencies": {

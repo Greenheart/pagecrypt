@@ -1,7 +1,7 @@
-const forge = require('node-forge')
-
+const { subtle, getRandomValues } = require('crypto').webcrypto
 const { mkdir, readFile, writeFile } = require('fs/promises')
 const { resolve, dirname } = require('path')
+const { base64 } = require('rfc4648')
 
 const packageRootDir = dirname(__filename)
 
@@ -12,27 +12,38 @@ const packageRootDir = dirname(__filename)
  * @param {string} password The password which will be used to encrypt + decrypt the content.
  * @returns an encrypted payload
  */
-function getEncryptedPayload(content, password) {
-    const salt = forge.random.getBytesSync(256)
-    const key = forge.pkcs5.pbkdf2(password, salt, 1e5, 32)
-    const iv = forge.random.getBytesSync(16)
+async function getEncryptedPayload(content, password) {
+    const encoder = new TextEncoder()
+    const salt = getRandomValues(new Uint8Array(32))
+    const baseKey = await subtle.importKey(
+        'raw',
+        encoder.encode(password),
+        'PBKDF2',
+        false,
+        ['deriveKey'],
+    )
+    const key = await subtle.deriveKey(
+        { name: 'PBKDF2', salt, iterations: 2e6, hash: 'SHA-256' },
+        baseKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt'],
+    )
 
-    const cipher = forge.cipher.createCipher('AES-GCM', key)
-    cipher.start({ iv })
-    cipher.update(forge.util.createBuffer(content))
-    cipher.finish()
+    const iv = getRandomValues(new Uint8Array(16))
+    const ciphertext = new Uint8Array(
+        await subtle.encrypt(
+            { name: 'AES-GCM', iv },
+            key,
+            encoder.encode(content),
+        ),
+    )
+    const totalLength = salt.length + iv.length + ciphertext.length
+    const data = new Uint8Array(
+        Buffer.concat([salt, iv, ciphertext], totalLength),
+    )
 
-    const tag = cipher.mode.tag
-    const encrypted = forge.util.createBuffer()
-    encrypted.putBuffer(cipher.output)
-    const encryptedBuffer = Buffer.from(encrypted.getBytes(), 'binary')
-
-    return {
-        iv: forge.util.encode64(iv),
-        tag: forge.util.encode64(tag.getBytes()),
-        salt: forge.util.encode64(salt),
-        data: forge.util.encode64(encryptedBuffer.toString('binary')),
-    }
+    return base64.stringify(data)
 }
 
 /**
@@ -71,10 +82,10 @@ async function encryptHTML(inputHTML, password) {
         { encoding: 'utf-8' },
     )
 
-    const encryptedPayload = JSON.stringify(
-        getEncryptedPayload(inputHTML, password),
+    return templateHTML.replace(
+        '/*{{ENCRYPTED_PAYLOAD}}*/""',
+        `"${await getEncryptedPayload(inputHTML, password)}"`,
     )
-    return templateHTML.replace('/*{{ENCRYPTED_PAYLOAD}}*/""', encryptedPayload)
 }
 
 /**
