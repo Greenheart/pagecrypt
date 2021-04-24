@@ -1,5 +1,13 @@
 # Changelog for `pagecrypt`
 
+## Unreleased
+
+### Fixes
+
+-   Clarify test instructions
+
+---
+
 ## 3.2.0 - 2021-04-24
 
 ### Features

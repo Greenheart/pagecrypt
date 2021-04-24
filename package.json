@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "cli": "node cli.js",
-        "test": "npm pack && cd test && npm i ../pagecrypt-*.tgz && npm run test && cd .. && echo 'Verify test output in the `test/out-*.html` files.'",
+        "test": "npm pack && cd test && npm i ../pagecrypt-*.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
         "start": "vite",
         "build": "vite build",
         "postbuild": "rm -rf web/build/assets",

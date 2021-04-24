@@ -133,7 +133,7 @@ The project consists of four parts:
 
 ## Testing
 
-`npm test` will run basic tests for JS API and CLI. Verify results by opening `test/out-js.html` and `test/out-cli.html` in your browser.
+`npm test` will run basic tests for JS API and CLI. Verify test results by opening the `test/out-*.html` files in your browser.
 
 ---
 
