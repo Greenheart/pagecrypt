@@ -1,4 +1,7 @@
-const { subtle, getRandomValues } = require('crypto').webcrypto
+const {
+    randomFillSync,
+    webcrypto: { subtle, getRandomValues },
+} = require('crypto')
 const { mkdir, readFile, writeFile } = require('fs/promises')
 const { resolve, dirname } = require('path')
 const { base64 } = require('rfc4648')
@@ -117,5 +120,22 @@ async function encrypt(inputFile, outputFile, password) {
     return await saveFile(outputFile, encrypted)
 }
 
+/**
+ * Generate a random password of a given length.
+ *
+ * @param {number} length The password length.
+ * @param {string} characters The characters used to generate the password.
+ * @returns A random password.
+ */
+function generatePassword(
+    length = 80,
+    characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+) {
+    return Array.from(randomFillSync(new Uint32Array(length)))
+        .map((x) => characters[x % characters.length])
+        .join('')
+}
+
 exports.encryptHTML = encryptHTML
 exports.encrypt = encrypt
+exports.generatePassword = generatePassword
