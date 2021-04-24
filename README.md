@@ -13,7 +13,33 @@ There are 3 different ways to use `pagecrypt`:
 Encrypt a single HTML-file with one command:
 
 ```sh
-npx pagecrypt <src> <dest> <password>
+npx pagecrypt <src> <dest> [password] [options]
+```
+
+Encrypt using a generate password with given length:
+
+```sh
+npx pagecrypt <src> <dest> -g <length>
+```
+
+#### 1.1. CLI Help
+
+```
+  Description
+    Encrypt the <src> HTML file with [password] and save the result in the <dest> HTML file.
+
+  Usage
+    $ pagecrypt <src> <dest> [password] [options]
+
+  Options
+    -g, --generate-password    Generate a random password with given length. Must be a number if used.
+    -v, --version              Displays current version
+    -h, --help                 Displays this message
+
+  Examples
+    $ pagecrypt index.html encrypted.html password
+    $ pagecrypt index.html encrypted.html --generate-password 64
+    $ pagecrypt index.html encrypted.html -g 64
 ```
 
 ### 2. Automate `pagecrypt` in your build process
@@ -71,6 +97,19 @@ const encryptedHTML = await encryptHTML(
 `,
     'password',
 )
+```
+
+#### `generatePassword(length: number): string`
+
+```js
+import { encrypt, generatePassword } from 'pagecrypt'
+
+// Generate a random password without any external dependencies
+const pass = generatePassword(64)
+
+// Works with both JS API:s
+await encrypt('index.html', 'encrypted.html', pass)
+const encryptedHTML = await encryptHTML('html string', pass)
 ```
 
 ---

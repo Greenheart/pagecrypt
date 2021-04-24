@@ -5,6 +5,7 @@ test/package-lock.json
 test/node_modules
 test/out-cli.html
 test/out-js.html
+test/out-cli-gen.html
 
 # Local certificates for localhost development with HTTPS
 *.pem
