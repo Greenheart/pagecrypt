@@ -1,5 +1,19 @@
 # Changelog for `pagecrypt`
 
+## 3.2.0 - 2021-04-24
+
+### Features
+
+-   Add password generator, built with the Node.js `crypto` module and without any external dependencies. Convenient, performant and secure.
+-   CLI: Add `--generate-password` (alias `-g`) option to encrypt using a generated password of given length. See `README.md` for more info.
+-   The password generator works well together with the JS API too.
+
+### Fixes
+
+-   Update tests and docs to describe new password generator feature.
+
+---
+
 ## 3.1.0 - 2021-04-24
 
 ### Features
