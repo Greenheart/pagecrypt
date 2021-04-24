@@ -6,3 +6,4 @@ vite.config.js
 tailwind.config.js
 prettier.config.js
 *.tgz
+*.pem

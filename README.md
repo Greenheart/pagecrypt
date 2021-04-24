@@ -80,6 +80,13 @@ The project consists of four parts:
 -   `/cli.js` - pagecrypt CLI.
 -   `/test` - testing setup
 
+## Setup a local development environment
+
+1.  Install Node.js >= 15.0.0
+2.  Run `npm install` in project root.
+3.  Install and use [`mkcert`](https://github.com/FiloSottile/mkcert) to generate local certificates to enable HTTPS for the development server. For example `mkcert localhost 192.168.1.32` to generate a two files named `localhost+1*.pem`.
+4.  Update `vite.config.js` to load the generated `*.pem` files in the `https` section.
+
 ## Testing
 
 `npm test` will run basic tests for JS API and CLI. Verify results by opening `test/out-js.html` and `test/out-cli.html` in your browser.

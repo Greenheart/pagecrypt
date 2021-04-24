@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
+import { readFileSync } from 'fs'
 
 /**
  * @type {import('vite').UserConfig}
@@ -20,6 +21,12 @@ export default defineConfig({
             },
         },
         outDir: 'build',
+    },
+    server: {
+        https: {
+            key: readFileSync('localhost+1-key.pem'),
+            cert: readFileSync('localhost+1.pem'),
+        },
     },
     root: 'web/',
 })

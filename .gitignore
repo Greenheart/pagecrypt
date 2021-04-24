@@ -1,5 +1,4 @@
 node_modules
-.snowpack
 build
 
 test/package-lock.json
@@ -7,6 +6,8 @@ test/node_modules
 test/out-cli.html
 test/out-js.html
 
+# Local certificates for localhost development with HTTPS
+*.pem
 
 # npm pack test output
 *.tgz
