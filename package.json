@@ -9,8 +9,12 @@
         "start": "vite",
         "build": "vite build",
         "postbuild": "rm -rf web/build/assets",
-        "serve": "vite preview"
+        "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem"
     },
+    "engines": {
+        "node": ">= 15.0.0"
+    },
+    "engineStrict": true,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Greenheart/pagecrypt.git"
@@ -41,8 +45,8 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.2.5",
-        "generate-password": "^1.6.0",
         "postcss": "^8.2.12",
+        "sirv-cli": "^1.0.11",
         "tailwindcss": "^2.1.1",
         "vite": "^2.2.1",
         "vite-plugin-singlefile": "^0.5.1"
