@@ -1,6 +1,10 @@
 # Changelog for `pagecrypt`
 
-## Unreleased
+## 3.3.0 - 2021-04-25
+
+### Features
+
+- Set `<iframe>` and document `title` to improve accessibility for the page.
 
 ### Fixes
 
