@@ -78,8 +78,14 @@ find('form').addEventListener('submit', async (event) => {
             '<head>',
             '<head><base href="." target="_top">',
         )
+        const match = decrypted.match(/<title[^>]*>([^<]+)<\/title>/)
+        const title = match ? match[1] : ''
 
         window.setTimeout(() => {
+            if (title) {
+                iframe.title = title
+                find('title').innerText = title
+            }
             find('main').remove()
             show(iframe)
             document.querySelectorAll('script').forEach((s) => s.remove())
