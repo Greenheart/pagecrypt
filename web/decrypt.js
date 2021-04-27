@@ -73,11 +73,7 @@ find('form').addEventListener('submit', async (event) => {
 
         success('Success!')
 
-        // Set default iframe link targets to _top so all links break out of the iframe
-        iframe.srcdoc = decrypted.replace(
-            '<head>',
-            '<head><base href="." target="_top">',
-        )
+        iframe.srcdoc = decrypted
         const match = decrypted.match(/<title[^>]*>([^<]+)<\/title>/)
         const title = match ? match[1] : ''
 
