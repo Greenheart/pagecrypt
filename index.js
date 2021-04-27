@@ -86,8 +86,8 @@ async function encryptHTML(inputHTML, password) {
     )
 
     return templateHTML.replace(
-        '/*{{ENCRYPTED_PAYLOAD}}*/""',
-        `"${await getEncryptedPayload(inputHTML, password)}"`,
+        /(<!--DEV ONLY-->[\s\S]*<!--\/DEV ONLY-->)/,
+        `<pre class="hidden">${await getEncryptedPayload(inputHTML, password)}</pre>`,
     )
 }
 
