@@ -1,13 +1,12 @@
 import { base64 } from 'rfc4648'
 
 const find = document.querySelector.bind(document)
-const [pwd, iframe, header, msg, locked, unlocked, form] = [
+const [pwd, iframe, header, msg, locked, form] = [
     'input',
     'iframe',
     'header',
     '#msg',
     '#locked',
-    '#unlocked',
     'form',
 ].map(find)
 
@@ -25,9 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-    await sleep(5000)
-
-    hide(find('#load'))
+    find('#load').remove()
     show(form)
     header.classList.replace('hidden', 'flex')
 })
@@ -42,32 +39,15 @@ if (!window.crypto.subtle) {
 function show(element) {
     element.classList.remove('hidden')
 }
-function hide(element) {
-    element.classList.add('hidden')
-}
 
 function error(text) {
     msg.innerText = text
     header.classList.toggle('text-red-600', true)
-    header.classList.toggle('text-green-600', false)
-    show(locked)
-    hide(unlocked)
-}
-
-function success(text) {
-    msg.innerText = text
-    header.classList.toggle('text-green-600', true)
-    header.classList.toggle('text-red-600', false)
-    show(unlocked)
-    hide(locked)
 }
 
 function status(text) {
     msg.innerText = text
-    header.classList.toggle('text-green-600', false)
     header.classList.toggle('text-red-600', false)
-    show(locked)
-    hide(unlocked)
 }
 
 async function sleep(milliseconds) {
@@ -83,21 +63,17 @@ form.addEventListener('submit', async (event) => {
         const decrypted = await decryptFile({ salt, iv, ciphertext }, pwd.value)
         if (!decrypted) throw 'Malformed data'
 
-        success('Success!')
-
         iframe.srcdoc = decrypted
         const match = decrypted.match(/<title[^>]*>([^<]+)<\/title>/)
         const title = match ? match[1] : ''
 
-        setTimeout(() => {
-            if (title) {
-                iframe.title = title
-                find('title').innerText = title
-            }
-            find('main').remove()
-            show(iframe)
-            document.querySelectorAll('script').forEach((s) => s.remove())
-        }, 1000)
+        if (title) {
+            iframe.title = title
+            find('title').innerText = title
+        }
+        find('main').remove()
+        show(iframe)
+        document.querySelectorAll('script').forEach((s) => s.remove())
     } catch (e) {
         error('Wrong password.')
         pwd.value = ''
