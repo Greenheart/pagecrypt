@@ -75,7 +75,7 @@ async function encryptFile(inputFile, password) {
  * Encrypt an HTML string with a given password.
  * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
  *
- * @param {string} inputHTML The filename (or path) to the HTML file to encrypt.
+ * @param {string} inputHTML The HTML string to encrypt.
  * @param {string} password The password which will be used to encrypt + decrypt the content.
  * @returns A promise that will resolve with the encrypted HTML content
  */
