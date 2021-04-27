@@ -1,24 +1,36 @@
 import { base64 } from 'rfc4648'
 
 const find = document.querySelector.bind(document)
-const [pwd, iframe, header, msg, locked, unlocked] = [
+const [pwd, iframe, header, msg, locked, unlocked, form] = [
     'input',
     'iframe',
     'header',
     '#msg',
     '#locked',
     '#unlocked',
+    'form',
 ].map(find)
 
-if (window.pl === '') {
-    pwd.disabled = true
-    error('No encrypted payload.')
-}
+let salt, iv, ciphertext
 
-const bytes = base64.parse(window.pl)
-const salt = bytes.slice(0, 32)
-const iv = bytes.slice(32, 32 + 16)
-const ciphertext = bytes.slice(32 + 16)
+document.addEventListener('DOMContentLoaded', async () => {
+    const pl = find('pre').innerText
+    if (!pl) {
+        pwd.disabled = true
+        error('No encrypted payload.')
+    }
+
+    const bytes = base64.parse(pl)
+    salt = bytes.slice(0, 32)
+    iv = bytes.slice(32, 32 + 16)
+    ciphertext = bytes.slice(32 + 16)
+
+    await sleep(5000)
+
+    hide(find('#load'))
+    show(form)
+    header.classList.replace('hidden', 'flex')
+})
 
 const subtle = window.crypto?.subtle || window.crypto?.webkitSubtle
 
@@ -62,7 +74,7 @@ async function sleep(milliseconds) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds))
 }
 
-find('form').addEventListener('submit', async (event) => {
+form.addEventListener('submit', async (event) => {
     event.preventDefault()
 
     try {
@@ -77,7 +89,7 @@ find('form').addEventListener('submit', async (event) => {
         const match = decrypted.match(/<title[^>]*>([^<]+)<\/title>/)
         const title = match ? match[1] : ''
 
-        window.setTimeout(() => {
+        setTimeout(() => {
             if (title) {
                 iframe.title = title
                 find('title').innerText = title
