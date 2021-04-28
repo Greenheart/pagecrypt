@@ -85,16 +85,10 @@ async function encryptHTML(inputHTML, password) {
         { encoding: 'utf-8' },
     )
 
-    // Set default iframe link targets to _top so all links break out of the iframe
-    const withBaseHref = inputHTML.replace(
-        '<head>',
-        '<head><base href="." target="_top">',
-    )
-
     return templateHTML.replace(
         /<!--ENCRYPTED PAYLOAD-->/,
         `<pre class="hidden">${await getEncryptedPayload(
-            withBaseHref,
+            inputHTML,
             password,
         )}</pre>`,
     )
