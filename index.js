@@ -92,7 +92,7 @@ async function encryptHTML(inputHTML, password) {
     )
 
     return templateHTML.replace(
-        /(<!--DEV ONLY-->[\s\S]*<!--\/DEV ONLY-->)/,
+        /<!--ENCRYPTED PAYLOAD-->/,
         `<pre class="hidden">${await getEncryptedPayload(
             withBaseHref,
             password,

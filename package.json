@@ -8,7 +8,7 @@
         "test": "npm pack && cd test && npm i ../pagecrypt-*.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
         "start": "vite",
         "build": "vite build",
-        "postbuild": "rm -rf web/build/assets",
+        "postbuild": "node scripts/postbuild.js",
         "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem"
     },
     "engines": {
