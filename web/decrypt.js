@@ -1,7 +1,13 @@
 import { base64 } from 'rfc4648'
 
 const find = document.querySelector.bind(document)
-const [pwd, header, msg, form] = ['input', 'header', '#msg', 'form'].map(find)
+const [pwd, header, msg, form, load] = [
+    'input',
+    'header',
+    '#msg',
+    'form',
+    '#load',
+].map(find)
 
 let salt, iv, ciphertext
 
@@ -17,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-    find('#load').remove()
+    hide(load)
     show(form)
     header.classList.replace('hidden', 'flex')
     pwd.focus()
@@ -34,14 +40,13 @@ function show(element) {
     element.classList.remove('hidden')
 }
 
-function error(text) {
-    msg.innerText = text
-    header.classList.toggle('text-red-600', true)
+function hide(element) {
+    element.classList.add('hidden')
 }
 
-function status(text) {
+function error(text) {
     msg.innerText = text
-    header.classList.toggle('text-red-600', false)
+    header.classList.add('text-red-600')
 }
 
 async function sleep(milliseconds) {
@@ -51,8 +56,12 @@ async function sleep(milliseconds) {
 form.addEventListener('submit', async (event) => {
     event.preventDefault()
 
+    load.lastElementChild.innerText = 'Decrypting...'
+    hide(header)
+    hide(form)
+    show(load)
+
     try {
-        status('Decrypting...')
         await sleep(60)
         const decrypted = await decryptFile({ salt, iv, ciphertext }, pwd.value)
         if (!decrypted) throw 'Malformed data'
@@ -60,8 +69,12 @@ form.addEventListener('submit', async (event) => {
         document.write(decrypted)
         document.close()
     } catch (e) {
+        hide(load)
+        show(form)
+        header.classList.replace('hidden', 'flex')
         error('Wrong password.')
         pwd.value = ''
+        pwd.focus()
     }
 })
 
