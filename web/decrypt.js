@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     find('#load').remove()
     show(form)
     header.classList.replace('hidden', 'flex')
+    pwd.focus()
 })
 
 const subtle = window.crypto?.subtle || window.crypto?.webkitSubtle
