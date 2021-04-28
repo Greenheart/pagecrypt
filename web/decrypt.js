@@ -1,14 +1,7 @@
 import { base64 } from 'rfc4648'
 
 const find = document.querySelector.bind(document)
-const [pwd, iframe, header, msg, locked, form] = [
-    'input',
-    'iframe',
-    'header',
-    '#msg',
-    '#locked',
-    'form',
-].map(find)
+const [pwd, header, msg, form] = ['input', 'header', '#msg', 'form'].map(find)
 
 let salt, iv, ciphertext
 
@@ -64,17 +57,8 @@ form.addEventListener('submit', async (event) => {
         const decrypted = await decryptFile({ salt, iv, ciphertext }, pwd.value)
         if (!decrypted) throw 'Malformed data'
 
-        iframe.srcdoc = decrypted
-        const match = decrypted.match(/<title[^>]*>([^<]+)<\/title>/)
-        const title = match ? match[1] : ''
-
-        if (title) {
-            iframe.title = title
-            find('title').innerText = title
-        }
-        find('main').remove()
-        show(iframe)
-        document.querySelectorAll('script').forEach((s) => s.remove())
+        document.write(decrypted)
+        document.close()
     } catch (e) {
         error('Wrong password.')
         pwd.value = ''
