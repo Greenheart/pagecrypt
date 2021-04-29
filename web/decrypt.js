@@ -23,10 +23,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-    hide(load)
-    show(form)
-    header.classList.replace('hidden', 'flex')
-    pwd.focus()
+    if (sessionStorage.k) {
+        await decrypt()
+    } else {
+        hide(load)
+        show(form)
+        header.classList.replace('hidden', 'flex')
+        pwd.focus()
+    }
 })
 
 const subtle = window.crypto?.subtle || window.crypto?.webkitSubtle
@@ -49,22 +53,24 @@ function error(text) {
     header.classList.add('text-red-600')
 }
 
+form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    await decrypt()
+})
+
 async function sleep(milliseconds) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds))
 }
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-
+async function decrypt() {
     load.lastElementChild.innerText = 'Decrypting...'
     hide(header)
     hide(form)
     show(load)
+    await sleep(60)
 
     try {
-        await sleep(60)
         const decrypted = await decryptFile({ salt, iv, ciphertext }, pwd.value)
-        if (!decrypted) throw 'Malformed data'
 
         document.write(decrypted)
         document.close()
@@ -72,33 +78,56 @@ form.addEventListener('submit', async (event) => {
         hide(load)
         show(form)
         header.classList.replace('hidden', 'flex')
-        error('Wrong password.')
+
+        if (sessionStorage.k) {
+            // Delete invalid key
+            sessionStorage.removeItem('k')
+        } else {
+            // Only show when user actually entered a password themselves.
+            error('Wrong password.')
+        }
+
         pwd.value = ''
         pwd.focus()
     }
-})
+}
 
-async function decryptFile({ salt, iv, ciphertext }, password) {
-    const decoder = new TextDecoder()
+async function deriveKey(salt, password) {
     const encoder = new TextEncoder()
-
     const baseKey = await subtle.importKey(
         'raw',
         encoder.encode(password),
         'PBKDF2',
-        false,
+        true,
         ['deriveKey'],
     )
-    const key = await subtle.deriveKey(
+    return await subtle.deriveKey(
         { name: 'PBKDF2', salt, iterations: 2e6, hash: 'SHA-256' },
         baseKey,
         { name: 'AES-GCM', length: 256 },
-        false,
+        true,
         ['decrypt'],
     )
+}
+
+async function importKey(key) {
+    return subtle.importKey('jwk', key, 'AES-GCM', true, ['decrypt'])
+}
+
+async function decryptFile({ salt, iv, ciphertext }, password) {
+    const decoder = new TextDecoder()
+
+    const key = sessionStorage.k
+        ? await importKey(JSON.parse(sessionStorage.k))
+        : await deriveKey(salt, password)
 
     const data = new Uint8Array(
         await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
     )
+    if (!data) throw 'Malformed data'
+
+    // If no exception were thrown, decryption succeded and we can save the key.
+    sessionStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
+
     return decoder.decode(data)
 }
