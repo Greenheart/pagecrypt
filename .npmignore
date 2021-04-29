@@ -1,5 +1,6 @@
 web/
 test/
+scripts/
 
 postcss.config.js
 vite.config.js

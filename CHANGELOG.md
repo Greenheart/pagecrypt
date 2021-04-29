@@ -1,10 +1,37 @@
 # Changelog for `pagecrypt`
 
+## 4.0.0 - 2021-04-29
+
+Major UX and performance improvements!
+
+This version uses `document.write()` to show the encrypted payload instead of using an `<iframe>` like `pagecrypt < v4` did. Since this means browsers won't have to create a separate DOM instance, this brings good performance improvements.
+
+### Features
+
+-   feature(UX): Major UX improvement - save CryptoKey to `sessionStorage` to gain massive UX + performance improvement on repeat visits.
+-   feature(UX): Show results faster by removing the `<iframe>` and show content directly in the top-level document instead.
+-   feature(DX): By removing the `<iframe>`, we also now allow embedded apps and webpages to use the full top-level document. Unlocks many new possible features that wouldn't work in `pagecrypt < v4`.
+-   feature(UX): Show a loading state when loading large encrypted payloads.
+-   feature(UX): Show loading spinner when decrypting for better UX.
+-   feature(UX): Improve perceived loading performance by not blocking the main thread on page load.
+    -   This was achieved in part by the loading state, but also by moving the encrypted payload from a render-blocking inline `<script>` into a `<pre>` that only contains the raw data.
+    -   This way, the browser can do more work in parallel, which speeds up the initial page load.
+-   feature(UX): Remove the success message and 1s timeout after successful decryption to improved perceived loading performance.
+-   feature(build): Improve code transformations applied at build time to optimize `decrypt-template.html`
+-   feature(UX): Add autofocus to password input when pageload has completed.
+
+### Fixes
+
+-   fix(build): Remove old iframe solution that's no longer relevant
+-   fix(docs): Fix invalid docstring for `encryptHTML()`
+
+---
+
 ## 3.3.0 - 2021-04-25
 
 ### Features
 
-- Set `<iframe>` and document `title` to improve accessibility for the page.
+-   Set `<iframe>` and document `title` to improve accessibility for the page.
 
 ### Fixes
 

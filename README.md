@@ -1,8 +1,8 @@
-# PageCrypt - Password Protected Single Page Applications and HTML files
+# 🔐 PageCrypt - Password Protected Single Page Applications and HTML files
 
 > Easily add client-side password-protection to your Single Page Applications and HTML files.
 
-Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt). Thanks for sharing an excellent starting point to create this tool!
+Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt), but rewritten to use native `Web Crypto API` and greatly improve UX + security. Thanks for sharing an excellent starting point to create this tool!
 
 ## Get started
 
