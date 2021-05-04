@@ -9,6 +9,6 @@
         "test:cli:generate-password": "pagecrypt test.html out-cli-gen.html --generate-password 64"
     },
     "dependencies": {
-        "pagecrypt": "file:../pagecrypt-4.0.0.tgz"
+        "pagecrypt": "file:../pagecrypt-4.0.1.tgz"
     }
 }

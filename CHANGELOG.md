@@ -1,5 +1,13 @@
 # Changelog for `pagecrypt`
 
+## 4.0.1 - 2021-05-04
+
+### Fixes
+
+-   fix(crypto): Ensure key derivation function is not extractable to fix bug in Chrome and Safari.
+
+---
+
 ## 4.0.0 - 2021-04-29
 
 Major UX and performance improvements!
