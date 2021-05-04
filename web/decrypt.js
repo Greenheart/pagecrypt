@@ -98,7 +98,7 @@ async function deriveKey(salt, password) {
         'raw',
         encoder.encode(password),
         'PBKDF2',
-        true,
+        false,
         ['deriveKey'],
     )
     return await subtle.deriveKey(
