@@ -1,6 +1,6 @@
-const { encrypt, encryptHTML } = require('pagecrypt')
-const { resolve } = require('path')
-const { readFile } = require('fs/promises')
+import { encrypt, encryptHTML } from 'pagecrypt'
+import { resolve } from 'path'
+import { readFile } from 'fs/promises'
 
 async function main() {
     const inputFile = 'test.html'

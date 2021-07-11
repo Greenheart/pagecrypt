@@ -3,9 +3,10 @@
     "version": "4.0.1",
     "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "cli": "node cli.js",
-        "test": "npm pack && cd test && npm i ../pagecrypt-*.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
+        "test": "npm pack && cd test && npm i ../pagecrypt-4.0.1.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
         "start": "vite",
         "build": "vite build",
         "postbuild": "node scripts/postbuild.js",

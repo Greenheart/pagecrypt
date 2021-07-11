@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 
-const sade = require('sade')
+import sade from 'sade'
+import { readFile } from 'fs/promises'
 
-const { encrypt, generatePassword } = require('./index')
-const pkg = require('./package.json')
+import { encrypt, generatePassword } from './index.js'
+
+const pkg = JSON.parse(
+    await readFile(new URL('./package.json', import.meta.url)),
+)
 
 sade(`${pkg.name} <src> <dest> [password]`, true)
     .version(pkg.version)

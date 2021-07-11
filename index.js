@@ -1,12 +1,11 @@
-const {
-    randomFillSync,
-    webcrypto: { subtle, getRandomValues },
-} = require('crypto')
-const { mkdir, readFile, writeFile } = require('fs/promises')
-const { resolve, dirname } = require('path')
-const { base64 } = require('rfc4648')
+import { base64 } from 'rfc4648'
+import { mkdir, readFile, writeFile } from 'fs/promises'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-const packageRootDir = dirname(__filename)
+import crypto from './crypto.js'
+
+const packageRootDir = dirname(fileURLToPath(import.meta.url))
 
 /**
  * Encrypt a string and turn it into an encrypted payload.
@@ -17,15 +16,15 @@ const packageRootDir = dirname(__filename)
  */
 async function getEncryptedPayload(content, password) {
     const encoder = new TextEncoder()
-    const salt = getRandomValues(new Uint8Array(32))
-    const baseKey = await subtle.importKey(
+    const salt = crypto.getRandomValues(new Uint8Array(32))
+    const baseKey = await crypto.subtle.importKey(
         'raw',
         encoder.encode(password),
         'PBKDF2',
         false,
         ['deriveKey'],
     )
-    const key = await subtle.deriveKey(
+    const key = await crypto.subtle.deriveKey(
         { name: 'PBKDF2', salt, iterations: 2e6, hash: 'SHA-256' },
         baseKey,
         { name: 'AES-GCM', length: 256 },
@@ -33,9 +32,9 @@ async function getEncryptedPayload(content, password) {
         ['encrypt'],
     )
 
-    const iv = getRandomValues(new Uint8Array(16))
+    const iv = crypto.getRandomValues(new Uint8Array(16))
     const ciphertext = new Uint8Array(
-        await subtle.encrypt(
+        await crypto.subtle.encrypt(
             { name: 'AES-GCM', iv },
             key,
             encoder.encode(content),
@@ -139,6 +138,4 @@ function generatePassword(
         .join('')
 }
 
-exports.encryptHTML = encryptHTML
-exports.encrypt = encrypt
-exports.generatePassword = generatePassword
+export { encryptHTML, encrypt, generatePassword }

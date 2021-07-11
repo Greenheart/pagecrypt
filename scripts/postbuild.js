@@ -1,5 +1,5 @@
-const { readFile, writeFile, rm } = require('fs/promises')
-const { resolve, join } = require('path')
+import { readFile, writeFile, rm } from 'fs/promises'
+import { resolve, join } from 'path'
 
 const BUILD_DIR = resolve('web', 'build')
 const HTML_FILE_PATH = join(BUILD_DIR, 'index.html')
