@@ -1,5 +1,19 @@
 # Changelog for `pagecrypt`
 
+## Unreleased
+
+### Features
+
+-   feature(crypto): Use isomorphic Web Crypto API to allow code reuse between Node.js, browsers and other ESM compatible environments.
+-   feature(password generator): Use the isomorhic Web Crypto API to make project run in Node.js, browsers and other ESM compatible environments.
+-   BREAKING: feature(package): Convert modules to use ESM by default instead of CommonJS.
+
+### Fixes
+
+-   chore(deps): Upgrade dependencies.
+
+---
+
 ## 4.0.1 - 2021-05-04
 
 ### Fixes

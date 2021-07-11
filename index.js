@@ -133,9 +133,28 @@ function generatePassword(
     length = 80,
     characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 ) {
-    return Array.from(randomFillSync(new Uint32Array(length)))
-        .map((x) => characters[x % characters.length])
-        .join('')
+    return Array.from({ length }, (_) => getRandomCharacter(characters)).join(
+        '',
+    )
+}
+
+/**
+ * Get a random character from a given set of characters.
+ *
+ * @param {string} characters The characters used to generate the password.
+ * @returns A random character.
+ */
+function getRandomCharacter(characters) {
+    let randomNumber
+
+    // Due to the repeating nature of results from the modulus operand, we potentially need to regenerate the random number several times.
+    // This is required to ensure all characters have the same probability to get picked.
+    // Otherwise, the first characters would appear more often, resulting in a weaker password security.
+    do {
+        randomNumber = crypto.getRandomValues(new Uint8Array(1))[0]
+    } while (randomNumber >= 256 - (256 % characters.length))
+
+    return characters[randomNumber % characters.length]
 }
 
 export { encryptHTML, encrypt, generatePassword }
