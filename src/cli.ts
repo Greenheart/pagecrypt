@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 
 import sade from 'sade'
-import { readFile } from 'fs/promises'
 
-import { encrypt, generatePassword } from './index.js'
+import { encrypt, generatePassword } from './index'
 
-const pkg = JSON.parse(
-    await readFile(new URL('./package.json', import.meta.url)),
-)
+import { name, version } from '../package.json'
 
-sade(`${pkg.name} <src> <dest> [password]`, true)
-    .version(pkg.version)
+sade(`${name} <src> <dest> [password]`, true)
+    .version(version)
     .describe(
         'Encrypt the <src> HTML file with [password] and save the result in the <dest> HTML file.',
     )

@@ -3,9 +3,8 @@ build
 
 test/package-lock.json
 test/node_modules
-test/out-cli.html
-test/out-js.html
-test/out-cli-gen.html
+test/out*
+dist
 
 # Local certificates for localhost development with HTTPS
 *.pem

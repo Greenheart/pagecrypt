@@ -1,11 +1,9 @@
 import { base64 } from 'rfc4648'
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import { resolve, dirname } from 'path'
-import { fileURLToPath } from 'url'
 
-import crypto from './crypto.js'
+import crypto from './crypto'
 
-const packageRootDir = dirname(fileURLToPath(import.meta.url))
+// @ts-expect-error 2307 - Using esbuild to inline this HTML file as a string
+import decryptTemplate from './decrypt-template.html'
 
 /**
  * Encrypt a string and turn it into an encrypted payload.
@@ -14,7 +12,7 @@ const packageRootDir = dirname(fileURLToPath(import.meta.url))
  * @param {string} password The password which will be used to encrypt + decrypt the content.
  * @returns an encrypted payload
  */
-async function getEncryptedPayload(content, password) {
+async function getEncryptedPayload(content: string, password: string) {
     const encoder = new TextEncoder()
     const salt = crypto.getRandomValues(new Uint8Array(32))
     const baseKey = await crypto.subtle.importKey(
@@ -49,28 +47,6 @@ async function getEncryptedPayload(content, password) {
 }
 
 /**
- * Encrypt a HTML file with a given password.
- * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
- *
- * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
- * @param {string} password The password which will be used to encrypt + decrypt the content.
- * @returns A promise that will resolve with the encrypted HTML content
- */
-async function encryptFile(inputFile, password) {
-    let content
-    try {
-        content = await readFile(resolve(process.cwd(), inputFile), {
-            encoding: 'utf-8',
-        })
-    } catch (e) {
-        console.error('❌ Error reading file: ', e)
-        process.exit(1)
-    }
-
-    return await encryptHTML(content, password)
-}
-
-/**
  * Encrypt an HTML string with a given password.
  * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
  *
@@ -78,13 +54,8 @@ async function encryptFile(inputFile, password) {
  * @param {string} password The password which will be used to encrypt + decrypt the content.
  * @returns A promise that will resolve with the encrypted HTML content
  */
-async function encryptHTML(inputHTML, password) {
-    const templateHTML = await readFile(
-        resolve(packageRootDir, 'decrypt-template.html'),
-        { encoding: 'utf-8' },
-    )
-
-    return templateHTML.replace(
+export async function encryptHTML(inputHTML: string, password: string) {
+    return (decryptTemplate as string).replace(
         /<!--ENCRYPTED PAYLOAD-->/,
         `<pre class="hidden">${await getEncryptedPayload(
             inputHTML,
@@ -94,42 +65,13 @@ async function encryptHTML(inputHTML, password) {
 }
 
 /**
- * Save a file, creating directories and files if they don't yet exist
- *
- * @param {string} outputFile The filename (or path) where the file will be saved
- * @param {string} content The file content
- * @returns A promise that will resolve when the file has been saved.
- */
-async function saveFile(outputFile, content) {
-    await mkdir(dirname(outputFile), { recursive: true })
-
-    return writeFile(resolve(process.cwd(), outputFile), content, {
-        encoding: 'utf8',
-    })
-}
-
-/**
- * Encrypt a HTML file with a given password.
- * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
- *
- * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
- * @param {string} outputFile The filename (or path) where the encrypted HTML file will be saved.
- * @param {string} password The password which will be used to encrypt + decrypt the content.
- * @returns A promise that will resolve when the encrypted file has been saved.
- */
-async function encrypt(inputFile, outputFile, password) {
-    const encrypted = await encryptFile(inputFile, password)
-    return await saveFile(outputFile, encrypted)
-}
-
-/**
  * Generate a random password of a given length.
  *
  * @param {number} length The password length.
  * @param {string} characters The characters used to generate the password.
  * @returns A random password.
  */
-function generatePassword(
+export function generatePassword(
     length = 80,
     characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 ) {
@@ -144,7 +86,7 @@ function generatePassword(
  * @param {string} characters The characters used to generate the password.
  * @returns A random character.
  */
-function getRandomCharacter(characters) {
+function getRandomCharacter(characters: string) {
     let randomNumber
 
     // Due to the repeating nature of results from the modulus operand, we potentially need to regenerate the random number several times.
@@ -156,5 +98,3 @@ function getRandomCharacter(characters) {
 
     return characters[randomNumber % characters.length]
 }
-
-export { encryptHTML, encrypt, generatePassword }

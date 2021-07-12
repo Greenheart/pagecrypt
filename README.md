@@ -6,7 +6,7 @@ Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt
 
 ## Get started
 
-There are 3 different ways to use `pagecrypt`:
+There are 4 different ways to use `pagecrypt`:
 
 ### 1. CLI
 
@@ -110,6 +110,14 @@ const pass = generatePassword(64)
 // Works with both JS API:s
 await encrypt('index.html', 'encrypted.html', pass)
 const encryptedHTML = await encryptHTML('html string', pass)
+```
+
+### 4. Encrypt HTML in browsers and in Deno by using the core pagecrypt library
+
+```js
+import { encryptHTML, generatePassword } from 'pagecrypt/core'
+
+// The encryptHTML() and generatePassword() functions are using Web Crypto API and will thus be able to run in any ESM compatible environment that supports Web Crypto API. This allows you to use the same API in any environment where you can run modern JavaScript.
 ```
 
 ---

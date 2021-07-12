@@ -1,30 +1,43 @@
 {
     "name": "pagecrypt",
-    "version": "4.0.1",
+    "version": "5.0.0",
     "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
-    "main": "index.js",
+    "main": "src/index.ts",
     "type": "module",
     "scripts": {
         "cli": "node cli.js",
-        "test": "npm pack && cd test && npm i ../pagecrypt-4.0.1.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
+        "test": "npm pack && cd test && npm i ../pagecrypt-5.0.0.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
         "start": "vite",
-        "build": "vite build",
-        "postbuild": "node scripts/postbuild.js",
+        "build:web": "vite build && node scripts/postbuild.js",
+        "build": "node ./scripts/esbuild.js",
         "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem"
+    },
+    "author": "Samuel Plumppu",
+    "license": "MIT",
+    "dependencies": {
+        "rfc4648": "^1.5.0",
+        "sade": "^1.7.4"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^9.0.12",
+        "@types/node": "^16.3.1",
+        "autoprefixer": "^10.3.1",
+        "esbuild": "^0.12.15",
+        "fs-extra": "^10.0.0",
+        "postcss": "^8.3.5",
+        "sirv-cli": "^1.0.12",
+        "tailwindcss": "^2.2.4",
+        "typescript": "^4.3.5",
+        "vite": "^2.4.2",
+        "vite-plugin-singlefile": "^0.5.1"
     },
     "engines": {
         "node": ">= 15.0.0"
     },
     "engineStrict": true,
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Greenheart/pagecrypt.git"
-    },
     "bin": {
-        "pagecrypt": "./cli.js"
+        "pagecrypt": "./src/cli.ts"
     },
-    "author": "Samuel Plumppu",
-    "license": "MIT",
     "keywords": [
         "web-crypto",
         "encryption",
@@ -40,20 +53,12 @@
         "crypto",
         "encrypted webpage"
     ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Greenheart/pagecrypt.git"
+    },
     "bugs": {
         "url": "https://github.com/Greenheart/pagecrypt/issues"
     },
-    "homepage": "https://github.com/Greenheart/pagecrypt#readme",
-    "dependencies": {
-        "rfc4648": "^1.5.0",
-        "sade": "^1.7.4"
-    },
-    "devDependencies": {
-        "autoprefixer": "^10.2.6",
-        "postcss": "^8.3.5",
-        "sirv-cli": "^1.0.12",
-        "tailwindcss": "^2.2.4",
-        "vite": "^2.4.1",
-        "vite-plugin-singlefile": "^0.5.1"
-    }
+    "homepage": "https://github.com/Greenheart/pagecrypt#readme"
 }
