@@ -2,9 +2,6 @@ import { defineConfig } from 'vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 import { readFileSync } from 'fs'
 
-/**
- * @type {import('vite').UserConfig}
- */
 export default defineConfig({
     plugins: [viteSingleFile()],
     build: {

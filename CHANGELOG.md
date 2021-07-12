@@ -1,10 +1,10 @@
 # Changelog for `pagecrypt`
 
-## Unreleased
+## 5.0.0 - 2021-07-12
 
 ### Features
 
--   BREAKING: feature(package): Convert modules to use ESM by default instead of CommonJS. Update your build tool to use `import` syntax instead of `require` - or keep using version 4.x which supports CommonJS `require`.
+-   BREAKING: feature(package): Convert modules to use ESM by default instead of CommonJS. Update your build tool to use `import` syntax instead of `require` - or keep using `pagecrypt@^4.0.1` which supports CommonJS `require`.
 
 -   feature(package): Add new the `pagecrypt/core` module that can be imported to use the core library features in browsers, Deno and any other ESM compatible modern JS environment. For Node.js, the index import `pagecrypt` still works just like before.
 -   feature(types): Add TypeScript definitions to improve DX and automation in TypeScript projects.

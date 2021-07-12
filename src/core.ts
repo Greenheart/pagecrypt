@@ -39,11 +39,12 @@ async function getEncryptedPayload(content: string, password: string) {
         ),
     )
     const totalLength = salt.length + iv.length + ciphertext.length
-    const data = new Uint8Array(
-        Buffer.concat([salt, iv, ciphertext], totalLength),
-    )
+    const mergedData = new Uint8Array(totalLength)
+    mergedData.set(salt)
+    mergedData.set(iv, salt.length)
+    mergedData.set(ciphertext, salt.length + iv.length)
 
-    return base64.stringify(data)
+    return base64.stringify(mergedData)
 }
 
 /**

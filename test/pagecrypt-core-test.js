@@ -1,11 +1,10 @@
-// TODO: This needs to use an locally imported version of the dist library to work properly.
-import { generatePassword, encryptHTML } from '../lib/core.js'
+import { generatePassword, encryptHTML } from 'pagecrypt/core'
 
 function download(filename, text) {
     const element = document.createElement('a')
     element.setAttribute(
         'href',
-        'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+        'data:text/html;charset=utf-8,' + encodeURIComponent(text),
     )
     element.setAttribute('download', filename)
 
@@ -16,8 +15,12 @@ function download(filename, text) {
 }
 
 document.querySelector('#download').addEventListener('click', async (e) => {
-    const html = await encryptHTML(testHTML, generatePassword(16))
-    download('browser-encrypted.html', html)
+    const password = 'asd'
+    console.log('random password: ', generatePassword(16))
+    console.time('🔐 Encrypting')
+    const html = await encryptHTML(testHTML, password)
+    download('out-browser-encrypted.html', html)
+    console.timeEnd('🔐 Encrypting')
 })
 
 const testHTML = `
@@ -53,7 +56,3 @@ const testHTML = `
     </body>
 
     </html>`
-
-// TODO: Verify that it works to import the pagecrypt/core module
-// TODO: Setup tests for repeated builds and tests
-// TODO: Add way to verify the result in the browser. Maybe add link to copy and download the encrypted test page

@@ -6,11 +6,13 @@
     "type": "module",
     "scripts": {
         "cli": "node cli.js",
-        "test": "npm pack && cd test && npm i ../pagecrypt-5.0.0.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
+        "pretest": "npm run build",
+        "test": "cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.0.0.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
         "start": "vite",
         "build:web": "vite build && node scripts/postbuild.js",
         "build": "node ./scripts/esbuild.js",
-        "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem"
+        "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem",
+        "publish": "cd dist && npm publish"
     },
     "author": "Samuel Plumppu",
     "license": "MIT",

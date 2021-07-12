@@ -65,8 +65,8 @@ esbuild
             (performance.now() - startTime) /
             1000
         ).toLocaleString('en-US', {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
+            minimumFractionDigits: 3,
+            maximumFractionDigits: 3,
         })
         console.log(`✅ Finished in ${buildTime} s\n`)
     })
@@ -74,12 +74,3 @@ esbuild
         console.error(e)
         process.exit(1)
     })
-
-// TODO: Ensure the npm publishing happens from the built library in /dist
-
-// TODO: when running test, pack the dist folder to get all built files as the root dir
-
-// TODO: Verify all tests works as expected
-
-// TODO: Test importing core and index in Node.js environment
-// TODO: Test importing core in browser environment
