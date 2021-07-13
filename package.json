@@ -62,5 +62,14 @@
     "bugs": {
         "url": "https://github.com/Greenheart/pagecrypt/issues"
     },
-    "homepage": "https://github.com/Greenheart/pagecrypt#readme"
+    "homepage": "https://github.com/Greenheart/pagecrypt#readme",
+    "types": "./index.d.ts",
+    "exports": {
+        ".": {
+            "node": "./index.js"
+        },
+        "./core": {
+            "import": "./core.js"
+        }
+    }
 }

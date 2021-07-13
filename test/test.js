@@ -1,6 +1,7 @@
-import { encrypt, encryptHTML } from 'pagecrypt'
+import { encrypt } from 'pagecrypt'
+import { encryptHTML, generatePassword } from 'pagecrypt/core'
 import { resolve } from 'path'
-import { readFile } from 'fs/promises'
+import { readFile, writeFile } from 'fs/promises'
 
 async function main() {
     const inputFile = 'test.html'
@@ -15,13 +16,18 @@ async function main() {
     await encrypt(inputFile, outputFile, password)
     console.timeEnd('✅ encrypt()')
 
+    const generatedPassword = generatePassword(20)
+
     console.time('✅ encryptHTML()')
-    const data = await encryptHTML(inputHTML, password)
+    const encrypted = await encryptHTML(inputHTML, generatedPassword)
     console.timeEnd('✅ encryptHTML()')
+
+    const outputFile2 = 'out-js-gen.html'
+    console.log(
+        `\u{1F510} Encrypting ${inputFile} \u2192 ${outputFile2} with \u{1F511}: ${generatedPassword}`,
+    )
+
+    await writeFile(outputFile2, encrypted)
 }
 
-main()
-    .then(() => {})
-    .catch((err) => {
-        console.error(err)
-    })
+main().catch((err) => console.error(err))
