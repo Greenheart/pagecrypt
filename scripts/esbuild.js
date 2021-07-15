@@ -49,6 +49,7 @@ esbuild
         // Prepare package.json for publishing.
         const distPackage = {
             ...pkg,
+            private: undefined,
             devDependencies: undefined,
             scripts: undefined,
             main: './index.js',

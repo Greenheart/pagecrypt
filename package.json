@@ -11,8 +11,7 @@
         "start": "vite",
         "build:web": "vite build && node scripts/postbuild.js",
         "build": "node ./scripts/esbuild.js",
-        "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem",
-        "publish": "cd dist && npm publish"
+        "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem"
     },
     "author": "Samuel Plumppu",
     "license": "MIT",
@@ -71,5 +70,6 @@
         "./core": {
             "import": "./core.js"
         }
-    }
+    },
+    "private": true
 }
