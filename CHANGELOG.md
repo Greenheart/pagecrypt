@@ -6,10 +6,10 @@
 
 -   BREAKING: feature(package): Convert modules to use ESM by default instead of CommonJS. Update your build tool to use `import` syntax instead of `require` - or keep using `pagecrypt@^4.0.1` which supports CommonJS `require`.
 
--   feature(package): Add new the `pagecrypt/core` module that can be imported to use the core library features in browsers, Deno and any other ESM compatible modern JS environment. For Node.js, the index import `pagecrypt` still works just like before.
+-   feature(package): Add a new `pagecrypt/core` module that can be imported to use the core library features in browsers, Deno and any other ESM compatible modern JS environment. For Node.js, the index import `pagecrypt` still works just like before.
 -   feature(types): Add TypeScript definitions to improve DX and automation in TypeScript projects.
 -   feature(crypto): Use isomorphic Web Crypto API to allow code reuse between Node.js, browsers and other ESM compatible environments.
--   feature(password generator): Use the isomorhic Web Crypto API to make project run in Node.js, browsers and other ESM compatible environments.
+-   feature(password generator): Use the isomorphic Web Crypto API to make project run in Node.js, browsers and other ESM compatible environments.
 -   feature(build): Improve package build setup using esbuild and node-fs-extra
 
 ### Fixes

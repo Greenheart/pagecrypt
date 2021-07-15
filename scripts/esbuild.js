@@ -44,6 +44,7 @@ esbuild
         await Promise.all([
             copy('./LICENSE.md', resolve(distDir, 'LICENSE.md')),
             copy('./CHANGELOG.md', resolve(distDir, 'CHANGELOG.md')),
+            copy('./README.md', resolve(distDir, 'README.md')),
         ])
 
         // Prepare package.json for publishing.

@@ -43,7 +43,7 @@ import { generatePassword, encryptHTML } from 'pagecrypt/core'
 
 // Generate a random password without any external dependencies
 const password = generatePassword(64)
-const encryptedHTML = await encryptHTML('html string', password)
+const encryptedHTML = await encryptHTML(inputHTML, password)
 ```
 
 ### 2. Node.js API
@@ -77,7 +77,7 @@ Encrypt a single HTML-file with one command:
 npx pagecrypt <src> <dest> [password] [options]
 ```
 
-Encrypt using a generate password with given length:
+Encrypt using a generated password with given length:
 
 ```sh
 npx pagecrypt <src> <dest> -g <length>
@@ -116,7 +116,7 @@ package.json:
 ```json
 {
     "devDependencies": {
-        "pagecrypt": "^3.0.0"
+        "pagecrypt": "^5.0.0"
     },
     "scripts": {
         "build": "...",
