@@ -145,8 +145,10 @@ Project structure:
 
 ## Testing
 
-`npm test` will run basic tests for JS API and CLI. Verify test results by opening the `test/out-*.html` files in your browser.
+`npm test` will run basic tests for JS API and CLI. See the passwords used in your terminal. Verify test results by opening the `test/out-*.html` files in your browser and entering the password matching the file.
+
+To test how `pagecrypt/core` works with encryption in browser environments, run `cd test && npm run test:browser-core`. Then download the encrypted sample file and use the "actual" password that's printed to the screen to verify it works. The generated password just shows that the password generation works.
 
 ---
 
-**Welcome to submit your pull requests!**
+**Welcome to submit issues and pull requests!**
