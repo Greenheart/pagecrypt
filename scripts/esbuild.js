@@ -57,6 +57,15 @@ esbuild
             bin: {
                 pagecrypt: './cli.js',
             },
+            types: './index.d.ts',
+            exports: {
+                '.': {
+                    node: './index.js',
+                },
+                './core': {
+                    import: './core.js',
+                },
+            },
         }
 
         await writeJson(resolve(distDir, 'package.json'), distPackage, {

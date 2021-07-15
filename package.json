@@ -5,13 +5,12 @@
     "main": "src/index.ts",
     "type": "module",
     "scripts": {
-        "cli": "node cli.js",
         "pretest": "npm run build",
         "test": "cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.0.0.tgz && npm run test && cd ..",
-        "start": "vite",
-        "build:web": "vite build && node scripts/postbuild.js",
         "build": "node ./scripts/esbuild.js",
-        "serve": "sirv web/build --http2 --key priv.pem --cert cert.pem"
+        "start:web": "vite",
+        "build:web": "vite build && node scripts/postbuild.js",
+        "serve:web": "sirv web/build --http2 --key priv.pem --cert cert.pem"
     },
     "author": "Samuel Plumppu",
     "license": "MIT",
@@ -62,14 +61,5 @@
         "url": "https://github.com/Greenheart/pagecrypt/issues"
     },
     "homepage": "https://github.com/Greenheart/pagecrypt#readme",
-    "types": "./index.d.ts",
-    "exports": {
-        ".": {
-            "node": "./index.js"
-        },
-        "./core": {
-            "import": "./core.js"
-        }
-    },
     "private": true
 }
