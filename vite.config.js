@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
-import { readFileSync } from 'fs'
 
 export default defineConfig({
     plugins: [viteSingleFile()],
@@ -18,12 +17,6 @@ export default defineConfig({
             },
         },
         outDir: 'build',
-    },
-    server: {
-        https: {
-            key: readFileSync('priv.pem'),
-            cert: readFileSync('cert.pem'),
-        },
     },
     root: 'web/',
 })

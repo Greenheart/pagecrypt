@@ -6,9 +6,6 @@ test/node_modules
 test/out*
 dist
 
-# Local certificates for localhost development with HTTPS
-*.pem
-
 # npm pack test output
 *.tgz
 

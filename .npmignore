@@ -9,6 +9,4 @@ vite.config.js
 tailwind.config.js
 prettier.config.js
 tsconfig.json
-esbuild.js
 *.tgz
-*.pem

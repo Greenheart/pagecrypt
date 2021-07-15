@@ -1,5 +1,15 @@
 # Changelog for `pagecrypt`
 
+## Unreleased
+
+### Features
+
+### Fixes
+
+-   fix(dev server): Remove `sirv-cli` dev dependency since we no longer need HTTPS for local dev.
+
+---
+
 ## 5.0.0 - 2021-07-15
 
 ### Features
