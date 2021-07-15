@@ -6,8 +6,8 @@
     "type": "module",
     "scripts": {
         "cli": "node cli.js",
-        "pretest": "npm run build",
-        "test": "cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.0.0.tgz && npm run test && cd .. && echo 'Verify test results by opening the `test/out-*.html` files in your browser.'",
+        "pretest": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.0.0.tgz",
+        "test": "npm run test && cd ..",
         "start": "vite",
         "build:web": "vite build && node scripts/postbuild.js",
         "build": "node ./scripts/esbuild.js",
@@ -21,7 +21,7 @@
     },
     "devDependencies": {
         "@types/fs-extra": "^9.0.12",
-        "@types/node": "^16.3.1",
+        "@types/node": "^16.3.2",
         "autoprefixer": "^10.3.1",
         "esbuild": "^0.12.15",
         "fs-extra": "^10.0.0",
