@@ -1,6 +1,6 @@
 # Changelog for `pagecrypt`
 
-## 5.0.0 - 2021-07-12
+## 5.0.0 - 2021-07-15
 
 ### Features
 

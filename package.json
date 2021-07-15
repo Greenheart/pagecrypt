@@ -6,8 +6,8 @@
     "type": "module",
     "scripts": {
         "cli": "node cli.js",
-        "pretest": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.0.0.tgz",
-        "test": "npm run test && cd ..",
+        "pretest": "npm run build",
+        "test": "cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.0.0.tgz && npm run test && cd ..",
         "start": "vite",
         "build:web": "vite build && node scripts/postbuild.js",
         "build": "node ./scripts/esbuild.js",

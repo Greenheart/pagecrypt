@@ -11,7 +11,9 @@ async function main() {
 
     const inputHTML = await readFile(resolve(inputFile), { encoding: 'utf-8' })
 
-    console.log(`🔐 Encrypting ${inputFile} → ${outputFile}`)
+    console.log(
+        `🔐 Encrypting ${inputFile} → ${outputFile} with \u{1F511}: ${password}`,
+    )
     console.time('✅ encrypt()')
     await encrypt(inputFile, outputFile, password)
     console.timeEnd('✅ encrypt()')
