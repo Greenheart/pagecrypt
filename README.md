@@ -6,6 +6,8 @@ Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt
 
 ## Get started
 
+**NOTE: Make sure you are using Node.js v15 or newer.**
+
 There are 4 different ways to use `pagecrypt`:
 
 ### 1. Encrypt HTML in modern browsers, Deno or Node.js using `pagecrypt/core`
