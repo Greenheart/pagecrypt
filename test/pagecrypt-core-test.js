@@ -15,9 +15,8 @@ function download(filename, text) {
 }
 
 document.querySelector('#download').addEventListener('click', async (e) => {
-    const password = 'asd'
+    const password = generatePassword(16)
     document.querySelector('code').innerText = password
-    document.querySelector('pre').innerText = generatePassword(16)
     console.time('🔐 Encrypting')
     const html = await encryptHTML(testHTML, password)
     download('out-browser-encrypted.html', html)
