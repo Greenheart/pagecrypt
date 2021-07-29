@@ -1,23 +1,25 @@
 # Changelog for `pagecrypt`
 
-## Unreleased
+## 5.1.0 - 2021-07-30
 
 Another major UX improvement incoming: Magic links to unlock encrypted pages with a single click!
 
-Also improved browser support for the `pagecrypt/core` module.
+Also slightly improved browser support for the `pagecrypt/core` module.
 
 ### Features
 
 -   feature(ux): Implement + add docs for magic links that allow single-click unlocks
--   feature(decrypt): Convert decryption script to TypeScript
 -   feature(core): Improve crypto loading to support older browsers for the core package.
+-   feature(decrypt): Convert decryption script to TypeScript
 
 ### Fixes
 
 -   docs(general): Highlight required Node.js version
--   docs(core): Clarify docstrings, improve terminology used and add link to related blog post.
 -   fix(dev server): Remove `sirv-cli` dev dependency since we no longer need HTTPS for local dev.
+-   docs(core): Clarify docstrings, improve terminology used and add link to related blog post.
 -   docs(dev): Update testing and dev server instructions.
+-   chore(test): Remove hardcoded test package version
+-   chore(test): Improve browser encryption test
 
 ---
 
