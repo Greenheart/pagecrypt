@@ -4,24 +4,15 @@
  * @returns An object implementing the Web Crypto API.
  */
 async function loadCrypto(): Promise<Crypto> {
-    if ((window && window.crypto) || (globalThis && globalThis.crypto)) {
-        // Running in browsers released after 2014, and other
+    if (
+        (typeof window !== 'undefined' && window.crypto) ||
+        (globalThis && globalThis.crypto)
+    ) {
+        // Running in browsers released after 2017, and other
         // runtimes with `globalThis` like Deno or CloudFlare Workers
-        const subtle =
-            window.crypto.subtle ||
-            globalThis.crypto.subtle ||
-            (
-                window.crypto as unknown as {
-                    webkitSubtle: Crypto['subtle']
-                }
-            )?.webkitSubtle
+        const crypto = window.crypto || globalThis.crypto
 
-        return new Promise((resolve) =>
-            resolve({
-                getRandomValues: window.crypto.getRandomValues,
-                subtle,
-            }),
-        )
+        return new Promise((resolve) => resolve(crypto))
     } else {
         // Running in Node.js >= 15
         const nodeCrypto = await import('crypto')
