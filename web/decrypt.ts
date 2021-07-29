@@ -9,7 +9,7 @@ const [pwd, header, msg, form, load] = [
     '#load',
 ].map(find)
 
-let salt, iv, ciphertext
+let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array
 
 document.addEventListener('DOMContentLoaded', async () => {
     const pl = find('pre').innerText
@@ -33,22 +33,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 })
 
-const subtle = window.crypto?.subtle || window.crypto?.webkitSubtle
+const subtle =
+    window.crypto?.subtle ||
+    (window.crypto as unknown as { webkitSubtle: Crypto['subtle'] })
+        ?.webkitSubtle
 
-if (!window.crypto.subtle) {
+if (!subtle) {
     error('Please use a modern browser.')
     pwd.disabled = true
 }
 
-function show(element) {
+function show(element: Element) {
     element.classList.remove('hidden')
 }
 
-function hide(element) {
+function hide(element: Element) {
     element.classList.add('hidden')
 }
 
-function error(text) {
+function error(text: string) {
     msg.innerText = text
     header.classList.add('text-red-600')
 }
@@ -58,7 +61,7 @@ form.addEventListener('submit', async (event) => {
     await decrypt()
 })
 
-async function sleep(milliseconds) {
+async function sleep(milliseconds: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, milliseconds))
 }
 
@@ -92,7 +95,10 @@ async function decrypt() {
     }
 }
 
-async function deriveKey(salt, password) {
+async function deriveKey(
+    salt: Uint8Array,
+    password: string,
+): Promise<CryptoKey> {
     const encoder = new TextEncoder()
     const baseKey = await subtle.importKey(
         'raw',
@@ -110,11 +116,18 @@ async function deriveKey(salt, password) {
     )
 }
 
-async function importKey(key) {
+async function importKey(key: JsonWebKey) {
     return subtle.importKey('jwk', key, 'AES-GCM', true, ['decrypt'])
 }
 
-async function decryptFile({ salt, iv, ciphertext }, password) {
+async function decryptFile(
+    {
+        salt,
+        iv,
+        ciphertext,
+    }: { salt: Uint8Array; iv: Uint8Array; ciphertext: Uint8Array },
+    password: string,
+) {
     const decoder = new TextDecoder()
 
     const key = sessionStorage.k
