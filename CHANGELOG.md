@@ -2,10 +2,20 @@
 
 ## Unreleased
 
+Another major UX improvement incoming: Magic links to unlock encrypted pages with a single click!
+
+Also improved browser support for the `pagecrypt/core` module.
+
 ### Features
+
+-   feature(ux): Implement + add docs for magic links that allow single-click unlocks
+-   feature(decrypt): Convert decryption script to TypeScript
+-   feature(core): Improve crypto loading to support older browsers for the core package.
 
 ### Fixes
 
+-   docs(general): Highlight required Node.js version
+-   docs(core): Clarify docstrings, improve terminology used and add link to related blog post.
 -   fix(dev server): Remove `sirv-cli` dev dependency since we no longer need HTTPS for local dev.
 -   docs(dev): Update testing and dev server instructions.
 
