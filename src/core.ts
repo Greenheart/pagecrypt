@@ -69,7 +69,7 @@ export async function encryptHTML(inputHTML: string, password: string) {
  * Generate a random password of a given length.
  *
  * @param {number} length The password length.
- * @param {string} characters The characters used to generate the password.
+ * @param {string} characters The set of characters to pick from.
  * @returns A random password.
  */
 export function generatePassword(
@@ -84,15 +84,18 @@ export function generatePassword(
 /**
  * Get a random character from a given set of characters.
  *
- * @param {string} characters The characters used to generate the password.
+ * @param {string} characters The set of characters to pick from.
  * @returns A random character.
  */
 function getRandomCharacter(characters: string) {
     let randomNumber
-
-    // Due to the repeating nature of results from the modulus operand, we potentially need to regenerate the random number several times.
-    // This is required to ensure all characters have the same probability to get picked.
-    // Otherwise, the first characters would appear more often, resulting in a weaker password security.
+    // Due to the repeating nature of results from the remainder
+    // operator, we potentially need to regenerate the random number
+    // several times. This is required to ensure all characters have
+    // the same probability to get picked. Otherwise, the first
+    // characters would appear more often, resulting in a weaker
+    // password security.
+    // Learn more: https://samuelplumppu.se/blog/generate-password-in-browser-web-crypto-api
     do {
         randomNumber = crypto.getRandomValues(new Uint8Array(1))[0]
     } while (randomNumber >= 256 - (256 % characters.length))
