@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!pl) {
         pwd.disabled = true
         error('No encrypted payload.')
+        return
     }
 
     const bytes = base64.parse(pl)
@@ -23,7 +24,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-    if (sessionStorage.k) {
+
+    /**
+     * Allow passwords to be automatically provided via the URI Fragment.
+     * This greatly improves UX by clicking links instead of having to copy and paste the password manually.
+     * It also does not compromise security since the URI Fragment is not sent across the internet.
+     * Additionally, we delete the URI Fragment from the browser address field when the page is loaded.
+     * 
+     * NOTE: However, beware that the password remains as a history entry if you use magic links!
+     * Feel free to submit a PR if you know a workaround for this.
+     */
+    if (location.hash) {
+        pwd.value = location.hash.slice(1)
+        history.replaceState(null, '', '.')
+    }
+
+    if (sessionStorage.k || pwd.value) {
         await decrypt()
     } else {
         hide(load)

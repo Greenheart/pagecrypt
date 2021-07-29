@@ -127,6 +127,36 @@ package.json:
 }
 ```
 
+## Deploying a SPA or Website Encrypted with `pagecrypt`
+
+Since the output is a single HTML file, you can host it anywhere. This lets you bypass the need for server access to use HTTP basic authentication for password protection.
+
+What this means in practice is that `pagecrypt` enables you to deploy private apps and websites to any static frontend hosting platform, often for free. Great for prototypes and client projects.
+
+### Share a Magic Link to Let Users Open Protected Pages With a Single Click
+
+To make it easier for your users to access protected pages, you can create a magic link by adding `#` followed by your password to your deployment URL:
+
+`https://<link-to-your-page>#<password>`
+
+Then users can simply click the link to load the protected SPA or website - a really smooth UX! Just make sure to keep the link safe by sharing it via E2E-encrypted chats and emails.
+
+#### How to Create a Magic Link
+
+1. Deploy your encrypted HTML file to any web server and copy the URL from your browser.
+2. Create the link by starting with your URL, then writing an `#`, followed by your `password`. E.g. `https://example.com#password`
+3. Make sure the link starts with the `https://` protocol to keep users safe.
+
+Since this magic link feature is using the [URI Fragment](https://en.m.wikipedia.org/wiki/URI_fragment), it will not be sent across the internet once the user clicks the link. Only the first part before the `#` leaves the user's computer to fetch the HTML page, and the rest remains in the browser, used for local decryption. Additionally, the fragment is removed from the browser address field when the page loads. However, beware that the password remains as a history entry if you use magic links!
+
+### Security Considerations
+
+- Most importantly, think twice about what kinds of sites and apps you publish to the open internet, even if they are encrypted.
+- If you use the magic link to login, beware that the password remains as a history entry! Feel free to submit a PR if you know a workaround for this!
+- Also keep in mind that the `sessionStorage` saves the encryption key (which is derived from the password) until the browser is restarted. This is what allows the rapid page reloads during the same session - at the cost of decreasing the security on your local device.
+- Only share magic links via secure channels, such as E2E-encrypted chats and emails.
+- `pagecrypt` only encrypts the contents of a single HTML file, so try to inline as much JS, CSS and other sensitive assets into this HTML file as possible. If you're unable to inline all sensitive assets, you can hide your other assets by placing them on another server, and then only reference the external resources within the `pagecrypt` protected HTML file instead. Of course, these could in turn be protected or hidden if you need to. If executed correctly, this allows you to completely hide what your webpage or app is about by only deploying a single HTML file to the public web. Neat!
+
 ---
 
 ## Development
