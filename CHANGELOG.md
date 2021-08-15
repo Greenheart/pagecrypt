@@ -1,5 +1,27 @@
 # Changelog for `pagecrypt`
 
+## 5.2.0 - 2021-08-15
+
+Added dark mode as new default theme since it probably is what the primary audience prefers. Also added a bug fix for magic links to preserve the URL and allow hosting the output HTML files on other routes than `/`.
+
+### Features
+
+- feature(ui): Add dark mode design by default.
+- feature(tests): Improve testing framework and simplify development
+- feature(tests): Update tests to use new dark template
+- feature(tests): Greatly improve testing DX by automating several manual steps and displaying everything neatly in the browser.
+- feature(build): Simplify package builds to greatly improve DX
+
+### Fixes
+
+- fix(ui): Ensure full page URL except the hash is preserved when using magic links.
+- fix(tests): Improve testing html file
+- fix(package): Update dev command for consistency
+- fix(package): Automatically remove whitespace from new decrypt template builds
+- chore(deps): Update deps to latest minor and patch versions.
+
+---
+
 ## 5.1.0 - 2021-07-30
 
 Another major UX improvement incoming: Magic links to unlock encrypted pages with a single click!
