@@ -14,13 +14,20 @@ function download(filename, text) {
     document.body.removeChild(element)
 }
 
-document.querySelector('#download').addEventListener('click', async (e) => {
+const btn = document.querySelector('#download')
+const defaultLabel = btn.innerText.slice()
+
+btn.addEventListener('click', async (e) => {
     const password = generatePassword(16)
     document.querySelector('code').innerText = password
+    btn.innerText = 'Encrypting...'
+    btn.disabled = true
     console.time('🔐 Encrypting')
     const html = await encryptHTML(testHTML, password)
     download('out-browser-encrypted.html', html)
     console.timeEnd('🔐 Encrypting')
+    btn.disabled = false
+    btn.innerText = defaultLabel
 })
 
 const testHTML = `
@@ -42,6 +49,8 @@ const testHTML = `
             margin-top: 20vh;
             justify-content: center;
             align-items: center;
+            background: #000;
+            color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
     </style>
