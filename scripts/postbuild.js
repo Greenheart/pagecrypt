@@ -3,7 +3,7 @@ import { resolve, join } from 'path'
 
 const BUILD_DIR = resolve('web', 'build')
 const HTML_FILE_PATH = join(BUILD_DIR, 'index.html')
-const HTML_OUT_FILE_PATH = join(BUILD_DIR, 'index.html')
+const HTML_OUT_FILE_PATH = resolve('src', 'decrypt-template.html')
 
 async function main() {
     const htmlInput = await readFile(HTML_FILE_PATH, { encoding: 'utf-8' })
