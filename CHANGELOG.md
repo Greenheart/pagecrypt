@@ -1,5 +1,15 @@
 # Changelog for `pagecrypt`
 
+## Unreleased
+
+### Features
+
+### Fixes
+
+- fix(build): Simplify build process to remove the steps no longer necessary.
+
+---
+
 ## 5.2.0 - 2021-08-15
 
 Added dark mode as new default theme since it probably is what the primary audience prefers. Also added a bug fix for magic links to preserve the URL and allow hosting the output HTML files on other routes than `/`.

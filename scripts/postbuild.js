@@ -1,8 +1,7 @@
-import { readFile, writeFile, rm } from 'fs/promises'
-import { resolve, join } from 'path'
+import { readFile, writeFile } from 'fs/promises'
+import { resolve } from 'path'
 
-const BUILD_DIR = resolve('web', 'build')
-const HTML_FILE_PATH = join(BUILD_DIR, 'index.html')
+const HTML_FILE_PATH = resolve('web', 'build', 'index.html')
 const HTML_OUT_FILE_PATH = resolve('src', 'decrypt-template.html')
 
 async function main() {
@@ -20,14 +19,9 @@ async function main() {
     )
 
     await writeFile(HTML_OUT_FILE_PATH, htmlOut)
-    await deleteUnwantedFiles()
 }
 
 main()
-
-async function deleteUnwantedFiles() {
-    await rm(join(BUILD_DIR, 'assets'), { recursive: true, force: true })
-}
 
 const preparePayloadTag = (html) =>
     html.replace(
