@@ -14,54 +14,53 @@ function download(filename, text) {
     document.body.removeChild(element)
 }
 
-const btn = document.querySelector('#download')
-const defaultLabel = btn.innerText.slice()
+const OUT_BROWSER_FILENAME = 'out-browser-gen.html'
 
-btn.addEventListener('click', async (e) => {
-    const password = generatePassword(16)
-    document.querySelector('code').innerText = password
-    btn.innerText = 'Encrypting...'
-    btn.disabled = true
-    console.time('🔐 Encrypting')
-    const html = await encryptHTML(testHTML, password)
-    download('out-browser-encrypted.html', html)
-    console.timeEnd('🔐 Encrypting')
-    btn.disabled = false
-    btn.innerText = defaultLabel
-})
+async function copyPassword (e) {
+    const labelBefore = e.target.innerText.slice()
+    await navigator.clipboard.writeText(e.target.dataset.pwd)
+    e.target.innerText  = 'Copied!'
+    setTimeout(() => {
+        e.target.innerText = labelBefore
+    }, 1500)
+}
 
-const testHTML = `
-    <!DOCTYPE html>
-    <html lang="en">
+document.querySelectorAll('[data-pwd]').forEach(btn => btn.addEventListener('click', copyPassword))
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Secret!</title>
-    </head>
+function addBrowserEncrypted() {
+    const btn = document.createElement('button')
+    const label = 'Download Encrypted'
+    btn.innerText = label
 
-    <style>
-        body {
-            display: flex;
-            font-size: 2rem;
-            text-align: center;
-            font-weight: 100;
-            margin-top: 20vh;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-    </style>
+    btn.addEventListener('click', async (e) => {
+        const password = generatePassword(16)
+        btn.dataset.pwd = password
+        btn.innerText = 'Encrypting...'
+        btn.disabled = true
+        console.time('🔐 Encrypting')
+        const html = await encryptHTML(testHTML, password)
+        download(OUT_BROWSER_FILENAME, html)
+        console.timeEnd('🔐 Encrypting')
+        btn.disabled = false
+        btn.innerText = 'Copy Password'
 
-    <body>
-        This content is secret & encrypted.<br>
-        It can only be unlocked with the password.
-        <script>
-            console.log('Scripts have localStorage access: ', localStorage.thisShouldNotThrowAnyExceptions)
-            history.pushState({}, 'History API works', '#secret-route')
-        </script>
-    </body>
+        const copyBtn = btn.cloneNode(true)
+        copyBtn.addEventListener('click', copyPassword)
+        btn.parentNode.replaceChild(copyBtn, btn)
+    })
 
-    </html>`
+    const link = document.createElement('a')
+    link.innerText = OUT_BROWSER_FILENAME
+    link.href = '/' + OUT_BROWSER_FILENAME
+    link.target = '_blank'
+
+    const div = document.createElement('div')
+    div.id = OUT_BROWSER_FILENAME
+    div.appendChild(link)
+    div.appendChild(btn)
+    document.querySelector('.results').appendChild(div)
+}
+
+addBrowserEncrypted()
+
+const testHTML = await fetch('/test.html').then(res => res.text()).then(html => html.replace(`<script type="module" src="/@vite/client"></script>`, ''))
