@@ -8,19 +8,19 @@
     <title>Protected Page</title>
 </head>
 <body>
-    <main class="bg-yellow-200 w-full h-screen items-start tracking-wide p-4 pt-40 font-light">
-        <div class="max-w-sm w-full bg-gray-50 p-4 rounded-sm shadow-2xl mx-auto h-28">
+    <main class="bg-black w-full h-screen items-start tracking-wide p-4 pt-40 font-light text-white">
+        <div class="max-w-sm w-full bg-gray-800 p-4 rounded-sm mx-auto h-28">
             <div id="load" class="flex items-center justify-center h-full">
-                <p class="loading w-6 h-6 mr-4"></p><p>Loading...</p>
+                <p class="loading w-6 h-6 mr-4"></p><p class="text-lg">Loading...</p>
             </div>
             <header class="hidden gap-2 mb-4 items-center">
                 <svg id="locked" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                 </svg>
-                <p id="msg" class="text-sm">This page is password protected.</p>
+                <p id="msg" class="text-sm xs:text-base">This page is password protected.</p>
             </header>
             <form class="hidden">
-                <input type="password" id="pwd" name="pwd" aria-label="Password" autofocus placeholder="Password" class="font-extralight bg-gray-200 flex w-full py-2 px-4 tracking-wider rounded-sm focus:outline-none text-black placeholder-black text-opacity-100 focus:border-black border" />
+                <input type="password" id="pwd" name="pwd" aria-label="Password" autofocus class="font-extralight flex w-full py-2 px-4 tracking-wider rounded-sm focus:outline-none border border-gray-700 bg-gray-800" />
             </form>
         </div>
         <a href="https://github.com/Greenheart/pagecrypt" class="fixed bottom-0 right-0 p-4">Created with <span class="font-semibold">PageCrypt</span></a>

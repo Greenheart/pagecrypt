@@ -7,8 +7,8 @@
     width: 2em;
     height: 2em;
     border: 0.15em solid transparent;
-    border-color: #e2e8f0;
-    border-top-color: #2563eb;
+    border-color: #fff;
+    border-right-width: 0.1em;
     border-radius: 50%;
     animation: spin 0.5s linear infinite;
 }
