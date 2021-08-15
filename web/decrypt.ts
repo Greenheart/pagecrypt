@@ -35,8 +35,10 @@ document.addEventListener('DOMContentLoaded', async () => {
      * Feel free to submit a PR if you know a workaround for this.
      */
     if (location.hash) {
-        pwd.value = location.hash.slice(1)
-        history.replaceState(null, '', '.')
+        const url = new URL(window.location.href)
+        pwd.value = url.hash.slice(1)
+        url.hash = ''
+        history.replaceState(null, '', url.toString())
     }
 
     if (sessionStorage.k || pwd.value) {

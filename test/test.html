@@ -27,7 +27,7 @@
     It can only be unlocked with the password.
     <script>
         console.log('Scripts have localStorage access: ', !localStorage.thisShouldNotThrowAnyExceptions)
-        history.pushState({}, 'History API works', '.')
+        history.pushState({}, 'History API works', window.location.href)
     </script>
 </body>
 
