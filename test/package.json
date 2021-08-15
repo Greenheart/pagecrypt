@@ -4,10 +4,9 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "test": "npm run test:cli && npm run test:cli:generate-password && npm run test:node",
-        "test:node": "node test.js",
+        "test": "node test.js",
         "test:cli": "pagecrypt test.html out-cli.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY",
-        "test:cli:generate-password": "pagecrypt test.html out-cli-gen.html --generate-password 64",
+        "test:cli-gen": "pagecrypt test.html out-cli-gen.html --generate-password 64",
         "test:verify": "vite"
     }
 }

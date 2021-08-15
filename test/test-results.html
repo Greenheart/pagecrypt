@@ -20,6 +20,11 @@
                 font-size: 20px;
             }
 
+            main {
+                display: flex;
+                flex-direction: column;
+            }
+
             .results {
                 display: grid;
                 gap: 1em;
@@ -30,7 +35,7 @@
             .results div {
                 display: grid;
                 gap: 1em;
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(2, minmax(100px, 1fr)) min-content;
                 align-items: center;
             }
 
@@ -53,6 +58,7 @@
                 padding: 16px;
                 border: 0;
                 border-radius: 4px;
+                cursor: pointer;
             }
 
             button:hover {
@@ -63,6 +69,16 @@
                 background: rgb(240, 240, 240);
                 color: #000;
             }
+
+            #reset {
+                padding: 4px;
+                margin: 32px auto;
+            }
+
+            a:last-child {
+                padding: 8px 16px;
+                background: #222;
+            }
         </style>
 
         <main>
@@ -71,6 +87,8 @@
             <div class="results">
                 <!--TEST-RESULTS-->
             </div>
+
+            <button id="reset">Reset Browser Encrypted File</button>
         </main>
 
         <script type="module" src="./pagecrypt-core-test.js"></script>

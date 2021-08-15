@@ -5,8 +5,9 @@
     "main": "src/index.ts",
     "type": "module",
     "scripts": {
-        "pretest": "npm run build",
-        "test": "cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.1.0.tgz && npm run test && cd ..",
+        "test": "cd ./test && npm test && cd ..",
+        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.1.0.tgz && npm run test && cd ..",
+        "test:verify": "cd test && npm run test:verify && cd ..",
         "build": "node ./scripts/esbuild.js",
         "dev:web": "vite",
         "build:web": "vite build && node scripts/postbuild.js",

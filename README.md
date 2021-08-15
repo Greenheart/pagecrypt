@@ -177,9 +177,16 @@ Project structure:
 
 ## Testing
 
-`npm test` will run basic tests for JS API and CLI. See the passwords used in your terminal. Verify test results by opening the `test/out-*.html` files in your browser and entering the password matching the file.
+First do one of the following:
 
-To test how `pagecrypt/core` works with encryption in browser environments, run `cd test && npm run test:browser-core`. Then download the encrypted sample file and use the "actual" password that's printed to the screen to verify it works. The generated password just shows that the password generation works.
+- `npm test` to run the tests.
+- `npm run test:build` to first build a new version of `pagecrypt` and then run the tests.
+
+Then run `npm run verify` in another terminal and verify the test results at http://localhost:3000.
+
+On the test results page you will find links to open output files in new tabs, buttons to copy passwords, and a special `#` link to verify that magic links decrypt the page immediately when the page loads.
+
+To test `pagecrypt/core` and verify encryption in the browser, use the button at the bottom of the list. Download the file and then copy the password by clicking the button again to decrypt it. If you save the file to the same directory as the other generated files, you can use the links just like for other results. Use the reset button to encrypt another file.
 
 ---
 
