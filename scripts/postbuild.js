@@ -14,6 +14,7 @@ async function main() {
             preparePayloadTag,
             deleteStyleAssetComment,
             deleteScriptAssetComment,
+            fixWhiteSpace,
         ],
         htmlInput,
     )
@@ -42,6 +43,14 @@ const deleteStyleAssetComment = (html) =>
 
 const deleteScriptAssetComment = (html) =>
     html.replace(/(\/\/assets[\s\S]*.js)/, '')
+
+const fixWhiteSpace = (html) =>
+    html
+        .replace(/\s+<title>/, '\n    <title>')
+        .replace(/  <script type="module">\n\n/, '    <script type="module">')
+        .replace(/\n\n<\/script>/, '</script>')
+        .replace(/<style>\s+/, '<style>')
+        .replace(/\n<\/style>/, '</style>')
 
 /**
  * Run all formatting functions, passing the result forward until we get a final result.
