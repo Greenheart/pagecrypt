@@ -8,8 +8,8 @@
     <title>Protected Page</title>
 </head>
 <body>
-    <main class="bg-black w-full h-screen items-start tracking-wide p-4 pt-40 font-light text-white">
-        <div class="max-w-sm w-full bg-gray-800 p-4 rounded-sm mx-auto h-28">
+    <main class="bg-black w-full h-screen items-start tracking-wide p-4 pt-16 xs:pt-40 font-light text-white">
+        <div class="max-w-sm w-full bg-gray-800 p-4 rounded-sm mx-auto h-[10.625rem]">
             <div id="load" class="flex items-center justify-center h-full">
                 <p class="loading w-6 h-6 mr-4"></p><p class="text-lg">Loading...</p>
             </div>
@@ -21,9 +21,10 @@
             </header>
             <form class="hidden">
                 <input type="password" id="pwd" name="pwd" aria-label="Password" autofocus class="font-extralight flex w-full py-2 px-4 tracking-wider rounded-sm focus:outline-none border border-gray-700 bg-gray-800" />
+                <input type="submit" value="Submit" class="text-black w-full py-2 mt-4 cursor-pointer bg-white rounded-sm">
             </form>
         </div>
-        <a href="https://github.com/Greenheart/pagecrypt" class="fixed bottom-0 right-0 p-4">Created with <span class="font-semibold">PageCrypt</span></a>
+        <a href="https://github.com/Greenheart/pagecrypt" class="fixed bottom-0 right-0 p-4 text-sm xs:text-base">Created with <span class="font-semibold">PageCrypt</span></a>
     </main>
 
     <script type="module" src="./decrypt.ts"></script>
