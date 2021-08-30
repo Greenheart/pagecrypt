@@ -12,7 +12,6 @@ async function main() {
             deleteViteModuleScript,
             preparePayloadTag,
             deleteStyleAssetComment,
-            deleteScriptAssetComment,
             fixWhiteSpace,
         ],
         htmlInput,
@@ -30,21 +29,17 @@ const preparePayloadTag = (html) =>
     )
 
 const deleteViteModuleScript = (html) =>
-    html.replace(/(;[\s\S]*\("\/assets\/"\))/, '')
+    html.replace(/<script type="module">([\s\S]*\}\(\);)/, '  <script type="module">')
 
 const deleteStyleAssetComment = (html) =>
-    html.replace(/<!-- assets[\s\S]*<style type="text\/css">/, '<style>')
-
-const deleteScriptAssetComment = (html) =>
-    html.replace(/(\/\/assets[\s\S]*.js)/, '')
+    html.replace(/<!-- assets[\s\S]*<style type="text\/css">\s+/, '<style>')
 
 const fixWhiteSpace = (html) =>
     html
         .replace(/\s+<title>/, '\n    <title>')
-        .replace(/  <script type="module">\n\n/, '    <script type="module">')
         .replace(/\n\n<\/script>/, '</script>')
-        .replace(/<style>\s+/, '<style>')
-        .replace(/\n<\/style>/, '</style>')
+        .replace(/\n\s+<\/style>/, '</style>')
+        .replace(/\n\s+<\/head>/, '\n</head>')
 
 /**
  * Run all formatting functions, passing the result forward until we get a final result.
