@@ -17,10 +17,8 @@ async function main() {
         htmlInput,
     )
 
-    await writeFile(HTML_OUT_FILE_PATH, htmlOut)
+    return writeFile(HTML_OUT_FILE_PATH, htmlOut)
 }
-
-main()
 
 const preparePayloadTag = (html) =>
     html.replace(
@@ -46,3 +44,5 @@ const fixWhiteSpace = (html) =>
  */
 const applyAllTransformations = (fns, initialValue) =>
     fns.reduce((prevResult, fn) => fn(prevResult), initialValue)
+
+await main()
