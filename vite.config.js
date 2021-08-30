@@ -19,4 +19,7 @@ export default defineConfig({
         outDir: 'build',
     },
     root: 'web/',
+    server: {
+        https: true,
+    }
 })
