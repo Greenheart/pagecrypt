@@ -26,8 +26,10 @@ const preparePayloadTag = (html) =>
         '\n    <!--ENCRYPTED PAYLOAD-->',
     )
 
-const deleteViteModuleScript = (html) =>
-    html.replace(/<script type="module">([\s\S]*\}\(\);)/, '  <script type="module">')
+const deleteViteModuleScript = (html) => {
+    const match = html.match(/(<script type="module">[\s\S]*)var [\s\S]*;(\!function\(\)\{[\s\S]*\}\(\);)/)
+    return html.replace(match[1], '  <script type="module">').replace(match[2], '')
+}
 
 const deleteStyleAssetComment = (html) =>
     html.replace(/<!-- assets[\s\S]*<style type="text\/css">\s+/, '<style>')
