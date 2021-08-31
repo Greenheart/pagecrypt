@@ -1,12 +1,19 @@
 # Changelog for `pagecrypt`
 
-## Unreleased
+## 5.3.0 - 2021-08-31
 
 ### Features
 
+- feature(ui): Add submit button to simplify mobile usage.
+- feature(ui): Build and use the latest decrypt template with new submit button
+
 ### Fixes
 
+- fix(deps): Update deps to latest minor and patch releases.
+- fix(build): Update build script with improved html template transformations
+- fix(build): Improve removal of the vite module inline script.
 - fix(build): Simplify build process to remove the steps no longer necessary.
+- fix(dev): Update dev template.
 
 ---
 
