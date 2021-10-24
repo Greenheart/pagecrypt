@@ -21,15 +21,15 @@
         "sade": "^1.7.4"
     },
     "devDependencies": {
-        "@types/fs-extra": "^9.0.12",
-        "@types/node": "^16.7.9",
-        "autoprefixer": "^10.3.3",
-        "esbuild": "^0.12.24",
+        "@types/fs-extra": "^9.0.13",
+        "@types/node": "^16.11.4",
+        "autoprefixer": "^10.3.7",
+        "esbuild": "^0.13.9",
         "fs-extra": "^10.0.0",
-        "postcss": "^8.3.6",
-        "tailwindcss": "^2.2.9",
-        "typescript": "^4.4.2",
-        "vite": "^2.5.2",
+        "postcss": "^8.3.11",
+        "tailwindcss": "^2.2.17",
+        "typescript": "^4.4.4",
+        "vite": "^2.6.10",
         "vite-plugin-singlefile": "^0.5.1"
     },
     "engines": {
