@@ -27,8 +27,12 @@ const preparePayloadTag = (html) =>
     )
 
 const deleteViteModuleScript = (html) => {
-    const match = html.match(/(<script type="module">[\s\S]*)var [\s\S]*;(\!function\(\)\{[\s\S]*\}\(\);)/)
-    return html.replace(match[1], '  <script type="module">').replace(match[2], '')
+    const match = html.match(
+        /(<script type="module">[\s\S]*)(const (\S)=function\(\)\{[\s\S]*\};\3\(\);)/,
+    )
+    return html
+        .replace(match[1], '  <script type="module">')
+        .replace(match[2], '')
 }
 
 const deleteStyleAssetComment = (html) =>
