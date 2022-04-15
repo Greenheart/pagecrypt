@@ -11,7 +11,7 @@ async function main() {
         [
             deleteViteModuleScript,
             preparePayloadTag,
-            deleteStyleAssetComment,
+            cleanStyleTag,
             fixWhiteSpace,
         ],
         htmlInput,
@@ -35,8 +35,8 @@ const deleteViteModuleScript = (html) => {
         .replace(match[2], '')
 }
 
-const deleteStyleAssetComment = (html) =>
-    html.replace(/<!-- assets[\s\S]*<style type="text\/css">\s+/, '<style>')
+const cleanStyleTag = (html) =>
+    html.replace(/<style type="text\/css">\n\s*/, '  <style>')
 
 const fixWhiteSpace = (html) =>
     html
