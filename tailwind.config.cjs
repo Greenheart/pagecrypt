@@ -2,29 +2,19 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-    mode: 'jit',
-    purge: {
-        mode: 'all',
-        preserveHtmlElements: false,
-        content: ['./web/**/*.html', './web/**/*.js'],
-        options: {
-            keyframes: true,
-            fontFace: true,
-        },
-    },
-    darkMode: false,
+    content: ['./web/**/*.html', './web/**/*.js'],
     theme: {
         colors: {
             yellow: colors.yellow,
-            gray: colors.warmGray,
+            gray: colors.stone,
             red: colors.red,
             white: colors.white,
             black: colors.black,
         },
         screens: {
-            'xs': '475px',
+            xs: '475px',
             ...defaultTheme.screens,
-        }
+        },
     },
     variants: {},
     plugins: [],
