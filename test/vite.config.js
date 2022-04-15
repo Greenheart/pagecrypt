@@ -5,4 +5,8 @@ export default defineConfig({
     build: {
         target: 'esnext',
     },
+    css: {
+        // Disable PostCSS since it's not used for tests.
+        postcss: {},
+    },
 })
