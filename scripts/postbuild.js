@@ -6,14 +6,8 @@ const HTML_OUT_FILE_PATH = resolve('src', 'decrypt-template.html')
 
 async function main() {
     const htmlInput = await readFile(HTML_FILE_PATH, { encoding: 'utf-8' })
-
     const htmlOut = applyAllTransformations(
-        [
-            deleteViteModuleScript,
-            preparePayloadTag,
-            cleanStyleTag,
-            fixWhiteSpace,
-        ],
+        [preparePayloadTag, cleanStyleTag, fixWhiteSpace],
         htmlInput,
     )
 
@@ -25,15 +19,6 @@ const preparePayloadTag = (html) =>
         /\s*<!--DEV ONLY-->[\s\S]*<!--\/DEV ONLY-->/,
         '\n    <!--ENCRYPTED PAYLOAD-->',
     )
-
-const deleteViteModuleScript = (html) => {
-    const match = html.match(
-        /(<script type="module">[\s\S]*)(const (\S)=function\(\)\{[\s\S]*\};\3\(\);)/,
-    )
-    return html
-        .replace(match[1], '  <script type="module">')
-        .replace(match[2], '')
-}
 
 const cleanStyleTag = (html) =>
     html.replace(/<style type="text\/css">\n\s*/, '  <style>')
