@@ -1,5 +1,14 @@
 # Changelog for `pagecrypt`
 
+## 5.4.0 - 2022-04-18
+
+### Fixes
+
+- Update dependencies and verify that the project works with latest versions.
+- Clarified installation instructions.
+
+---
+
 ## 5.3.0 - 2021-08-31
 
 ### Features
