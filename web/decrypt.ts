@@ -24,13 +24,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-
     /**
      * Allow passwords to be automatically provided via the URI Fragment.
      * This greatly improves UX by clicking links instead of having to copy and paste the password manually.
      * It also does not compromise security since the URI Fragment is not sent across the internet.
      * Additionally, we delete the URI Fragment from the browser address field when the page is loaded.
-     * 
+     *
      * NOTE: However, beware that the password remains as a history entry if you use magic links!
      * Feel free to submit a PR if you know a workaround for this.
      */
@@ -157,7 +156,7 @@ async function decryptFile(
     )
     if (!data) throw 'Malformed data'
 
-    // If no exception were thrown, decryption succeded and we can save the key.
+    // If no exception was thrown, decryption succeded and we can save the key.
     sessionStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
 
     return decoder.decode(data)
