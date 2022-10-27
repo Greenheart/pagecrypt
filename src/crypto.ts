@@ -10,7 +10,7 @@ async function loadCrypto(): Promise<Crypto> {
     ) {
         // Running in browsers released after 2017, and other
         // runtimes with `globalThis` like Deno or CloudFlare Workers
-        const crypto = window.crypto || globalThis.crypto
+        const crypto = globalThis.crypto || window.crypto
 
         return new Promise((resolve) => resolve(crypto))
     } else {
