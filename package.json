@@ -1,12 +1,12 @@
 {
     "name": "pagecrypt",
-    "version": "5.4.0",
+    "version": "5.5.0",
     "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
     "main": "src/index.ts",
     "type": "module",
     "scripts": {
         "test": "cd ./test && npm test && cd ..",
-        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.4.0.tgz && npm run test && cd ..",
+        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.5.0.tgz && npm run test && cd ..",
         "test:verify": "cd test && npm run test:verify && cd ..",
         "build": "npm run build:web && npm run build:lib",
         "build:lib": "node ./scripts/esbuild.js",
@@ -22,15 +22,15 @@
     },
     "devDependencies": {
         "@types/fs-extra": "^9.0.13",
-        "@types/node": "^16.11.39",
-        "autoprefixer": "^10.4.7",
-        "esbuild": "^0.14.43",
+        "@types/node": "^16.11.57",
+        "autoprefixer": "^10.4.8",
+        "esbuild": "^0.15.7",
         "fs-extra": "^10.1.0",
-        "postcss": "^8.4.14",
-        "tailwindcss": "^3.0.24",
-        "typescript": "^4.7.3",
-        "vite": "^2.9.10",
-        "vite-plugin-singlefile": "^0.9.0"
+        "postcss": "^8.4.16",
+        "tailwindcss": "^3.1.8",
+        "typescript": "^4.8.2",
+        "vite": "^3.1.0",
+        "vite-plugin-singlefile": "^0.11.1"
     },
     "engines": {
         "node": ">= 15.0.0"

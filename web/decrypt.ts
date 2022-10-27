@@ -7,7 +7,13 @@ const [pwd, header, msg, form, load] = [
     '#msg',
     'form',
     '#load',
-].map(find)
+].map(find) as unknown[] as [
+    HTMLInputElement,
+    HTMLElement,
+    HTMLParagraphElement,
+    HTMLFormElement,
+    HTMLDivElement,
+]
 
 let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array
 
@@ -83,6 +89,7 @@ async function sleep(milliseconds: number): Promise<void> {
 }
 
 async function decrypt() {
+    // @ts-expect-error lastElementChild does exist in this case
     load.lastElementChild.innerText = 'Decrypting...'
     hide(header)
     hide(form)

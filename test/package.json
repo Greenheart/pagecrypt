@@ -8,5 +8,8 @@
         "test:cli": "pagecrypt test.html out-cli.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY",
         "test:cli-gen": "pagecrypt test.html out-cli-gen.html --generate-password 64",
         "test:verify": "vite"
+    },
+    "dependencies": {
+        "pagecrypt": "file:../dist/pagecrypt-5.5.0.tgz"
     }
 }
