@@ -27,7 +27,6 @@ main {
 }
 
 header {
-    display: flex;
     align-items: center;
     margin-bottom: 1rem;
     gap: 0.5rem;
@@ -53,7 +52,7 @@ header {
 }
 
 .flex {
-    display: flex !important;
+    display: flex;
 }
 
 #load {
@@ -63,16 +62,8 @@ header {
     height: 100%;
 }
 
-@media (min-width: 475px) {
-    main {
-        padding-top: 10rem;
-    }
-
-    #msg,
-    a {
-        font-size: 1rem;
-        line-height: 1.5rem;
-    }
+.red {
+    color: #dc2626;
 }
 
 .spinner {
@@ -131,4 +122,16 @@ a {
 
 a span {
     font-weight: 600;
+}
+
+@media (min-width: 475px) {
+    main {
+        padding-top: 10rem;
+    }
+
+    #msg,
+    a {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
 }

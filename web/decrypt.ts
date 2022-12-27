@@ -74,7 +74,7 @@ function hide(element: Element) {
 
 function error(text: string) {
     msg.innerText = text
-    header.classList.add('text-red-600')
+    header.classList.add('red')
 }
 
 form.addEventListener('submit', async (event) => {
