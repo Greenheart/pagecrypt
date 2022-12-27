@@ -20,7 +20,7 @@ async function getEncryptedPayload(
 ) {
     if (iterations < 2e6) {
         console.warn(
-            `[pagecrypt]: WARNING: The specified number of password iterations (${iterations}) is not secure. If possible, use at least 2_000_000 or more.`,
+            `[pagecrypt] WARNING: The specified number of password iterations (${iterations}) is not secure. If possible, use at least 2_000_000 or more.`,
         )
     }
     const encoder = new TextEncoder()
