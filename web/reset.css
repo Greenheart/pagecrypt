@@ -10,6 +10,7 @@ Minimal CSS reset, adapted from Tailwind CSS v3.0.24 (MIT license)
 ::before,
 ::after {
     box-sizing: border-box; /* 1 */
+    border: 0;
 }
 
 /*
