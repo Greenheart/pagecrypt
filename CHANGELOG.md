@@ -2,12 +2,20 @@
 
 ## 6.0.0 - 2022-12-27
 
+This is a major upgrade, reducing the amount of CSS by 50%, removing about 40% of the required third-party npm modules, and adding support for a custom number of password `iterations` which allows for greatly improved security.
+
+### Breaking changes
+
+-   License changed to AGPL-3.0. If you prefer the MIT license, you can keep using pagecrypt 5.x.
+
 ### Features
 
--   Improved security: It's now possible to specify a custom number of password iterations for both `encryptHTML()` and `encrypt()`. See usage examples in [README](./README.md) to learn more.
+-   Improved security: It's now possible to specify a custom number of password `iterations` for both `encryptHTML()` and `encrypt()`. See usage examples in [README](./README.md) to learn more.
+-   Added support for specifying the new `iterations` option through the CLI. See usage examples in [README](./README.md) to learn more.
 
 ### Fixes
 
+-   Prefer `globalThis` over `window` in Node 19 - thanks [@metonym](https://github.com/metonym)
 -   Reduce CSS size with 50% by replacing Tailwind CSS with custom CSS. This also greatly simplifies the development and build setup for this project.
 -   Update dependencies to latest versions.
 
