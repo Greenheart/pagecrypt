@@ -62,5 +62,11 @@
         "url": "https://github.com/Greenheart/pagecrypt/issues"
     },
     "homepage": "https://github.com/Greenheart/pagecrypt#readme",
-    "private": true
+    "private": true,
+    "prettier": {
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "tabWidth": 4
+    }
 }
