@@ -83,6 +83,7 @@ header {
     border-color: #fff;
     border-right-width: 2px;
     border-radius: 50%;
+    -webkit-animation: spin 0.5s linear infinite;
     animation: spin 0.5s linear infinite;
     margin-right: 0.5rem;
 }

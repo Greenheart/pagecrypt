@@ -4,9 +4,6 @@ scripts/
 src/
 dist/*.tgz
 
-postcss.config.js
 vite.config.js
-tailwind.config.js
-prettier.config.js
 tsconfig.json
 *.tgz
