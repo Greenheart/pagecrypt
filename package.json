@@ -1,12 +1,12 @@
 {
     "name": "pagecrypt",
-    "version": "5.5.0",
+    "version": "6.0.0",
     "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
     "main": "src/index.ts",
     "type": "module",
     "scripts": {
         "test": "cd ./test && npm test && cd ..",
-        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-5.4.0.tgz && npm run test && cd ..",
+        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-6.0.0.tgz && npm run test && cd ..",
         "test:verify": "cd test && npm run test:verify && cd ..",
         "build": "npm run build:web && npm run build:lib",
         "build:lib": "node ./scripts/esbuild.js",
