@@ -52,7 +52,7 @@ esbuild
             ...pkg,
             private: undefined,
             devDependencies: undefined,
-            scripts: undefined,
+            prettier: undefined,
             main: './index.js',
             bin: {
                 pagecrypt: './cli.js',
