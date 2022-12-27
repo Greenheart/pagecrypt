@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
+import { setDefaultResultOrder } from 'dns'
+
+setDefaultResultOrder('verbatim')
 
 export default defineConfig({
     plugins: [viteSingleFile({ removeViteModuleLoader: true })],
@@ -8,7 +11,7 @@ export default defineConfig({
         outDir: 'build',
     },
     root: 'web/',
-    server: {
+    preview: {
         https: true,
     },
 })
