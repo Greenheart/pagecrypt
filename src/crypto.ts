@@ -14,7 +14,6 @@ async function loadCrypto(): Promise<Crypto> {
 
         return new Promise((resolve) => resolve(crypto))
     } else {
-        // Running in Node.js >= 15
         const nodeCrypto = await import('crypto')
         return nodeCrypto.webcrypto as unknown as Crypto
     }

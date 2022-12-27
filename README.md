@@ -6,7 +6,7 @@ Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt
 
 ## Get started
 
-**NOTE: Make sure you are using Node.js v15 or newer.**
+**NOTE: Make sure you are using Node.js v16 or newer.**
 
 ```sh
 npm i -D pagecrypt
@@ -176,7 +176,7 @@ Project structure:
 
 ## Setup a local development environment
 
-1.  Install Node.js >= 15.0.0
+1.  Install Node.js >= 16.0.0
 2.  Run `npm install` in project root.
 
 ## Testing

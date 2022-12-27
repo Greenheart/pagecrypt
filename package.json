@@ -33,7 +33,7 @@
         "vite-plugin-singlefile": "^0.9.0"
     },
     "engines": {
-        "node": ">= 15.0.0"
+        "node": ">= 16.0.0"
     },
     "engineStrict": true,
     "bin": {
