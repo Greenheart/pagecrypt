@@ -1,18 +1,22 @@
 import { base64 } from 'rfc4648'
 
-const find = document.querySelector.bind(document)
-const [pwd, header, msg, form, load] = [
-    'input',
-    'header',
-    '#msg',
-    'form',
-    '#load',
-].map(find)
+function find<T>(selector: string): T {
+    const element = document.querySelector(selector) as T
+    if (element) return element
+
+    throw new Error(`No element found with selector: "${selector}"`)
+}
+
+const pwd = find<HTMLInputElement>('input')
+const header = find<HTMLDivElement>('header')
+const msg = find<HTMLParagraphElement>('#msg')
+const form = find<HTMLFormElement>('form')
+const load = find<HTMLDivElement>('#load')
 
 let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const pl = find('pre').innerText
+    const pl = find<HTMLPreElement>('pre').innerText
     if (!pl) {
         pwd.disabled = true
         error('No encrypted payload.')
@@ -24,13 +28,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-
     /**
      * Allow passwords to be automatically provided via the URI Fragment.
      * This greatly improves UX by clicking links instead of having to copy and paste the password manually.
      * It also does not compromise security since the URI Fragment is not sent across the internet.
      * Additionally, we delete the URI Fragment from the browser address field when the page is loaded.
-     * 
+     *
      * NOTE: However, beware that the password remains as a history entry if you use magic links!
      * Feel free to submit a PR if you know a workaround for this.
      */
@@ -84,6 +87,7 @@ async function sleep(milliseconds: number): Promise<void> {
 }
 
 async function decrypt() {
+    // @ts-expect-error This text update is non-critical and we can thus ignore the TS error.
     load.lastElementChild.innerText = 'Decrypting...'
     hide(header)
     hide(form)
