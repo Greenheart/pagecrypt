@@ -9,10 +9,20 @@ import decryptTemplate from './decrypt-template.html'
  * Encrypt a string and turn it into an encrypted payload.
  *
  * @param {string} content The data to encrypt
- * @param {string} password The password which will be used to encrypt + decrypt the content.
+ * @param {string} password The password used to encrypt + decrypt the content.
+ * @param {number} iterations The number of iterations to derive the key from the password.
  * @returns an encrypted payload
  */
-async function getEncryptedPayload(content: string, password: string) {
+async function getEncryptedPayload(
+    content: string,
+    password: string,
+    iterations: number,
+) {
+    if (iterations < 2e6) {
+        console.warn(
+            `[pagecrypt]: WARNING: The specified number of password iterations (${iterations}) is not secure. If possible, use at least 2_000_000 or more.`,
+        )
+    }
     const encoder = new TextEncoder()
     const salt = crypto.getRandomValues(new Uint8Array(32))
     const baseKey = await crypto.subtle.importKey(
@@ -23,7 +33,7 @@ async function getEncryptedPayload(content: string, password: string) {
         ['deriveKey'],
     )
     const key = await crypto.subtle.deriveKey(
-        { name: 'PBKDF2', salt, iterations: 2e6, hash: 'SHA-256' },
+        { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' },
         baseKey,
         { name: 'AES-GCM', length: 256 },
         false,
@@ -52,15 +62,21 @@ async function getEncryptedPayload(content: string, password: string) {
  * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
  *
  * @param {string} inputHTML The HTML string to encrypt.
- * @param {string} password The password which will be used to encrypt + decrypt the content.
+ * @param {string} password The password used to encrypt + decrypt the content.
+ * @param {number} iterations The number of iterations to derive the key from the password.
  * @returns A promise that will resolve with the encrypted HTML content
  */
-export async function encryptHTML(inputHTML: string, password: string) {
+export async function encryptHTML(
+    inputHTML: string,
+    password: string,
+    iterations: number = 2e6,
+) {
     return (decryptTemplate as string).replace(
         /<!--ENCRYPTED PAYLOAD-->/,
-        `<pre class="hidden">${await getEncryptedPayload(
+        `<pre class="hidden" data-i="${iterations}">${await getEncryptedPayload(
             inputHTML,
             password,
+            iterations,
         )}</pre>`,
     )
 }

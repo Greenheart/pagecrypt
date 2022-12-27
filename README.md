@@ -20,7 +20,7 @@ The `encryptHTML()` and `generatePassword()` functions are using Web Crypto API 
 
 This allows you to use the same pagecrypt API in any environment where you can run modern JavaScript.
 
-#### `encryptHTML(inputHTML: string, password: string): Promise<string>`
+#### `encryptHTML(inputHTML: string, password: string, iterations?: number): Promise<string>`
 
 ```js
 import { encryptHTML } from 'pagecrypt/core'
@@ -40,6 +40,10 @@ const inputHTML = `
 // Encrypt a HTML string and return an encrypted HTML string.
 // Write it to a file or send as an HTTPS response.
 const encryptedHTML = await encryptHTML(inputHTML, 'password')
+
+// Optional: You can customize the number of password iterations if you want increased security.
+const iterations = 3e6 // Same as 3_000_000
+const customIterations = await encryptHTML(inputHTML, 'password', iterations)
 ```
 
 #### `generatePassword(length: number): string`
@@ -56,13 +60,17 @@ const encryptedHTML = await encryptHTML(inputHTML, password)
 
 When working in a Node.js environment, you may prefer the `pagecrypt` Node.js build. This also includes the `encrypt()` function to read and write directly from and to the file system.
 
-#### `encrypt(inputFile: string, outputFile: string, password: string): Promise<void>`
+#### `encrypt(inputFile: string, outputFile: string, password: string, iterations: number): Promise<void>`
 
 ```js
 import { encrypt } from 'pagecrypt'
 
 // Encrypt a HTML file and write to the filesystem
 await encrypt('index.html', 'encrypted.html', 'password')
+
+// You can optionally customize the number of password iterations
+const iterations = 3e6 // Same as 3_000_000
+await encrypt('index.html', 'encrypted.html', 'password', iterations)
 ```
 
 **NOTE:** Importing `pagecrypt` also gives you access to `generatePassword()` and `encryptHTML()` from `pagecrypt/core`.
@@ -71,8 +79,9 @@ await encrypt('index.html', 'encrypted.html', 'password')
 import { generatePassword, encryptHTML } from 'pagecrypt'
 
 const password = generatePassword(48)
+const iterations = 3e6 // Same as 3_000_000
 
-const encrypted = await encryptHTML(inputHTML, password)
+const encrypted = await encryptHTML(inputHTML, password, iterations)
 ```
 
 ### 3. CLI
@@ -90,6 +99,8 @@ npx pagecrypt <src> <dest> -g <length>
 ```
 
 #### 3.1. CLI Help
+
+**TODO: Allow custom password iterations via the CLI too.**
 
 ```
   Description

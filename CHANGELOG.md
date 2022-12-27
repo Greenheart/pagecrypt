@@ -1,11 +1,22 @@
 # Changelog for `pagecrypt`
 
+## 6.0.0 - 2022-12-27
+
+### Features
+
+-   Improved security: It's now possible to specify a custom number of password iterations for both `encryptHTML()` and `encrypt()`. See usage examples in [README](./README.md) to learn more.
+
+### Fixes
+
+-   Reduce CSS size with 50% by replacing Tailwind CSS with custom CSS. This also greatly simplifies the development and build setup for this project.
+-   Update dependencies to latest versions.
+
 ## 5.4.0 - 2022-04-18
 
 ### Fixes
 
-- Update dependencies and verify that the project works with latest versions.
-- Clarified installation instructions.
+-   Update dependencies and verify that the project works with latest versions.
+-   Clarified installation instructions.
 
 ---
 
@@ -13,16 +24,16 @@
 
 ### Features
 
-- feature(ui): Add submit button to simplify mobile usage.
-- feature(ui): Build and use the latest decrypt template with new submit button
+-   feature(ui): Add submit button to simplify mobile usage.
+-   feature(ui): Build and use the latest decrypt template with new submit button
 
 ### Fixes
 
-- fix(deps): Update deps to latest minor and patch releases.
-- fix(build): Update build script with improved html template transformations
-- fix(build): Improve removal of the vite module inline script.
-- fix(build): Simplify build process to remove the steps no longer necessary.
-- fix(dev): Update dev template.
+-   fix(deps): Update deps to latest minor and patch releases.
+-   fix(build): Update build script with improved html template transformations
+-   fix(build): Improve removal of the vite module inline script.
+-   fix(build): Simplify build process to remove the steps no longer necessary.
+-   fix(dev): Update dev template.
 
 ---
 
@@ -32,19 +43,19 @@ Added dark mode as new default theme since it probably is what the primary audie
 
 ### Features
 
-- feature(ui): Add dark mode design by default.
-- feature(tests): Improve testing framework and simplify development
-- feature(tests): Update tests to use new dark template
-- feature(tests): Greatly improve testing DX by automating several manual steps and displaying everything neatly in the browser.
-- feature(build): Simplify package builds to greatly improve DX
+-   feature(ui): Add dark mode design by default.
+-   feature(tests): Improve testing framework and simplify development
+-   feature(tests): Update tests to use new dark template
+-   feature(tests): Greatly improve testing DX by automating several manual steps and displaying everything neatly in the browser.
+-   feature(build): Simplify package builds to greatly improve DX
 
 ### Fixes
 
-- fix(ui): Ensure full page URL except the hash is preserved when using magic links.
-- fix(tests): Improve testing html file
-- fix(package): Update dev command for consistency
-- fix(package): Automatically remove whitespace from new decrypt template builds
-- chore(deps): Update deps to latest minor and patch versions.
+-   fix(ui): Ensure full page URL except the hash is preserved when using magic links.
+-   fix(tests): Improve testing html file
+-   fix(package): Update dev command for consistency
+-   fix(package): Automatically remove whitespace from new decrypt template builds
+-   chore(deps): Update deps to latest minor and patch versions.
 
 ---
 

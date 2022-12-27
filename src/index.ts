@@ -8,10 +8,15 @@ import { generatePassword, encryptHTML } from './core'
  * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
  *
  * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
- * @param {string} password The password which will be used to encrypt + decrypt the content.
+ * @param {string} password The password used to encrypt + decrypt the content.
+ * @param {number} iterations The number of iterations to derive the key from the password.
  * @returns A promise that will resolve with the encrypted HTML content
  */
-async function encryptFile(inputFile: string, password: string) {
+async function encryptFile(
+    inputFile: string,
+    password: string,
+    iterations: number,
+) {
     let content: string
     try {
         content = await readFile(resolve(process.cwd(), inputFile), {
@@ -22,7 +27,7 @@ async function encryptFile(inputFile: string, password: string) {
         process.exit(1)
     }
 
-    return await encryptHTML(content, password)
+    return await encryptHTML(content, password, iterations)
 }
 
 /**
@@ -46,15 +51,17 @@ async function saveFile(outputFile: string, content: string) {
  *
  * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
  * @param {string} outputFile The filename (or path) where the encrypted HTML file will be saved.
- * @param {string} password The password which will be used to encrypt + decrypt the content.
+ * @param {string} password The password used to encrypt + decrypt the content.
+ * @param {number} iterations The number of iterations to derive the key from the password.
  * @returns A promise that will resolve when the encrypted file has been saved.
  */
 async function encrypt(
     inputFile: string,
     outputFile: string,
     password: string,
+    iterations: number,
 ) {
-    const encrypted = await encryptFile(inputFile, password)
+    const encrypted = await encryptFile(inputFile, password, iterations)
     return await saveFile(outputFile, encrypted)
 }
 

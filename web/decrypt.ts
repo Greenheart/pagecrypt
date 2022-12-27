@@ -13,17 +13,17 @@ const msg = find<HTMLParagraphElement>('#msg')
 const form = find<HTMLFormElement>('form')
 const load = find<HTMLDivElement>('#load')
 
-let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array
+let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array, iterations: number
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const pl = find<HTMLPreElement>('pre').innerText
-    if (!pl) {
+    const pl = find<HTMLPreElement>('pre[data-i]')
+    if (!pl.innerText) {
         pwd.disabled = true
         error('No encrypted payload.')
         return
     }
-
-    const bytes = base64.parse(pl)
+    iterations = Number(pl.dataset.i)
+    const bytes = base64.parse(pl.innerText)
     salt = bytes.slice(0, 32)
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
@@ -95,7 +95,10 @@ async function decrypt() {
     await sleep(60)
 
     try {
-        const decrypted = await decryptFile({ salt, iv, ciphertext }, pwd.value)
+        const decrypted = await decryptFile(
+            { salt, iv, ciphertext, iterations },
+            pwd.value,
+        )
 
         document.write(decrypted)
         document.close()
@@ -120,6 +123,7 @@ async function decrypt() {
 async function deriveKey(
     salt: Uint8Array,
     password: string,
+    iterations: number,
 ): Promise<CryptoKey> {
     const encoder = new TextEncoder()
     const baseKey = await subtle.importKey(
@@ -130,7 +134,7 @@ async function deriveKey(
         ['deriveKey'],
     )
     return await subtle.deriveKey(
-        { name: 'PBKDF2', salt, iterations: 2e6, hash: 'SHA-256' },
+        { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' },
         baseKey,
         { name: 'AES-GCM', length: 256 },
         true,
@@ -147,14 +151,20 @@ async function decryptFile(
         salt,
         iv,
         ciphertext,
-    }: { salt: Uint8Array; iv: Uint8Array; ciphertext: Uint8Array },
+        iterations,
+    }: {
+        salt: Uint8Array
+        iv: Uint8Array
+        ciphertext: Uint8Array
+        iterations: number
+    },
     password: string,
 ) {
     const decoder = new TextDecoder()
 
     const key = sessionStorage.k
         ? await importKey(JSON.parse(sessionStorage.k))
-        : await deriveKey(salt, password)
+        : await deriveKey(salt, password, iterations)
 
     const data = new Uint8Array(
         await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
