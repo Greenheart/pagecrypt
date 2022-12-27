@@ -11,7 +11,4 @@ export default defineConfig({
         outDir: 'build',
     },
     root: 'web/',
-    preview: {
-        https: true,
-    },
 })

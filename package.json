@@ -12,7 +12,7 @@
         "build:lib": "node ./scripts/esbuild.js",
         "dev:web": "vite",
         "build:web": "vite build && node scripts/postbuild.js",
-        "serve:web": "vite preview"
+        "preview:web": "vite preview"
     },
     "author": "Samuel Plumppu",
     "license": "MIT",
