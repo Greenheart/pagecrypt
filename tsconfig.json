@@ -11,7 +11,7 @@
         "outDir": "dist",
         "module": "esnext",
         "resolveJsonModule": true,
-        "emitDeclarationOnly": true,
+        "emitDeclarationOnly": true
     },
     "include": ["src/*.ts"]
 }

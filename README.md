@@ -101,6 +101,7 @@ npx pagecrypt <src> <dest> -g <length>
 #### 3.1. CLI Help
 
 **TODO: Allow custom password iterations via the CLI too.**
+**TODO: Add tests for custom iterations in all three environments, CLI, browser and JS.**
 
 ```
   Description
