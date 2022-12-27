@@ -112,6 +112,7 @@ npx pagecrypt <src> <dest> -g <length>
 
   Options
     -g, --generate-password    Generate a random password with given length. Must be a number if used.
+    -i, --iterations           The number of password iterations.
     -v, --version              Displays current version
     -h, --help                 Displays this message
 
@@ -119,6 +120,8 @@ npx pagecrypt <src> <dest> -g <length>
     $ pagecrypt index.html encrypted.html password
     $ pagecrypt index.html encrypted.html --generate-password 64
     $ pagecrypt index.html encrypted.html -g 64
+    $ pagecrypt index.html encrypted.html password --iterations 3e6
+    $ pagecrypt index.html encrypted.html -g 64 --i 3e6
 ```
 
 ### 4. Automate `pagecrypt` in your build process

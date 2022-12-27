@@ -14,6 +14,8 @@ sade(`${name} <src> <dest> [password]`, true)
     .example('index.html encrypted.html password')
     .example('index.html encrypted.html --generate-password 64')
     .example('index.html encrypted.html -g 64')
+    .example('index.html encrypted.html password --iterations 3e6')
+    .example('index.html encrypted.html -g 64 --i 3e6')
     .option(
         '-g, --generate-password',
         'Generate a random password with given length. Must be a number if used.',
