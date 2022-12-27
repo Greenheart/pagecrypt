@@ -15,7 +15,7 @@ import { generatePassword, encryptHTML } from './core'
 async function encryptFile(
     inputFile: string,
     password: string,
-    iterations: number,
+    iterations?: number,
 ) {
     let content: string
     try {
@@ -59,7 +59,7 @@ async function encrypt(
     inputFile: string,
     outputFile: string,
     password: string,
-    iterations: number,
+    iterations?: number,
 ) {
     const encrypted = await encryptFile(inputFile, password, iterations)
     return await saveFile(outputFile, encrypted)
