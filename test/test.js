@@ -11,19 +11,23 @@ console.log('\nRunning PageCrypt tests...\n')
 
 const CLI_PASSWORDS = {
     'out-cli.html': 'npm run test:cli',
-    'out-cli-gen.html': 'npm run test:cli-gen'
+    'out-cli-gen.html': 'npm run test:cli-gen',
+    'out-cli-iterations.html': 'npm run test:cli-iterations',
+    'out-cli-gen-iterations.html': 'npm run test:cli-gen-iterations',
 }
 
-await Promise.all(Object.entries(CLI_PASSWORDS).map(async ([file, cmd]) => {
-    console.time(`✅ CLI: ${cmd}`)
-    try {
-        const { stdout } = await exec(cmd)
-        CLI_PASSWORDS[file] = stdout.split('🔑: ')[1].split('\n')[0]
-        console.timeEnd(`✅ CLI: ${cmd}`)
-    } catch (e) {
-        console.error(e)
-    }
-}))
+await Promise.all(
+    Object.entries(CLI_PASSWORDS).map(async ([file, cmd]) => {
+        console.time(`✅ CLI: ${cmd}`)
+        try {
+            const { stdout } = await exec(cmd)
+            CLI_PASSWORDS[file] = stdout.split('🔑: ')[1].split('\n')[0]
+            console.timeEnd(`✅ CLI: ${cmd}`)
+        } catch (e) {
+            console.error(e)
+        }
+    }),
+)
 
 async function main() {
     const inputFile = 'test.html'
@@ -63,8 +67,8 @@ async function main() {
                     <a href="/${file}" target="_blank">${file}</a>
                     ${
                         pwd
-                        ? `<button data-pwd="${pwd}">Copy Password</button>`
-                        : '<p>Find in the terminal</p>'
+                            ? `<button data-pwd="${pwd}">Copy Password</button>`
+                            : '<p>Find in the terminal</p>'
                     }
                     <a href="/${file}#${pwd}" target="_blank">#</a>
                 </div>

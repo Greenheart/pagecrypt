@@ -7,6 +7,8 @@
         "test": "node test.js",
         "test:cli": "pagecrypt test.html out-cli.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY",
         "test:cli-gen": "pagecrypt test.html out-cli-gen.html --generate-password 64",
+        "test:cli-iterations": "pagecrypt test.html out-cli-iterations.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY --iterations 3e6",
+        "test:cli-gen-iterations": "pagecrypt test.html out-cli-gen-iterations.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY --generate-password 59 --iterations 2500000",
         "test:verify": "vite"
     }
 }
