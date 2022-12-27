@@ -1,20 +1,133 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+    --gray-800: #292524;
+    --gray-700: #433f3b;
+}
 
-.loading {
+html,
+body {
+    color: #fff;
+    font-weight: 300;
+}
+
+main {
+    background: #000;
+    height: 100vh;
+    letter-spacing: 0.025em;
+    padding: 4rem 1rem 1rem;
+}
+
+.box {
+    max-width: 24rem;
+    width: 100%;
+    background: var(--bg-800);
+    padding: 1rem;
+    border-radius: 0.125rem;
+    margin: 0 auto;
+    height: 170px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+#pwd {
+    font-weight: 200;
+    border-radius: 0.125rem;
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+    padding: 0.5rem 1rem;
+    width: 100%;
+    color: #fff;
+}
+
+#pwd:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.flex {
+    display: flex !important;
+}
+
+#load {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+@media (min-width: 475px) {
+    main {
+        padding-top: 10rem;
+    }
+
+    #msg,
+    a {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+}
+
+.spinner {
     pointer-events: none;
-    width: 2em;
-    height: 2em;
-    border: 0.15em solid transparent;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid transparent;
     border-color: #fff;
-    border-right-width: 0.1em;
+    border-right-width: 2px;
     border-radius: 50%;
     animation: spin 0.5s linear infinite;
+    margin-right: 0.5rem;
+}
+
+#load p:last-child {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+[type='submit'] {
+    border-radius: 0.125rem;
+    color: #000;
+    background: #fff;
+    width: 100%;
+    padding: 0.5rem 0;
+    margin-top: 1rem;
+    cursor: pointer;
 }
 
 @keyframes spin {
     100% {
         transform: rotate(360deg);
     }
+}
+
+#locked {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#msg {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+a {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #fff;
+}
+
+a span {
+    font-weight: 600;
 }
