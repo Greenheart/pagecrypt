@@ -19,7 +19,7 @@ main {
 .box {
     max-width: 24rem;
     width: 100%;
-    background: var(--bg-800);
+    background: var(--gray-800);
     padding: 1rem;
     border-radius: 0.125rem;
     margin: 0 auto;
