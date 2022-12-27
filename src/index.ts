@@ -12,7 +12,7 @@ import { generatePassword, encryptHTML } from './core'
  * @returns A promise that will resolve with the encrypted HTML content
  */
 async function encryptFile(inputFile: string, password: string) {
-    let content
+    let content: string
     try {
         content = await readFile(resolve(process.cwd(), inputFile), {
             encoding: 'utf-8',
@@ -49,7 +49,11 @@ async function saveFile(outputFile: string, content: string) {
  * @param {string} password The password which will be used to encrypt + decrypt the content.
  * @returns A promise that will resolve when the encrypted file has been saved.
  */
-async function encrypt(inputFile: string, outputFile: string, password: string) {
+async function encrypt(
+    inputFile: string,
+    outputFile: string,
+    password: string,
+) {
     const encrypted = await encryptFile(inputFile, password)
     return await saveFile(outputFile, encrypted)
 }
