@@ -47,13 +47,20 @@ async function main() {
     console.timeEnd('✅ encryptHTML()')
 
     const outputFile2 = 'out-js-gen.html'
-
     await writeFile(outputFile2, encrypted)
+
+    console.time('✅ encryptHTML() custom iterations')
+    const withIterations = await encryptHTML(inputHTML, password, 2.1e6)
+    console.timeEnd('✅ encryptHTML() custom iterations')
+
+    const outputFile3 = 'out-js-gen-iterations.html'
+    await writeFile(outputFile3, withIterations)
 
     const outputFiles = {
         ...CLI_PASSWORDS,
         [outputFile]: password,
         [outputFile2]: generatedPassword,
+        [outputFile3]: password,
     }
 
     const indexHTML = await readFile(resolve('test-results.html'), {
