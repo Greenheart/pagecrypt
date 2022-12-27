@@ -20,12 +20,12 @@ const preparePayloadTag = (html) =>
         '\n    <!--ENCRYPTED PAYLOAD-->',
     )
 
-const cleanStyleTag = (html) =>
-    html.replace(/<style type="text\/css">\n\s*/, '  <style>')
+const cleanStyleTag = (html) => html.replace(/  <style>\n/, '    <style>')
 
 const fixWhiteSpace = (html) =>
     html
         .replace(/\s+<title>/, '\n    <title>')
+        .replace(/  <script type="module">\n/, '    <script type="module">')
         .replace(/\n\n<\/script>/, '</script>')
         .replace(/\n\s+<\/style>/, '</style>')
         .replace(/\n\s+<\/head>/, '\n</head>')
