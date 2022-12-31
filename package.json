@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "test": "cd ./test && npm test && cd ..",
-        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-6.0.0.tgz && npm run test && cd ..",
+        "test:build": "npm run build && cd dist && npm pack && cd ../test && npm i ../dist/pagecrypt-*.tgz && npm run test && cd ..",
         "test:verify": "cd test && npm run test:verify && cd ..",
         "build": "npm run build:web && npm run build:lib",
         "build:lib": "node ./scripts/esbuild.js",
