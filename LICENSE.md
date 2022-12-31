@@ -1,6 +1,3 @@
-Copyright (c) 2015 Maximillian Laumeister
-Copyright (c) 2021-2022 Samuel Plumppu
-
 ### GNU AFFERO GENERAL PUBLIC LICENSE
 
 Version 3, 19 November 2007
