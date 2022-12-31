@@ -1,5 +1,11 @@
 # Changelog for `pagecrypt`
 
+## 6.0.1 - 2022-12-31
+
+### Fixes
+
+-   Cleanup README. No code changes.
+
 ## 6.0.0 - 2022-12-27
 
 This is a major upgrade, reducing the amount of CSS by 50%, removing about 40% of the required third-party npm modules, and adding support for a custom number of password `iterations` which allows for greatly improved security.
