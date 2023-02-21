@@ -179,7 +179,7 @@ Since this magic link feature is using the [URI Fragment](https://en.m.wikipedia
 
 Project structure:
 
--   `/web` - Web frontend for public webpage (`decrypt-template.html`). Built using Vite & Tailwind CSS.
+-   `/web` - Web frontend for public webpage (`decrypt-template.html`).
 -   `/src/core.ts` - pagecrypt core library.
 -   `/src/index.ts` - pagecrypt Node.js library.
 -   `/src/cli.ts` - pagecrypt CLI.
