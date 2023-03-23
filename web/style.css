@@ -110,20 +110,6 @@ header {
     line-height: 1.25rem;
 }
 
-a {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    padding: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: #fff;
-}
-
-a span {
-    font-weight: 600;
-}
-
 @media (min-width: 475px) {
     main {
         padding-top: 10rem;
