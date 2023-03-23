@@ -85,13 +85,16 @@ export async function encryptHTML(
  * Generate a random password of a given length.
  *
  * @param {number} length The password length.
- * @param {string} characters The set of characters to pick from.
+ * @param {string} characters The set of characters to pick from. Max length 255 characters.
  * @returns A random password.
  */
 export function generatePassword(
     length = 80,
     characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 ) {
+    if (characters.length >= 255) {
+        throw new Error('[pagecrypt] Max character set length is 255')
+    }
     return Array.from({ length }, (_) => getRandomCharacter(characters)).join(
         '',
     )
@@ -104,7 +107,7 @@ export function generatePassword(
  * @returns A random character.
  */
 function getRandomCharacter(characters: string) {
-    let randomNumber
+    let randomNumber: number
     // Due to the repeating nature of results from the remainder
     // operator, we potentially need to regenerate the random number
     // several times. This is required to ensure all characters have

@@ -46,7 +46,7 @@ const iterations = 3e6 // Same as 3_000_000
 const customIterations = await encryptHTML(inputHTML, 'password', iterations)
 ```
 
-#### `generatePassword(length: number): string`
+#### `generatePassword(length: number, characters: string): string`
 
 ```js
 import { generatePassword, encryptHTML } from 'pagecrypt/core'
@@ -54,6 +54,12 @@ import { generatePassword, encryptHTML } from 'pagecrypt/core'
 // Generate a random password without any external dependencies
 const password = generatePassword(64)
 const encryptedHTML = await encryptHTML(inputHTML, password)
+```
+
+You can also provide a custom dictionary of characters to use in your password:
+
+```ts
+generatePassword(71, '!#$%&()*+,-./:;<=>?@[]^_{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 ```
 
 ### 2. Node.js API
