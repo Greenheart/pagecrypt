@@ -44,7 +44,7 @@ sade(`${name} <src> <dest> [password]`, true)
                 process.exit(1)
             }
         } else if (password) {
-            console.log(`🔐 Encrypting ${src} → ${dest} with 🔑: ${password}`)
+            console.log(`🔐 Encrypting ${src} → ${dest}`)
             await encrypt(src, dest, password, iterations)
         } else {
             console.error(
