@@ -16,12 +16,20 @@ const CLI_PASSWORDS = {
     'out-cli-gen-iterations.html': 'npm run test:cli-gen-iterations',
 }
 
+const TEST_PASSWORD =
+    'eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY'
+
 await Promise.all(
     Object.entries(CLI_PASSWORDS).map(async ([file, cmd]) => {
         console.time(`✅ CLI: ${cmd}`)
         try {
             const { stdout } = await exec(cmd)
-            CLI_PASSWORDS[file] = stdout.split('🔑: ')[1].split('\n')[0]
+
+            CLI_PASSWORDS[file] = stdout.includes('🔑')
+                ? // When generating passwords with the CLI, capture the output
+                  stdout.split('🔑: ')[1].split('\n')[0]
+                : TEST_PASSWORD
+
             console.timeEnd(`✅ CLI: ${cmd}`)
         } catch (e) {
             console.error(e)
@@ -32,12 +40,10 @@ await Promise.all(
 async function main() {
     const inputFile = 'test.html'
     const outputFile = 'out-js.html'
-    const password =
-        'eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY'
 
     const inputHTML = await readFile(resolve(inputFile), { encoding: 'utf-8' })
     console.time('✅ encrypt()')
-    await encrypt(inputFile, outputFile, password)
+    await encrypt(inputFile, outputFile, TEST_PASSWORD)
     console.timeEnd('✅ encrypt()')
 
     const generatedPassword = generatePassword(20)
@@ -50,7 +56,7 @@ async function main() {
     await writeFile(outputFile2, encrypted)
 
     console.time('✅ encryptHTML() custom iterations')
-    const withIterations = await encryptHTML(inputHTML, password, 2.1e6)
+    const withIterations = await encryptHTML(inputHTML, TEST_PASSWORD, 2.1e6)
     console.timeEnd('✅ encryptHTML() custom iterations')
 
     const outputFile3 = 'out-js-gen-iterations.html'
@@ -58,9 +64,9 @@ async function main() {
 
     const outputFiles = {
         ...CLI_PASSWORDS,
-        [outputFile]: password,
+        [outputFile]: TEST_PASSWORD,
         [outputFile2]: generatedPassword,
-        [outputFile3]: password,
+        [outputFile3]: TEST_PASSWORD,
     }
 
     const indexHTML = await readFile(resolve('test-results.html'), {
