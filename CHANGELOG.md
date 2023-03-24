@@ -1,5 +1,20 @@
 # Changelog for `pagecrypt`
 
+## 6.1.0 - 2023-03-24
+
+### Features
+
+Two improvements inspired by [Harry Rabin](https://github.com/harryrabin) - thank you!
+
+-   Better operational security by removing logging of predefined passwords when encrypting via the pagecrypt CLI.
+-   Better operational security by removing the GitHub link in the web template, to make it harder for attackers to analyse the project.
+
+### Fixes
+
+-   Improved documentation for generating a password with a custom character set `generatePassword(length: number, characters: string)`.
+-   Upgrade dependencies to latest versions.
+-   Export TypeScript type definitions in npm package - Thanks to [Bjorn Lu](https://github.com/bluwy) and <https://github.com/bluwy/publint>
+
 ## 6.0.1 - 2022-12-31
 
 ### Fixes
