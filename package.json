@@ -1,6 +1,6 @@
 {
     "name": "pagecrypt",
-    "version": "6.1.0",
+    "version": "6.1.1",
     "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
     "main": "src/index.ts",
     "type": "module",
@@ -22,12 +22,12 @@
     },
     "devDependencies": {
         "@types/fs-extra": "^11.0.1",
-        "@types/node": "^18.15.6",
-        "esbuild": "^0.17.12",
+        "@types/node": "^20.4.2",
+        "esbuild": "^0.18.13",
         "fs-extra": "^11.1.1",
-        "typescript": "^5.0.2",
-        "vite": "^4.2.1",
-        "vite-plugin-singlefile": "^0.13.3"
+        "typescript": "^5.1.6",
+        "vite": "^4.4.4",
+        "vite-plugin-singlefile": "^0.13.5"
     },
     "engines": {
         "node": ">= 16.0.0"

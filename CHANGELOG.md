@@ -1,5 +1,11 @@
 # Changelog for `pagecrypt`
 
+## 6.1.1 - 2023-07-17
+
+### Fixes
+
+-   Maintenance: Update dev dependencies to latest versions.
+
 ## 6.1.0 - 2023-03-24
 
 ### Features
