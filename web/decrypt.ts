@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         history.replaceState(null, '', url.toString())
     }
 
-    if (sessionStorage.k || pwd.value) {
+    if (localStorage.k || pwd.value) {
         await decrypt()
     } else {
         hide(load)
@@ -107,9 +107,9 @@ async function decrypt() {
         show(form)
         header.classList.replace('hidden', 'flex')
 
-        if (sessionStorage.k) {
+        if (localStorage.k) {
             // Delete invalid key
-            sessionStorage.removeItem('k')
+            localStorage.removeItem('k')
         } else {
             // Only show when user actually entered a password themselves.
             error('Wrong password.')
@@ -162,8 +162,8 @@ async function decryptFile(
 ) {
     const decoder = new TextDecoder()
 
-    const key = sessionStorage.k
-        ? await importKey(JSON.parse(sessionStorage.k))
+    const key = localStorage.k
+        ? await importKey(JSON.parse(localStorage.k))
         : await deriveKey(salt, password, iterations)
 
     const data = new Uint8Array(
@@ -172,7 +172,7 @@ async function decryptFile(
     if (!data) throw 'Malformed data'
 
     // If no exception were thrown, decryption succeded and we can save the key.
-    sessionStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
+    localStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
 
     return decoder.decode(data)
 }
