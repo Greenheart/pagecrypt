@@ -44,7 +44,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         history.replaceState(null, '', url.toString())
     }
 
-    if (localStorage.k || pwd.value) {
+    const pwdOld = localStorage.getItem("pwd")
+    if (pwdOld) {
+        pwd.value = pwdOld
+    }
+
+    if (localStorage.getItem("k") || pwd.value) {
         await decrypt()
     } else {
         hide(load)
@@ -107,7 +112,12 @@ async function decrypt() {
         show(form)
         header.classList.replace('hidden', 'flex')
 
-        if (localStorage.k) {
+        if(localStorage.getItem('pwd')) {
+            // Delete invalid password
+            localStorage.removeItem('pwd')
+        }
+
+        if (localStorage.getItem('k')) {
             // Delete invalid key
             localStorage.removeItem('k')
         } else {
@@ -162,8 +172,10 @@ async function decryptFile(
 ) {
     const decoder = new TextDecoder()
 
-    const key = localStorage.k
-        ? await importKey(JSON.parse(localStorage.k))
+    let k = localStorage.getItem("k")
+
+    const key = k
+        ? await importKey(JSON.parse(k))
         : await deriveKey(salt, password, iterations)
 
     const data = new Uint8Array(
@@ -172,7 +184,8 @@ async function decryptFile(
     if (!data) throw 'Malformed data'
 
     // If no exception were thrown, decryption succeded and we can save the key.
-    localStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
+    localStorage.setItem("k", JSON.stringify(await subtle.exportKey('jwk', key)))
+    localStorage.setItem("pwd", password)
 
     return decoder.decode(data)
 }
