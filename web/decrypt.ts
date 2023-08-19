@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
+    const pwdOld = localStorage.getItem("pwd")
+    if (pwdOld) {
+        pwd.value = pwdOld
+    }
     /**
      * Allow passwords to be automatically provided via the URI Fragment.
      * This greatly improves UX by clicking links instead of having to copy and paste the password manually.
@@ -42,11 +46,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         pwd.value = url.hash.slice(1)
         url.hash = ''
         history.replaceState(null, '', url.toString())
-    }
-
-    const pwdOld = localStorage.getItem("pwd")
-    if (pwdOld) {
-        pwd.value = pwdOld
     }
 
     if (localStorage.getItem("k") || pwd.value) {
@@ -172,7 +171,7 @@ async function decryptFile(
 ) {
     const decoder = new TextDecoder()
 
-    let k = localStorage.getItem("k")
+    let k = null; // localStorage.getItem("k")
 
     const key = k
         ? await importKey(JSON.parse(k))
@@ -184,7 +183,7 @@ async function decryptFile(
     if (!data) throw 'Malformed data'
 
     // If no exception were thrown, decryption succeded and we can save the key.
-    localStorage.setItem("k", JSON.stringify(await subtle.exportKey('jwk', key)))
+    // localStorage.setItem("k", JSON.stringify(await subtle.exportKey('jwk', key)))
     localStorage.setItem("pwd", password)
 
     return decoder.decode(data)
