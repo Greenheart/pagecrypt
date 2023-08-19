@@ -1,5 +1,33 @@
 # 🔐 PageCrypt - Password Protected Single Page Applications and HTML files
 
+This fork adds the ability to encrypt entire directories to password-protect an entire static site hosted on a static site host, e.g. Amazon S3 or Google Cloud Storage or Github Pages.
+
+It does so by caching the password entered the first time, to use it again for all other pages a user may visit, and caching the derived keys per file in localStorage to speed up decryption.
+
+## Installation:
+
+```sh
+npm i -D https://github.com/souramoo/pagecrypt/releases/download/6.2.0/pagecrypt-6.2.0.tgz
+```
+
+## Usage for whole directories:
+
+Assuming you have a directory `src/` to encrypt and an empty target directory `dist/`...
+
+```sh
+PASSWORD=hunter2
+dir=$(pwd)
+cd src
+find . -name "*.html" -print -exec npx pagecrypt {} ${dir}/dist/{} ${PASSWORD} \;
+cd ..
+```
+
+You should now be able to publish the contents of `dist/` :)
+
+This should also work in cloud CI workflows to automatically password protect deployments.
+
+# Original description
+
 > Easily add client-side password-protection to your Single Page Applications and HTML files.
 
 Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt), but rewritten to use native `Web Crypto API` and greatly improve UX + security. Thanks for sharing an excellent starting point to create this tool!
@@ -9,7 +37,7 @@ Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt
 **NOTE: Make sure you are using Node.js v16 or newer.**
 
 ```sh
-npm i -D pagecrypt
+npm i -D https://github.com/souramoo/pagecrypt/releases/download/6.2.0/pagecrypt-6.2.0.tgz
 ```
 
 There are 4 different ways to use `pagecrypt`:
@@ -175,7 +203,7 @@ Since this magic link feature is using the [URI Fragment](https://en.m.wikipedia
 
 -   Most importantly, think twice about what kinds of sites and apps you publish to the open internet, even if they are encrypted.
 -   If you use the magic link to login, beware that the password remains as a history entry! Feel free to submit a PR if you know a workaround for this!
--   Also keep in mind that the `sessionStorage` saves the encryption key (which is derived from the password) until the browser is restarted. This is what allows the rapid page reloads during the same session - at the cost of decreasing the security on your local device.
+-   Also keep in mind that the `localStorage` saves the encryption key (which is derived from the password). This is what allows the rapid page reloads during the same session - at the cost of decreasing the security on your local device.
 -   Only share magic links via secure channels, such as E2E-encrypted chats and emails.
 -   `pagecrypt` only encrypts the contents of a single HTML file, so try to inline as much JS, CSS and other sensitive assets into this HTML file as possible. If you're unable to inline all sensitive assets, you can hide your other assets by placing them on another server, and then only reference the external resources within the `pagecrypt` protected HTML file instead. Of course, these could in turn be protected or hidden if you need to. If executed correctly, this allows you to completely hide what your webpage or app is about by only deploying a single HTML file to the public web. Neat!
 
