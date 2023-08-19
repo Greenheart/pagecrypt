@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         history.replaceState(null, '', url.toString())
     }
 
-    if (localStorage.getItem("k") || pwd.value) {
+    if (localStorage.getItem(window.location.href) || pwd.value) {
         await decrypt()
     } else {
         hide(load)
@@ -114,11 +114,9 @@ async function decrypt() {
         if(localStorage.getItem('pwd')) {
             // Delete invalid password
             localStorage.removeItem('pwd')
-        }
-
-        if (localStorage.getItem('k')) {
+        } else if (localStorage.getItem(window.location.href)) {
             // Delete invalid key
-            localStorage.removeItem('k')
+            localStorage.removeItem(window.location.href)
         } else {
             // Only show when user actually entered a password themselves.
             error('Wrong password.')
@@ -171,7 +169,7 @@ async function decryptFile(
 ) {
     const decoder = new TextDecoder()
 
-    let k = null; // localStorage.getItem("k")
+    let k = localStorage.getItem(window.location.href)
 
     const key = k
         ? await importKey(JSON.parse(k))
@@ -183,7 +181,7 @@ async function decryptFile(
     if (!data) throw 'Malformed data'
 
     // If no exception were thrown, decryption succeded and we can save the key.
-    // localStorage.setItem("k", JSON.stringify(await subtle.exportKey('jwk', key)))
+    localStorage.setItem(window.location.href, JSON.stringify(await subtle.exportKey('jwk', key)))
     localStorage.setItem("pwd", password)
 
     return decoder.decode(data)

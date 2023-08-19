@@ -12,6 +12,6 @@
         "test:verify": "vite"
     },
     "dependencies": {
-        "pagecrypt": "file:../dist/pagecrypt-6.1.3.tgz"
+        "pagecrypt": "file:../dist/pagecrypt-6.2.0.tgz"
     }
 }
