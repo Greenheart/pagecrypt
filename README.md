@@ -7,7 +7,7 @@ It does so by caching the password entered the first time, to use it again for a
 ## Installation:
 
 ```sh
-npm i -D https://github.com/souramoo/pagecrypt/releases/download/6.2.0/pagecrypt-6.2.0.tgz
+npm i -D https://github.com/souramoo/pagecrypt/releases/download/6.2.1/pagecrypt-6.2.1.tgz
 ```
 
 ## Usage for whole directories:
