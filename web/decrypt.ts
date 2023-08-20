@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
-    const pwdOld = localStorage.getItem("pwd")
+    const pwdOld = localStorage.getItem('pwd')
     if (pwdOld) {
         pwd.value = pwdOld
     }
@@ -111,13 +111,20 @@ async function decrypt() {
         show(form)
         header.classList.replace('hidden', 'flex')
 
-        if(localStorage.getItem('pwd')) {
+        let automatic = false
+
+        if (localStorage.getItem('pwd')) {
             // Delete invalid password
             localStorage.removeItem('pwd')
-        } else if (localStorage.getItem(window.location.href)) {
+            automatic = true
+        }
+        if (localStorage.getItem(window.location.href)) {
             // Delete invalid key
             localStorage.removeItem(window.location.href)
-        } else {
+            automatic = true
+        }
+
+        if (!automatic) {
             // Only show when user actually entered a password themselves.
             error('Wrong password.')
         }
@@ -170,19 +177,33 @@ async function decryptFile(
     const decoder = new TextDecoder()
 
     let k = localStorage.getItem(window.location.href)
+    let key: CryptoKey | null
+    let data = new Uint8Array()
 
-    const key = k
-        ? await importKey(JSON.parse(k))
-        : await deriveKey(salt, password, iterations)
+    try {
+        key = k
+            ? await importKey(JSON.parse(k))
+            : await deriveKey(salt, password, iterations)
+        data = new Uint8Array(
+            await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
+        )
+        if (!data) throw 'Malformed data'
+    } catch (e) {
+        // Delete invalid key and try a saved password
+        localStorage.removeItem(window.location.href)
+        key = await deriveKey(salt, password, iterations)
 
-    const data = new Uint8Array(
-        await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
-    )
-    if (!data) throw 'Malformed data'
+        data = new Uint8Array(
+            await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
+        )
+    }
 
     // If no exception were thrown, decryption succeded and we can save the key.
-    localStorage.setItem(window.location.href, JSON.stringify(await subtle.exportKey('jwk', key)))
-    localStorage.setItem("pwd", password)
+    localStorage.setItem(
+        window.location.href,
+        JSON.stringify(await subtle.exportKey('jwk', key)),
+    )
+    localStorage.setItem('pwd', password)
 
     return decoder.decode(data)
 }
