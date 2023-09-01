@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)
 
+    const pwdOld = localStorage.getItem('pwd')
+    if (pwdOld) {
+        pwd.value = pwdOld
+    }
     /**
      * Allow passwords to be automatically provided via the URI Fragment.
      * This greatly improves UX by clicking links instead of having to copy and paste the password manually.
@@ -44,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         history.replaceState(null, '', url.toString())
     }
 
-    if (sessionStorage.k || pwd.value) {
+    if (localStorage.getItem(window.location.href) || pwd.value) {
         await decrypt()
     } else {
         hide(load)
@@ -107,10 +111,20 @@ async function decrypt() {
         show(form)
         header.classList.replace('hidden', 'flex')
 
-        if (sessionStorage.k) {
+        let automatic = false
+
+        if (localStorage.getItem('pwd')) {
+            // Delete invalid password
+            localStorage.removeItem('pwd')
+            automatic = true
+        }
+        if (localStorage.getItem(window.location.href)) {
             // Delete invalid key
-            sessionStorage.removeItem('k')
-        } else {
+            localStorage.removeItem(window.location.href)
+            automatic = true
+        }
+
+        if (!automatic) {
             // Only show when user actually entered a password themselves.
             error('Wrong password.')
         }
@@ -162,17 +176,34 @@ async function decryptFile(
 ) {
     const decoder = new TextDecoder()
 
-    const key = sessionStorage.k
-        ? await importKey(JSON.parse(sessionStorage.k))
-        : await deriveKey(salt, password, iterations)
+    let k = localStorage.getItem(window.location.href)
+    let key: CryptoKey | null
+    let data = new Uint8Array()
 
-    const data = new Uint8Array(
-        await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
-    )
-    if (!data) throw 'Malformed data'
+    try {
+        key = k
+            ? await importKey(JSON.parse(k))
+            : await deriveKey(salt, password, iterations)
+        data = new Uint8Array(
+            await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
+        )
+        if (!data) throw 'Malformed data'
+    } catch (e) {
+        // Delete invalid key and try a saved password
+        localStorage.removeItem(window.location.href)
+        key = await deriveKey(salt, password, iterations)
+
+        data = new Uint8Array(
+            await subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext),
+        )
+    }
 
     // If no exception were thrown, decryption succeded and we can save the key.
-    sessionStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
+    localStorage.setItem(
+        window.location.href,
+        JSON.stringify(await subtle.exportKey('jwk', key)),
+    )
+    localStorage.setItem('pwd', password)
 
     return decoder.decode(data)
 }
