@@ -60,8 +60,8 @@ esbuild
             types: './index.d.ts',
             exports: {
                 '.': {
-                    node: './index.js',
                     types: './index.d.ts',
+                    node: './index.js',
                 },
                 './core': {
                     import: './core.js',
