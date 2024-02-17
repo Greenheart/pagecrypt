@@ -92,7 +92,7 @@ export function generatePassword(
     length = 80,
     characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 ) {
-    if (characters.length >= 255) {
+    if (characters.length > 255) {
         throw new Error('[pagecrypt] Max character set length is 255')
     }
     return Array.from({ length }, (_) => getRandomCharacter(characters)).join(
