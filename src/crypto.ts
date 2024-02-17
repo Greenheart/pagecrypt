@@ -4,18 +4,15 @@
  * @returns An object implementing the Web Crypto API.
  */
 async function loadCrypto(): Promise<Crypto> {
-    if (
-        (typeof window !== 'undefined' && window.crypto) ||
-        (globalThis && globalThis.crypto)
-    ) {
-        // Running in browsers released after 2017, and other
-        // runtimes with `globalThis` like Deno or CloudFlare Workers
-        const crypto = globalThis.crypto || window.crypto
-
-        return new Promise((resolve) => resolve(crypto))
+    if (globalThis && globalThis.crypto) {
+        // `globalThis` exists in modern browsers and runtimes like Deno, Bun or CloudFlare Workers
+        return globalThis.crypto
+    } else if (typeof window !== 'undefined' && window.crypto) {
+        // Some older browsers released after 2017 only expose the crypto API via the window.
+        return window.crypto
     } else {
-        const nodeCrypto = await import('crypto')
-        return nodeCrypto.webcrypto as unknown as Crypto
+        // Node.js
+        return (await import('crypto')).webcrypto as unknown as Crypto
     }
 }
 
