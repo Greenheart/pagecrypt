@@ -219,6 +219,6 @@ To test `pagecrypt/core` and verify encryption in the browser, use the button at
 [AGPL-3.0](./LICENSE.md)
 
 Copyright (c) 2015 Maximillian Laumeister
-Copyright (c) 2021-2023 Samuel Plumppu
+Copyright (c) 2021-2024 Samuel Plumppu
 
 This is a complete rewrite of the MIT-licensed [PageCrypt](https://github.com/MaxLaumeister/PageCrypt) created by Maximillian Laumeister.

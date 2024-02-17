@@ -1,5 +1,16 @@
 # Changelog for `pagecrypt`
 
+### Unreleased
+
+### Fixes
+
+-   Reduce size of `decrypt-template.html` by 12% (-889 bytes) by using latest versions of Vite and Rollup.
+-   Allow `generatePassword()` to use 255 characters instead of only 254.
+-   Maintenance: Upgrade dependencies to latest versions and verify output.
+-   Simplify clearing of the URL hash after decryption - fix #50
+-   Export types first. Resolves error from https://publint.dev/rules#exports_types_should_be_first
+-   Fix reference error in case globalThis is undefined. Inspired by #44. Thanks[@PysKa-Ratzinger](https://github.com/PysKa-Ratzinger)!
+
 ## 6.1.1 - 2023-07-17
 
 ### Fixes
