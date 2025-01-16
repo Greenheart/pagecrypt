@@ -26,8 +26,17 @@ html {
     -moz-tab-size: 4; /* 3 */
     -o-tab-size: 4;
     tab-size: 4; /* 3 */
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; /* 4 */
+    font-family:
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        'Helvetica Neue',
+        Arial,
+        'Noto Sans',
+        sans-serif; /* 4 */
 }
 
 /*
@@ -135,16 +144,6 @@ Make sure disabled buttons don't get the pointer cursor.
 svg {
     display: block; /* 1 */
     vertical-align: middle; /* 2 */
-}
-
-/*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
-*/
-
-img,
-video {
-    max-width: 100%;
-    height: auto;
 }
 
 /*
