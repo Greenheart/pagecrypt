@@ -10,6 +10,7 @@
 - Simplify clearing of the URL hash after decryption - fix #50
 - Export types first. Resolves error from https://publint.dev/rules#exports_types_should_be_first
 - Fix reference error in case globalThis is undefined. Inspired by #44. Thanks[@PysKa-Ratzinger](https://github.com/PysKa-Ratzinger)!
+- Replace devDependency `fs-extra` with Node.js built in methods.
 
 ## 6.1.1 - 2023-07-17
 

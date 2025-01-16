@@ -1,13 +1,28 @@
 import esbuild from 'esbuild'
-import fse from 'fs-extra'
+import { cp, readFile, writeFile, rm, readdir, mkdir } from 'fs/promises'
 import { execSync } from 'child_process'
-import { resolve } from 'path'
+import { resolve, join } from 'path'
 import { performance } from 'perf_hooks'
 
-const { emptyDir, copy, remove, readJson, writeJson } = fse
+const readJSON = (path) => readFile(path, 'utf-8').then(JSON.parse)
+const writeJSON = (path, content, indentation = 4) =>
+    writeFile(path, JSON.stringify(content, null, indentation), 'utf-8')
+
+async function emptyDir(dir) {
+    let items
+    try {
+        items = await readdir(dir)
+    } catch {
+        return mkdir(dir, { recursive: true })
+    }
+
+    return Promise.all(
+        items.map((item) => rm(join(dir, item), { recursive: true })),
+    )
+}
 
 const startTime = performance.now()
-const pkg = await readJson('./package.json')
+const pkg = await readJSON('./package.json')
 
 console.log(`⚡ Building pagecrypt v${pkg.version}...`)
 
@@ -37,14 +52,14 @@ esbuild
         const declarationsDir = resolve(distDir, 'src')
 
         // Move all declaration files to the root dist folder. Also remove unwanted files and folder.
-        await remove(resolve(declarationsDir, 'cli.d.ts'))
-        await copy(declarationsDir, distDir)
-        await remove(declarationsDir)
+        await rm(resolve(declarationsDir, 'cli.d.ts'))
+        await cp(declarationsDir, distDir, { recursive: true })
+        await rm(declarationsDir, { recursive: true })
 
         await Promise.all([
-            copy('./LICENSE.md', resolve(distDir, 'LICENSE.md')),
-            copy('./CHANGELOG.md', resolve(distDir, 'CHANGELOG.md')),
-            copy('./README.md', resolve(distDir, 'README.md')),
+            cp('./LICENSE.md', resolve(distDir, 'LICENSE.md')),
+            cp('./CHANGELOG.md', resolve(distDir, 'CHANGELOG.md')),
+            cp('./README.md', resolve(distDir, 'README.md')),
         ])
 
         // Prepare package.json for publishing.
@@ -69,9 +84,7 @@ esbuild
             },
         }
 
-        await writeJson(resolve(distDir, 'package.json'), distPackage, {
-            spaces: 4,
-        })
+        await writeJSON(resolve(distDir, 'package.json'), distPackage)
 
         const buildTime = (
             (performance.now() - startTime) /
