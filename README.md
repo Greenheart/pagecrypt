@@ -59,7 +59,10 @@ const encryptedHTML = await encryptHTML(inputHTML, password)
 You can also provide a custom dictionary of characters to use in your password:
 
 ```ts
-generatePassword(71, '!#$%&()*+,-./:;<=>?@[]^_{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+generatePassword(
+    71,
+    '!#$%&()*+,-./:;<=>?@[]^_{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+)
 ```
 
 ### 2. Node.js API
@@ -173,11 +176,11 @@ Since this magic link feature is using the [URI Fragment](https://en.m.wikipedia
 
 ### Security Considerations
 
--   Most importantly, think twice about what kinds of sites and apps you publish to the open internet, even if they are encrypted.
--   If you use the magic link to login, beware that the password remains as a history entry! Feel free to submit a PR if you know a workaround for this!
--   Also keep in mind that the `sessionStorage` saves the encryption key (which is derived from the password) until the browser is restarted. This is what allows the rapid page reloads during the same session - at the cost of decreasing the security on your local device.
--   Only share magic links via secure channels, such as E2E-encrypted chats and emails.
--   `pagecrypt` only encrypts the contents of a single HTML file, so try to inline as much JS, CSS and other sensitive assets into this HTML file as possible. If you're unable to inline all sensitive assets, you can hide your other assets by placing them on another server, and then only reference the external resources within the `pagecrypt` protected HTML file instead. Of course, these could in turn be protected or hidden if you need to. If executed correctly, this allows you to completely hide what your webpage or app is about by only deploying a single HTML file to the public web. Neat!
+- Most importantly, think twice about what kinds of sites and apps you publish to the open internet, even if they are encrypted.
+- If you use the magic link to login, beware that the password remains as a history entry! Feel free to submit a PR if you know a workaround for this!
+- Also keep in mind that the `sessionStorage` saves the encryption key (which is derived from the password) until the browser is restarted. This is what allows the rapid page reloads during the same session - at the cost of decreasing the security on your local device.
+- Only share magic links via secure channels, such as E2E-encrypted chats and emails.
+- `pagecrypt` only encrypts the contents of a single HTML file, so try to inline as much JS, CSS and other sensitive assets into this HTML file as possible. If you're unable to inline all sensitive assets, you can hide your other assets by placing them on another server, and then only reference the external resources within the `pagecrypt` protected HTML file instead. Of course, these could in turn be protected or hidden if you need to. If executed correctly, this allows you to completely hide what your webpage or app is about by only deploying a single HTML file to the public web. Neat!
 
 ---
 
@@ -185,12 +188,12 @@ Since this magic link feature is using the [URI Fragment](https://en.m.wikipedia
 
 Project structure:
 
--   `/web` - Web frontend for public webpage (`decrypt-template.html`).
--   `/src/core.ts` - pagecrypt core library.
--   `/src/index.ts` - pagecrypt Node.js library.
--   `/src/cli.ts` - pagecrypt CLI.
--   `/test` - simple testing setup.
--   `/scripts` - local scripts for development tasks.
+- `/web` - Web frontend for public webpage (`decrypt-template.html`).
+- `/src/core.ts` - pagecrypt core library.
+- `/src/index.ts` - pagecrypt Node.js library.
+- `/src/cli.ts` - pagecrypt CLI.
+- `/test` - simple testing setup.
+- `/scripts` - local scripts for development tasks.
 
 ## Setup a local development environment
 
@@ -201,8 +204,8 @@ Project structure:
 
 First do one of the following:
 
--   `npm test` to run the tests.
--   `npm run test:build` to first build a new version of `pagecrypt` and then run the tests.
+- `npm test` to run the tests.
+- `npm run test:build` to first build a new version of `pagecrypt` and then run the tests.
 
 Then run `npm run verify` in another terminal and verify the test results at http://localhost:3000.
 
