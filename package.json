@@ -18,8 +18,7 @@
     "author": "Samuel Plumppu",
     "license": "AGPL-3.0",
     "dependencies": {
-        "rfc4648": "^1.5.4",
-        "sade": "^1.8.1"
+        "rfc4648": "^1.5.4"
     },
     "devDependencies": {
         "@types/node": "^22.10.7",

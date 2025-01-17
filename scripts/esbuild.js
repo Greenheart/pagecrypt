@@ -76,7 +76,7 @@ esbuild
         format: 'esm',
         target: ['esnext'],
         platform: 'node',
-        external: ['rfc4648', 'sade'],
+        external: ['rfc4648'],
         plugins: [minifyHTMLPlugin],
     })
     .then(async () => {
