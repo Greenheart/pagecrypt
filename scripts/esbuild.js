@@ -3,6 +3,7 @@ import { cp, readFile, writeFile, rm, readdir, mkdir } from 'fs/promises'
 import { execSync } from 'child_process'
 import { resolve, join } from 'path'
 import { performance } from 'perf_hooks'
+import { minify } from 'html-minifier-terser'
 
 const readJSON = (path) => readFile(path, 'utf-8').then(JSON.parse)
 const writeJSON = (path, content, indentation = 4) =>
@@ -21,6 +22,26 @@ async function emptyDir(dir) {
     )
 }
 
+async function minifyHTML(html) {
+    const minifiedHTML = await minify(html, {
+        removeComments: true,
+        removeEmptyAttributes: true,
+        html5: true,
+        decodeEntities: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeRedundantAttributes: true,
+    })
+    console.log(
+        `HTML size reduced by ${Math.round(
+            100 - (minifiedHTML.length / html.length) * 100,
+        )}%`,
+    )
+
+    return minifiedHTML
+}
+
 const startTime = performance.now()
 const pkg = await readJSON('./package.json')
 
@@ -30,6 +51,19 @@ const outDir = './dist'
 const distDir = resolve(outDir)
 
 await emptyDir(distDir)
+
+const minifyHTMLPlugin = {
+    name: 'minifyl-html-plugin',
+    setup(build) {
+        build.onLoad({ filter: /\.html$/ }, async (args) => {
+            const contents = await readFile(args.path, 'utf8')
+            return {
+                contents: await minifyHTML(contents),
+                loader: 'text',
+            }
+        })
+    },
+}
 
 esbuild
     .build({
@@ -42,8 +76,8 @@ esbuild
         format: 'esm',
         target: ['esnext'],
         platform: 'node',
-        loader: { '.html': 'text' },
         external: ['rfc4648', 'sade'],
+        plugins: [minifyHTMLPlugin],
     })
     .then(async () => {
         // Build declaration files with TSC since they aren't built by esbuild.
