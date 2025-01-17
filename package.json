@@ -24,10 +24,10 @@
     "devDependencies": {
         "@types/node": "^22.10.7",
         "esbuild": "^0.20.2",
+        "prettier": "^3.4.2",
         "typescript": "^5.7.3",
         "vite": "^6.0.7",
-        "vite-plugin-singlefile": "^2.1.0",
-        "prettier": "^3.4.2"
+        "vite-plugin-singlefile": "^2.1.0"
     },
     "engines": {
         "node": ">= 16.0.0"
