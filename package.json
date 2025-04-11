@@ -21,12 +21,12 @@
         "rfc4648": "^1.5.4"
     },
     "devDependencies": {
-        "@types/node": "^22.13.10",
-        "esbuild": "^0.25.1",
+        "@types/node": "^22.14.0",
+        "esbuild": "^0.25.2",
         "html-minifier-terser": "^7.2.0",
         "prettier": "^3.5.3",
-        "typescript": "^5.8.2",
-        "vite": "^6.2.2",
+        "typescript": "^5.8.3",
+        "vite": "^6.2.6",
         "vite-plugin-singlefile": "^2.2.0"
     },
     "engines": {
