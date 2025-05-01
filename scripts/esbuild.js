@@ -104,7 +104,7 @@ esbuild
             prettier: undefined,
             main: './index.js',
             bin: {
-                pagecrypt: './cli.js',
+                pagecrypt: 'cli.js',
             },
             types: './index.d.ts',
             exports: {
