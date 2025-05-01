@@ -1,6 +1,6 @@
 {
     "name": "pagecrypt",
-    "version": "6.1.1",
+    "version": "6.2.0",
     "description": "Easily add client-side password-protection to your Single Page Applications and HTML files.",
     "main": "src/index.ts",
     "type": "module",

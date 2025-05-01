@@ -1,6 +1,6 @@
 # Changelog for `pagecrypt`
 
-### Unreleased
+## 6.2.0 - 2025-05-01
 
 ### Fixes
 
@@ -13,6 +13,7 @@
 - Replace devDependency `fs-extra` with Node.js built-in methods.
 - Replace CLI dependency `sade` with Node.js built-in `parseArgs()`.
 - Improved CLI error handling if arguments are missing.
+- Fix template string to work with new esbuild version.
 
 ## 6.1.1 - 2023-07-17
 
