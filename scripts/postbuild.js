@@ -17,7 +17,7 @@ async function main() {
 const preparePayloadTag = (html) =>
     html.replace(
         /\s*<!--DEV ONLY-->[\s\S]*<!--\/DEV ONLY-->/,
-        '\n    <!--ENCRYPTED PAYLOAD-->',
+        '\n    <encrypted-payload></encrypted-payload>',
     )
 
 const cleanStyleTag = (html) =>

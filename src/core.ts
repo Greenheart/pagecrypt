@@ -72,7 +72,7 @@ export async function encryptHTML(
     iterations: number = 2e6,
 ) {
     return (decryptTemplate as string).replace(
-        /<!--ENCRYPTED PAYLOAD-->/,
+        '<encrypted-payload></encrypted-payload>',
         `<pre class="hidden" data-i="${iterations.toExponential()}">${await getEncryptedPayload(
             inputHTML,
             password,
