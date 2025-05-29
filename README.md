@@ -211,6 +211,16 @@ On the test results page you will find links to open output files in new tabs, b
 
 To test `pagecrypt/core` and verify encryption in the browser, use the button at the bottom of the list. Download the file and then copy the password by clicking the button again to decrypt it. If you save the file to the same directory as the other generated files, you can use the links just like for other results. Use the reset button to encrypt another file.
 
+## Releasing a new version to npm
+
+After testing all changes, here's how to publish them to npm:
+
+- In the project root, run `pnpm build`
+- Run `cd dist && npm pack`
+- Verify the output `pagecrypt-*.tgz`
+- Good idea to verify with `npm publish --dry-run` first.
+- Then, publish with `npm publish`
+
 ---
 
 **Welcome to submit issues and pull requests!**
