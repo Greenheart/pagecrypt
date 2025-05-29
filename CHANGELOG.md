@@ -1,5 +1,11 @@
 # Changelog for `pagecrypt`
 
+## 7.0.0 - 2025-05-29
+
+- Perform Base64 encoding with modern ECMAScript features to remove dependency `rfc4648`. This reduces the size of `decrypt-template.html` by 16% (-985 bytes), and also makes this library free of runtime dependencies! 🎉
+- Switch license to `LGPL-3.0-or-later`. This is a better choice for a library like pagecrypt.
+- Update dev dependencies to latest versions.
+
 ## 6.2.0 - 2025-05-01
 
 ### Fixes
