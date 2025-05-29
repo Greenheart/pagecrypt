@@ -17,14 +17,13 @@
     },
     "author": "Samuel Plumppu",
     "license": "AGPL-3.0",
-    "dependencies": {},
     "devDependencies": {
-        "@types/node": "^22.15.3",
-        "esbuild": "^0.25.3",
+        "@types/node": "^22.15.24",
+        "esbuild": "^0.25.5",
         "html-minifier-terser": "^7.2.0",
         "prettier": "^3.5.3",
         "typescript": "^5.8.3",
-        "vite": "^6.3.4",
+        "vite": "^6.3.5",
         "vite-plugin-singlefile": "^2.2.0"
     },
     "engines": {
