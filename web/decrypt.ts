@@ -1,4 +1,4 @@
-import { base64 } from 'rfc4648'
+import { parse } from '../src/base64'
 
 function find<T>(selector: string): T {
     const element = document.querySelector(selector) as T
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return
     }
     iterations = Number(pl.dataset.i)
-    const bytes = base64.parse(pl.innerText)
+    const bytes = parse(pl.innerText)
     salt = bytes.slice(0, 32)
     iv = bytes.slice(32, 32 + 16)
     ciphertext = bytes.slice(32 + 16)

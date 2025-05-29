@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      rfc4648:
-        specifier: ^1.5.4
-        version: 1.5.4
     devDependencies:
       '@types/node':
         specifier: ^22.15.3
@@ -422,9 +418,6 @@ packages:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
 
-  rfc4648@1.5.4:
-    resolution: {integrity: sha512-rRg/6Lb+IGfJqO05HZkN50UtY7K/JhxJag1kP23+zyMfrvoB0B7RWv06MbOzoc79RgCdNTiUaNsTT1AJZ7Z+cg==}
-
   rollup@4.40.1:
     resolution: {integrity: sha512-C5VvvgCCyfyotVITIAv+4efVytl5F7wt+/I2i9q9GZcEXW9BP52YYOXC58igUi+LFZVHukErIIqQSWwv/M3WRw==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -797,8 +790,6 @@ snapshots:
   prettier@3.5.3: {}
 
   relateurl@0.2.7: {}
-
-  rfc4648@1.5.4: {}
 
   rollup@4.40.1:
     dependencies:

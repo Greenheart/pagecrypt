@@ -17,9 +17,7 @@
     },
     "author": "Samuel Plumppu",
     "license": "AGPL-3.0",
-    "dependencies": {
-        "rfc4648": "^1.5.4"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/node": "^22.15.3",
         "esbuild": "^0.25.3",

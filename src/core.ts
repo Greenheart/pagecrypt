@@ -1,4 +1,4 @@
-import { base64 } from 'rfc4648'
+import { stringify } from './base64'
 
 import crypto from './crypto'
 
@@ -54,7 +54,7 @@ async function getEncryptedPayload(
     mergedData.set(iv, salt.length)
     mergedData.set(ciphertext, salt.length + iv.length)
 
-    return base64.stringify(mergedData)
+    return stringify(mergedData)
 }
 
 /**
