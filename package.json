@@ -16,7 +16,7 @@
         "preview:web": "vite preview"
     },
     "author": "Samuel Plumppu",
-    "license": "AGPL-3.0",
+    "license": "LGPL-3.0-or-later",
     "devDependencies": {
         "@types/node": "^22.15.24",
         "esbuild": "^0.25.5",
