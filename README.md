@@ -196,16 +196,16 @@ Project structure:
 ## Setup a local development environment
 
 1.  Install Node.js >= 16.0.0
-2.  Run `npm install` in project root.
+2.  Run `pnpm install` in project root.
 
 ## Testing
 
 First do one of the following:
 
-- `npm test` to run the tests.
-- `npm run test:build` to first build a new version of `pagecrypt` and then run the tests.
+- `pnpm test` to run the tests.
+- `pnpm test:build` to first build a new version of `pagecrypt` and then run the tests.
 
-Then run `npm run verify` in another terminal and verify the test results at http://localhost:3000.
+Then run `pnpm verify` in another terminal and verify the test results at http://localhost:3000.
 
 On the test results page you will find links to open output files in new tabs, buttons to copy passwords, and a special `#` link to verify that magic links decrypt the page immediately when the page loads.
 

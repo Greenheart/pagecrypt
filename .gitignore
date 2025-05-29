@@ -2,6 +2,7 @@ node_modules
 build
 
 test/package-lock.json
+test/pnpm-lock.yaml
 test/node_modules
 test/out*
 dist

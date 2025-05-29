@@ -10,10 +10,10 @@ const exec = promisify(execCallback)
 console.log('\nRunning PageCrypt tests...\n')
 
 const CLI_PASSWORDS = {
-    'out-cli.html': 'npm run test:cli',
-    'out-cli-gen.html': 'npm run test:cli-gen',
-    'out-cli-iterations.html': 'npm run test:cli-iterations',
-    'out-cli-gen-iterations.html': 'npm run test:cli-gen-iterations',
+    'out-cli.html': 'pnpm test:cli',
+    'out-cli-gen.html': 'pnpm test:cli-gen',
+    'out-cli-iterations.html': 'pnpm test:cli-iterations',
+    'out-cli-gen-iterations.html': 'pnpm test:cli-gen-iterations',
 }
 
 const TEST_PASSWORD =
@@ -95,7 +95,7 @@ async function main() {
     )
 
     console.log(
-        '\nOpen another terminal and run `npm run test:verify` to verify test results in a browser.\n',
+        '\nOpen another terminal and run `pnpm test:verify` to verify test results in a browser.\n',
     )
 }
 
