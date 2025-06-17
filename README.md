@@ -227,7 +227,7 @@ After testing all changes, here's how to publish them to npm:
 
 ## License
 
-[AGPL-3.0](./LICENSE.md)
+[LGPL-3.0-or-later](./LICENSE.md)
 
 Copyright (c) 2015 Maximillian Laumeister
 Copyright (c) 2021-2025 Samuel Plumppu
