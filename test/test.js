@@ -14,6 +14,7 @@ const CLI_PASSWORDS = {
     'out-cli-gen.html': 'pnpm test:cli-gen',
     'out-cli-iterations.html': 'pnpm test:cli-iterations',
     'out-cli-gen-iterations.html': 'pnpm test:cli-gen-iterations',
+    'out-cli-big.html': 'pnpm test:cli-big',
 }
 
 const TEST_PASSWORD =

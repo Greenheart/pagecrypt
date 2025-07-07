@@ -15,6 +15,7 @@ function download(filename, text) {
 }
 
 const OUT_BROWSER_FILENAME = 'out-browser-gen.html'
+const OUT_BROWSER_BIG_FILENAME = 'out-browser-gen-big.html'
 
 async function copyPassword(e) {
     const labelBefore = e.target.innerText.slice()
@@ -82,14 +83,75 @@ function addBrowserEncrypted() {
     document.querySelector('.results').appendChild(div)
 }
 
+function addBrowserEncryptedBig() {
+    const btn = document.createElement('button')
+    const label = 'Download Encrypted BIG File'
+    btn.innerText = label
+
+    if (sessionStorage.link) {
+        btn.innerText = 'Copy Password'
+        btn.dataset.pwd = sessionStorage.link.split('#')[1]
+        btn.addEventListener('click', copyPassword)
+    } else {
+        btn.addEventListener('click', async (e) => {
+            const password = generatePassword(16)
+            btn.dataset.pwd = password
+            btn.innerText = 'Encrypting...'
+            btn.disabled = true
+            console.time('🔐 Encrypting')
+
+            const html = await encryptHTML(testBIGHTML, password)
+
+            const link = `/${OUT_BROWSER_BIG_FILENAME}#${password}`
+            sessionStorage.linkBig = link
+            btn.nextElementSibling.href = link
+            btn.previousElementSibling.href = link
+
+            download(OUT_BROWSER_BIG_FILENAME, html)
+            console.timeEnd('🔐 Encrypting')
+            btn.disabled = false
+            btn.innerText = 'Copy Password'
+
+            const copyBtn = btn.cloneNode(true)
+            copyBtn.addEventListener('click', copyPassword)
+            btn.parentNode.replaceChild(copyBtn, btn)
+        })
+    }
+
+    const link = document.createElement('a')
+    link.innerText = OUT_BROWSER_BIG_FILENAME
+    link.target = '_blank'
+    if (sessionStorage.linkBig) link.href = sessionStorage.linkBig.split('#')[0]
+
+    const magicLink = document.createElement('a')
+    magicLink.innerText = '#'
+    magicLink.target = '_blank'
+    if (sessionStorage.linkBig) magicLink.href = sessionStorage.linkBig
+
+    const div = document.createElement('div')
+    div.id = OUT_BROWSER_BIG_FILENAME
+    div.appendChild(link)
+    div.appendChild(btn)
+    div.appendChild(magicLink)
+    document.querySelector('.results').appendChild(div)
+}
+
 addBrowserEncrypted()
+addBrowserEncryptedBig()
 
 document.querySelector('#reset').addEventListener('click', (e) => {
     delete sessionStorage.link
+    delete sessionStorage.linkBig
     window.location.reload()
 })
 
 const testHTML = await fetch('/test.html')
+    .then((res) => res.text())
+    .then((html) =>
+        html.replace(`<script type="module" src="/@vite/client"></script>`, ''),
+    )
+
+const testBIGHTML = await fetch('/test-big.html')
     .then((res) => res.text())
     .then((html) =>
         html.replace(`<script type="module" src="/@vite/client"></script>`, ''),
