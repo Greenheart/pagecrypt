@@ -1,5 +1,13 @@
 # Changelog for `pagecrypt`
 
+## 7.0.1 - 2025-07-07
+
+### Fixes
+
+- Improve Base64 stringification to reduce call stack size. Fixes #58
+- Add tests for large 20 MB payload.
+- Maintenance: Simplify browser tests and test results page.
+
 ## 7.0.0 - 2025-05-29
 
 - Perform Base64 encoding with modern ECMAScript features to remove dependency `rfc4648`. This reduces the size of `decrypt-template.html` by 16% (-985 bytes), and also makes this library free of runtime dependencies! 🎉
@@ -235,7 +243,6 @@ This version uses `document.write()` to show the encrypted payload instead of us
 ### Features
 
 - Replace `node-forge` with the standard Web Crypto API - both in Node.js and in browsers.
-
     - This greatly improves performance, bundle size and security compared to `v1.x` and `v2.x`.
     - This allows using the same native code both for encryption in Node.js and decryption in the browser, simplifying the codebase.
 
