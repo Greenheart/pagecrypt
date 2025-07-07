@@ -230,6 +230,7 @@ After testing all changes, here's how to publish them to npm:
 [LGPL-3.0-or-later](./LICENSE.md)
 
 Copyright (c) 2015 Maximillian Laumeister
+
 Copyright (c) 2021-2025 Samuel Plumppu
 
 This is a complete rewrite of the MIT-licensed [PageCrypt](https://github.com/MaxLaumeister/PageCrypt) created by Maximillian Laumeister.
