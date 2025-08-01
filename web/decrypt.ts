@@ -59,7 +59,7 @@ const subtle =
         ?.webkitSubtle
 
 if (!subtle) {
-    error('Please use a modern browser.')
+    error('SubtleCrypto is missing')
     pwd.disabled = true
 }
 
