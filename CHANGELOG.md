@@ -1,5 +1,11 @@
 # Changelog for `pagecrypt`
 
+## 7.0.2 - 2025-08-01
+
+### Fixes
+
+- Improved error message when SubtleCrypto is missing
+
 ## 7.0.1 - 2025-07-07
 
 ### Fixes
