@@ -10,6 +10,7 @@ const {
     values: {
         'generate-password': generatedLength,
         iterations: passwordIterations,
+        compress: comPress,
         help: printHelp,
         version: printVersion,
     },
@@ -24,6 +25,11 @@ const {
         iterations: {
             short: 'i',
             type: 'string',
+        },
+        compress: {
+            short: 'c',
+            type: 'boolean',
+            default: false,
         },
         version: {
             short: 'v',
@@ -58,7 +64,7 @@ async function main() {
         if (Number.isInteger(length)) {
             const pass = generatePassword(length)
             console.log(`🔐 Encrypting ${src} → ${dest} with 🔑: ${pass}`)
-            await encrypt(src, dest, pass, iterations)
+            await encrypt(src, dest, pass, iterations, comPress)
         } else {
             console.error(
                 '❌: The <length> must be an integer when using --generate-password <length>',
@@ -67,7 +73,7 @@ async function main() {
         }
     } else if (password) {
         console.log(`🔐 Encrypting ${src} → ${dest}`)
-        await encrypt(src, dest, password, iterations)
+        await encrypt(src, dest, password, iterations, comPress)
     } else {
         console.error(
             '❌: Either provide a password or use --generate-password <length>',
@@ -87,6 +93,7 @@ if (printHelp) {
   Options
     -g, --generate-password    Generate a random password with given length. Must be a number if used.
     -i, --iterations           The number of password iterations.
+    -c, --compress             Compress input before encrypting
     -v, --version              Display current version
     -h, --help                 Display this message
 
