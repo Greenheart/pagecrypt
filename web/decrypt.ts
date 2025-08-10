@@ -94,10 +94,14 @@ async function decrypt() {
     await sleep(60)
 
     try {
-        const decrypted = await decryptFile(
+        let decrypted = await decryptFile(
             { salt, iv, ciphertext, iterations },
             pwd.value,
         )
+        const pl = find<HTMLPreElement>('pre[data-i]')
+        if(pl.dataset.c == "gzip") {
+            decrypted = await decompress64(decrypted);
+        }
 
         document.write(decrypted)
         document.close()
@@ -174,4 +178,16 @@ async function decryptFile(
     sessionStorage.k = JSON.stringify(await subtle.exportKey('jwk', key))
 
     return decoder.decode(data)
+}
+
+// Decompresses base64 encoded GZIP string. Retruns a string with original text.
+async function decompress64(base64string) {
+    const bytes = Uint8Array.from(atob(base64string), c => c.charCodeAt(0));
+    const cs = new DecompressionStream('gzip');
+    const writer = cs.writable.getWriter();
+    writer.write(bytes);
+    writer.close();
+    return new Response(cs.readable).arrayBuffer().then(function (arrayBuffer) {
+        return new TextDecoder().decode(arrayBuffer);
+    });
 }

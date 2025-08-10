@@ -1,7 +1,11 @@
+import { gzip } from 'zlib'
+import { promisify } from 'util'
 import { mkdir, readFile, writeFile } from 'fs/promises'
 import { resolve, dirname } from 'path'
 
 import { generatePassword, encryptHTML } from './core'
+
+const pgzip = promisify(gzip)
 
 /**
  * Encrypt a HTML file with a given password.
@@ -16,6 +20,7 @@ async function encryptFile(
     inputFile: string,
     password: string,
     iterations?: number,
+    compress?: boolean,
 ) {
     let content: string
     try {
@@ -26,8 +31,18 @@ async function encryptFile(
         console.error('❌ Error reading file: ', e)
         process.exit(1)
     }
+    if (compress) {
+        try {
+            const sz = content.length
+            content = (await pgzip(content)).toString('base64')
+            console.log(`Compression: ${100.0 * content.length / sz}%`)
+        } catch (e) {
+            console.error('❌ Error compressing file: ', e)
+            process.exit(1)
+        }
+    }
 
-    return await encryptHTML(content, password, iterations)
+    return await encryptHTML(content, password, iterations, compress)
 }
 
 /**
@@ -60,9 +75,11 @@ async function encrypt(
     outputFile: string,
     password: string,
     iterations?: number,
+    compress?: boolean,
 ) {
-    const encrypted = await encryptFile(inputFile, password, iterations)
+    const encrypted = await encryptFile(inputFile, password, iterations, compress)
     return await saveFile(outputFile, encrypted)
 }
+
 
 export { encrypt, generatePassword, encryptHTML }
