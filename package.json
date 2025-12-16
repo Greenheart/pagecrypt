@@ -18,12 +18,12 @@
     "author": "Samuel Plumppu",
     "license": "LGPL-3.0-or-later",
     "devDependencies": {
-        "@types/node": "^24.9.2",
-        "esbuild": "^0.25.11",
+        "@types/node": "^25.0.2",
+        "esbuild": "^0.27.1",
         "html-minifier-terser": "^7.2.0",
-        "prettier": "^3.6.2",
+        "prettier": "^3.7.4",
         "typescript": "^5.9.3",
-        "vite": "^7.1.12",
+        "vite": "^7.3.0",
         "vite-plugin-singlefile": "^2.3.0"
     },
     "engines": {
