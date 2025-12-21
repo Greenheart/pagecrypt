@@ -18,8 +18,8 @@
     "author": "Samuel Plumppu",
     "license": "LGPL-3.0-or-later",
     "devDependencies": {
-        "@types/node": "^25.0.2",
-        "esbuild": "^0.27.1",
+        "@types/node": "^25.0.3",
+        "esbuild": "^0.27.2",
         "html-minifier-terser": "^7.2.0",
         "prettier": "^3.7.4",
         "typescript": "^5.9.3",
