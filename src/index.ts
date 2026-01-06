@@ -7,9 +7,9 @@ import { generatePassword, encryptHTML } from './core'
  * Encrypt a HTML file with a given password.
  * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
  *
- * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
- * @param {string} password The password used to encrypt + decrypt the content.
- * @param {number} iterations The number of iterations to derive the key from the password.
+ * @param inputFile The filename (or path) to the HTML file to encrypt.
+ * @param password The password used to encrypt + decrypt the content.
+ * @param iterations The number of iterations to derive the key from the password.
  * @returns A promise that will resolve with the encrypted HTML content
  */
 async function encryptFile(
@@ -33,8 +33,8 @@ async function encryptFile(
 /**
  * Save a file, creating directories and files if they don't yet exist
  *
- * @param {string} outputFile The filename (or path) where the file will be saved
- * @param {string} content The file content
+ * @param outputFile The filename (or path) where the file will be saved
+ * @param content The file content
  * @returns A promise that will resolve when the file has been saved.
  */
 async function saveFile(outputFile: string, content: string) {
@@ -49,10 +49,10 @@ async function saveFile(outputFile: string, content: string) {
  * Encrypt a HTML file with a given password.
  * The resulting page can be viewed and decrypted by opening the output HTML file in a browser, and entering the correct password.
  *
- * @param {string} inputFile The filename (or path) to the HTML file to encrypt.
- * @param {string} outputFile The filename (or path) where the encrypted HTML file will be saved.
- * @param {string} password The password used to encrypt + decrypt the content.
- * @param {number} iterations The number of iterations to derive the key from the password.
+ * @param inputFile The filename (or path) to the HTML file to encrypt.
+ * @param outputFile The filename (or path) where the encrypted HTML file will be saved.
+ * @param password The password used to encrypt + decrypt the content.
+ * @param iterations The number of iterations to derive the key from the password.
  * @returns A promise that will resolve when the encrypted file has been saved.
  */
 async function encrypt(
