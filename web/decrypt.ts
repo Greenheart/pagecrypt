@@ -13,7 +13,10 @@ const msg = find<HTMLParagraphElement>('#msg')
 const form = find<HTMLFormElement>('form')
 const load = find<HTMLDivElement>('#load')
 
-let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array, iterations: number
+let salt: Uint8Array<ArrayBuffer>,
+    iv: Uint8Array<ArrayBuffer>,
+    ciphertext: Uint8Array<ArrayBuffer>,
+    iterations: number
 
 document.addEventListener('DOMContentLoaded', async () => {
     const pl = find<HTMLPreElement>('pre[data-i]')
@@ -120,7 +123,7 @@ async function decrypt() {
 }
 
 async function deriveKey(
-    salt: Uint8Array,
+    salt: Uint8Array<ArrayBuffer>,
     password: string,
     iterations: number,
 ): Promise<CryptoKey> {
@@ -152,9 +155,9 @@ async function decryptFile(
         ciphertext,
         iterations,
     }: {
-        salt: Uint8Array
-        iv: Uint8Array
-        ciphertext: Uint8Array
+        salt: Uint8Array<ArrayBuffer>
+        iv: Uint8Array<ArrayBuffer>
+        ciphertext: Uint8Array<ArrayBuffer>
         iterations: number
     },
     password: string,
