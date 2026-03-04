@@ -22,6 +22,7 @@
         "esbuild": "^0.27.3",
         "html-minifier-terser": "^7.2.0",
         "prettier": "^3.8.1",
+        "tsdown": "^0.20.3",
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
         "vite-plugin-singlefile": "^2.3.0"
@@ -52,6 +53,9 @@
         "type": "git",
         "url": "git+https://github.com/Greenheart/pagecrypt.git"
     },
+    "files": [
+        "dist"
+    ],
     "bugs": {
         "url": "https://github.com/Greenheart/pagecrypt/issues"
     },

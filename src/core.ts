@@ -1,8 +1,7 @@
 import { stringify } from './base64'
-
 import crypto from './crypto'
 
-// @ts-expect-error 2307 - Using esbuild to inline this HTML file as a string
+// @ts-expect-error 2307 - This HTML file is inlined as a string during build
 import decryptTemplate from './decrypt-template.html'
 
 /**
