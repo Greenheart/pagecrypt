@@ -2,7 +2,6 @@
     "name": "pagecrypt",
     "version": "7.0.2",
     "description": "Easily add client-side password-protection to your Single Page Applications, static websites and HTML files.",
-    "main": "src/index.ts",
     "type": "module",
     "scripts": {
         "test": "cd ./test && pnpm test && cd ..",
@@ -18,10 +17,12 @@
     "author": "Samuel Plumppu",
     "license": "LGPL-3.0-or-later",
     "devDependencies": {
+        "@arethetypeswrong/cli": "^0.18.2",
         "@types/node": "^25.3.3",
         "esbuild": "^0.27.3",
         "html-minifier-terser": "^7.2.0",
         "prettier": "^3.8.1",
+        "publint": "^0.3.18",
         "tsdown": "^0.20.3",
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
@@ -32,7 +33,19 @@
     },
     "engineStrict": true,
     "bin": {
-        "pagecrypt": "./src/cli.ts"
+        "pagecrypt": "./dist/cli.mjs"
+    },
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.mts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.mts",
+            "node": "./dist/index.mjs"
+        },
+        "./core": {
+            "types": "./dist/core.d.mts",
+            "import": "./dist/core.mjs"
+        }
     },
     "keywords": [
         "web-crypto",
@@ -60,11 +73,9 @@
         "url": "https://github.com/Greenheart/pagecrypt/issues"
     },
     "homepage": "https://github.com/Greenheart/pagecrypt#readme",
-    "private": true,
     "prettier": {
         "semi": false,
         "singleQuote": true,
-        "trailingComma": "all",
         "tabWidth": 4
     },
     "pnpm": {

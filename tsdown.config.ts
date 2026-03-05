@@ -3,6 +3,10 @@ import { defineConfig, type Rolldown } from 'tsdown'
 
 export default defineConfig({
     dts: true,
+    attw: {
+        profile: 'esm-only',
+    },
+    publint: true,
     entry: {
         index: 'src/index.ts',
         core: 'src/core.ts',
