@@ -4,7 +4,6 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "test:old": "node test.js",
         "test": "node --test **/*.test.ts",
         "test:verify": "vite"
     }
