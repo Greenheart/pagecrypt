@@ -32,7 +32,7 @@
     },
     "engineStrict": true,
     "bin": {
-        "pagecrypt": "./dist/cli.mjs"
+        "pagecrypt": "dist/cli.mjs"
     },
     "main": "./dist/index.mjs",
     "types": "./dist/index.d.mts",
