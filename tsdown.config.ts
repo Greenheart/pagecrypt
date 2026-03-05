@@ -12,14 +12,6 @@ export default defineConfig({
         core: 'src/core.ts',
         cli: 'src/cli.ts',
     },
-    loader: {
-        '.html': 'text',
-    },
-    hooks: {
-        // 'build:done': async (ctx) => {
-        //     console.log(ctx.chunks.map((c) => c.fileName))
-        // },
-    },
     plugins: [minifyHTMLPlugin()],
     nodeProtocol: true,
 })
