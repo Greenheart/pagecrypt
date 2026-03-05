@@ -5,11 +5,11 @@
     "type": "module",
     "scripts": {
         "test": "cd ./test && pnpm test && cd ..",
-        "test:build": "pnpm build && cd dist && pnpm pack && cd ../test && pnpm i ../dist/pagecrypt-*.tgz && pnpm test && cd ..",
+        "test:build": "pnpm build && pnpm pack && cd ./test && pnpm i ../pagecrypt-*.tgz && pnpm test && cd ..",
         "test:verify": "cd test && pnpm test:verify && cd ..",
         "build": "pnpm build:web && pnpm build:lib",
         "format": "prettier --write .",
-        "build:lib": "node ./scripts/esbuild.js",
+        "build:lib": "tsdown",
         "dev:web": "vite",
         "build:web": "vite build && node scripts/postbuild.js",
         "preview:web": "vite preview"
