@@ -216,8 +216,8 @@ To test `pagecrypt/core` and verify encryption in the browser, use the button at
 After testing all changes, here's how to publish them to npm:
 
 - In the project root, run `pnpm build`
-- Run `cd dist && npm pack`
-- Verify the output `pagecrypt-*.tgz`
+- Run `npm pack`
+- Verify the output in `pagecrypt-*.tgz`
 - Good idea to verify with `npm publish --dry-run` first.
 - Then, publish with `npm publish`
 
@@ -231,6 +231,6 @@ After testing all changes, here's how to publish them to npm:
 
 Copyright (c) 2015 Maximillian Laumeister
 
-Copyright (c) 2021-2025 Samuel Plumppu
+Copyright (c) 2021-2026 Samuel Plumppu
 
 This is a complete rewrite of the MIT-licensed [PageCrypt](https://github.com/MaxLaumeister/PageCrypt) created by Maximillian Laumeister.
