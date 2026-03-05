@@ -6,36 +6,27 @@ import { resolve } from 'node:path'
 import { encrypt, encryptHTML, generatePassword } from 'pagecrypt'
 import { writeFile } from 'node:fs/promises'
 
-/*
-
-IDEA: Remove pnpm overhead for each test case by defining test cases directly in TS instead.
-
-"test:cli": "pagecrypt test.html out-cli.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY",
-"test:cli-gen": "pagecrypt test.html out-cli-gen.html --generate-password 64",
-"test:cli-iterations": "pagecrypt test.html out-cli-iterations.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY --iterations 3e6",
-"test:cli-gen-iterations": "pagecrypt test.html out-cli-gen-iterations.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY --generate-password 59 --iterations 2500000",
-"test:cli-big": "pagecrypt test-big.html out-cli-big.html eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY",
-
-*/
-
 const exec = promisify(execCallback)
 
 const TEST_PASSWORD =
     'eRx1sD0LrHTNubycv1IYgyNqU3Qc9GKPGcl3XT63JG7djgMxU9etkVNcK5Hak5GWDzm4mx6AQFlpOPsY'
+
+const PAGECRYPT_CLI = './node_modules/.bin/pagecrypt'
+
+const inputFile = 'test.html'
 
 /**
  * Defines the output file and command to execute for each CLI test.
  * Will be updated with generated passwords so everything can be saved to the test result file.
  */
 const CLI_PASSWORDS = {
-    'out-cli.html': 'pnpm test:cli',
-    'out-cli-gen.html': 'pnpm test:cli-gen',
-    'out-cli-iterations.html': 'pnpm test:cli-iterations',
-    'out-cli-gen-iterations.html': 'pnpm test:cli-gen-iterations',
-    'out-cli-big.html': 'pnpm test:cli-big',
+    'out-cli.html': `${PAGECRYPT_CLI} ${inputFile} out-cli.html ${TEST_PASSWORD}`,
+    'out-cli-gen.html': `${PAGECRYPT_CLI} ${inputFile} out-cli-gen.html --generate-password 64`,
+    'out-cli-iterations.html': `${PAGECRYPT_CLI} ${inputFile} out-cli-iterations.html ${TEST_PASSWORD} --iterations 3e6`,
+    'out-cli-gen-iterations.html': `${PAGECRYPT_CLI} ${inputFile} out-cli-gen-iterations.html ${TEST_PASSWORD} --generate-password 59 --iterations 2500000`,
+    'out-cli-big.html': `${PAGECRYPT_CLI} test-big.html out-cli-big.html ${TEST_PASSWORD}`,
 }
 
-const inputFile = 'test.html'
 const inputHTML = readFileSync(resolve(inputFile), 'utf-8')
 
 const jsOutFile1 = 'out-js.html'
@@ -111,7 +102,7 @@ await Promise.all([
     }),
     suite('pagecrypt CLI', () => {
         Object.entries(CLI_PASSWORDS).map(async ([file, cmd]) => {
-            test(cmd.replace('pnpm', ''), async (t: TestContext) => {
+            test(file, async (t: TestContext) => {
                 const { stdout, stderr } = await exec(cmd)
 
                 t.assert.strictEqual(stderr.length, 0)
