@@ -1,5 +1,26 @@
 # Changelog for `pagecrypt`
 
+## 7.1.0 - 2026-03-05
+
+### Features
+
+- 54% smaller package size when unpacked, down from 76.2 kB to 35.2 kB.
+    - Depending on your use case, you usually only import a small part of the library. Despite that, this is still a big improvement.
+
+- Improved build: Replaced `esbuild` with `tsdown` which is based on `rolldown`. This gives several benefits:
+    - Smaller npm package size by reducing duplication in the bundled code.
+    - For local development of the `pagecrypt` library, this makes project maintenance much easier.
+
+- Improved testing to help improve code quality and catch potential regressions:
+    - Added more extensive unit- and integration tests to cover a larger part of the library's public APIs.
+    - Switched from the custom test runner to `node:test`
+
+### Fixes
+
+- Removed unnecessary files that were previously included in the published npm package.
+
+---
+
 ## 7.0.2 - 2025-08-01
 
 ### Fixes
