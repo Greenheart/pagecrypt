@@ -19,7 +19,6 @@
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.2",
         "@types/node": "^25.3.3",
-        "esbuild": "^0.27.3",
         "html-minifier-terser": "^7.2.0",
         "prettier": "^3.8.1",
         "publint": "^0.3.18",
@@ -77,10 +76,5 @@
         "semi": false,
         "singleQuote": true,
         "tabWidth": 4
-    },
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild"
-        ]
     }
 }

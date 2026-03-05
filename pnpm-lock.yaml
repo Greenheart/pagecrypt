@@ -14,9 +14,6 @@ importers:
       '@types/node':
         specifier: ^25.3.3
         version: 25.3.3
-      esbuild:
-        specifier: ^0.27.3
-        version: 0.27.3
       html-minifier-terser:
         specifier: ^7.2.0
         version: 7.2.0
