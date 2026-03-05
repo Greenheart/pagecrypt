@@ -55,21 +55,6 @@ const JS_API_PASSWORDS = {
 // Define all test suites in a promise to allow us to generate
 // the test results file after all tests are done
 await Promise.all([
-    suite('pagecrypt CLI', () => {
-        Object.entries(CLI_PASSWORDS).map(async ([file, cmd]) => {
-            test(cmd.replace('pnpm', ''), async (t: TestContext) => {
-                const { stdout, stderr } = await exec(cmd)
-
-                t.assert.strictEqual(stderr.length, 0)
-
-                CLI_PASSWORDS[file as keyof typeof CLI_PASSWORDS] =
-                    stdout.includes('🔑')
-                        ? // When generating passwords with the CLI, capture the output
-                          stdout.split('🔑: ')[1].split('\n')[0]
-                        : TEST_PASSWORD
-            })
-        })
-    }),
     suite('pagecrypt JS API', () => {
         test(encrypt.name, async (t: TestContext) => {
             await encrypt(inputFile, jsOutFile1, TEST_PASSWORD)
@@ -123,6 +108,21 @@ await Promise.all([
                 await writeFile(jsOutFile3, withIterations)
             },
         )
+    }),
+    suite('pagecrypt CLI', () => {
+        Object.entries(CLI_PASSWORDS).map(async ([file, cmd]) => {
+            test(cmd.replace('pnpm', ''), async (t: TestContext) => {
+                const { stdout, stderr } = await exec(cmd)
+
+                t.assert.strictEqual(stderr.length, 0)
+
+                CLI_PASSWORDS[file as keyof typeof CLI_PASSWORDS] =
+                    stdout.includes('🔑')
+                        ? // When generating passwords with the CLI, capture the output
+                          stdout.split('🔑: ')[1].split('\n')[0]
+                        : TEST_PASSWORD
+            })
+        })
     }),
 ])
 
