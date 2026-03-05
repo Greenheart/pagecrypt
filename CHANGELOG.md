@@ -6,6 +6,8 @@
 
 - Improved error message when SubtleCrypto is missing
 
+---
+
 ## 7.0.1 - 2025-07-07
 
 ### Fixes
@@ -14,11 +16,15 @@
 - Add tests for large 20 MB payload.
 - Maintenance: Simplify browser tests and test results page.
 
+---
+
 ## 7.0.0 - 2025-05-29
 
 - Perform Base64 encoding with modern ECMAScript features to remove dependency `rfc4648`. This reduces the size of `decrypt-template.html` by 16% (-985 bytes), and also makes this library free of runtime dependencies! 🎉
 - Switch license to `LGPL-3.0-or-later`. This is a better choice for a library like pagecrypt.
 - Update dev dependencies to latest versions.
+
+---
 
 ## 6.2.0 - 2025-05-01
 
@@ -35,11 +41,15 @@
 - Improved CLI error handling if arguments are missing.
 - Fix template string to work with new esbuild version.
 
+---
+
 ## 6.1.1 - 2023-07-17
 
 ### Fixes
 
 - Maintenance: Update dev dependencies to latest versions.
+
+---
 
 ## 6.1.0 - 2023-03-24
 
@@ -56,11 +66,15 @@ Two improvements inspired by [Harry Rabin](https://github.com/harryrabin) - than
 - Upgrade dependencies to latest versions.
 - Export TypeScript type definitions in npm package - Thanks to [Bjorn Lu](https://github.com/bluwy) and <https://github.com/bluwy/publint>
 
+---
+
 ## 6.0.1 - 2022-12-31
 
 ### Fixes
 
 - Cleanup README. No code changes.
+
+---
 
 ## 6.0.0 - 2022-12-27
 
@@ -80,6 +94,8 @@ This is a major upgrade, reducing the amount of CSS by 50%, removing about 40% o
 - Prefer `globalThis` over `window` in Node 19 - thanks [@metonym](https://github.com/metonym)
 - Reduce CSS size with 50% by replacing Tailwind CSS with custom CSS. This also greatly simplifies the development and build setup for this project.
 - Update dependencies to latest versions.
+
+---
 
 ## 5.4.0 - 2022-04-18
 
