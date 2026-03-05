@@ -19,9 +19,7 @@ async function encryptFile(
 ) {
     let content: string
     try {
-        content = await readFile(resolve(process.cwd(), inputFile), {
-            encoding: 'utf-8',
-        })
+        content = await readFile(resolve(process.cwd(), inputFile), 'utf-8')
     } catch (e) {
         console.error('❌ Error reading file: ', e)
         process.exit(1)
@@ -40,9 +38,7 @@ async function encryptFile(
 async function saveFile(outputFile: string, content: string) {
     await mkdir(dirname(outputFile), { recursive: true })
 
-    return writeFile(resolve(process.cwd(), outputFile), content, {
-        encoding: 'utf8',
-    })
+    return writeFile(resolve(process.cwd(), outputFile), content, 'utf-8')
 }
 
 /**

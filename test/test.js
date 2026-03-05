@@ -42,7 +42,7 @@ async function main() {
     const inputFile = 'test.html'
     const outputFile = 'out-js.html'
 
-    const inputHTML = await readFile(resolve(inputFile), { encoding: 'utf-8' })
+    const inputHTML = await readFile(resolve(inputFile), 'utf-8')
     console.time('✅ encrypt()')
     await encrypt(inputFile, outputFile, TEST_PASSWORD)
     console.timeEnd('✅ encrypt()')
@@ -70,9 +70,7 @@ async function main() {
         [outputFile3]: TEST_PASSWORD,
     }
 
-    const indexHTML = await readFile(resolve('test-results.html'), {
-        encoding: 'utf-8',
-    })
+    const indexHTML = await readFile(resolve('test-results.html'), 'utf-8')
 
     const results = Object.entries(outputFiles)
         .map(([file, pwd]) => {

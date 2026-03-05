@@ -5,7 +5,7 @@ const HTML_FILE_PATH = resolve('web', 'build', 'index.html')
 const HTML_OUT_FILE_PATH = resolve('src', 'decrypt-template.html')
 
 async function main() {
-    const htmlInput = await readFile(HTML_FILE_PATH, { encoding: 'utf-8' })
+    const htmlInput = await readFile(HTML_FILE_PATH, 'utf-8')
     const htmlOut = applyAllTransformations(
         [preparePayloadTag, cleanStyleTag, fixWhiteSpace],
         htmlInput,
