@@ -1,6 +1,6 @@
 {
     "name": "pagecrypt",
-    "version": "7.0.2",
+    "version": "7.1.0",
     "description": "Easily add client-side password-protection to your Single Page Applications, static websites and HTML files.",
     "type": "module",
     "scripts": {
