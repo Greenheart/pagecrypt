@@ -4,7 +4,7 @@ import { promisify } from 'node:util'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { encrypt, encryptHTML, generatePassword } from 'pagecrypt'
-import { writeFile } from 'node:fs/promises'
+import { stat, writeFile } from 'node:fs/promises'
 
 const exec = promisify(execCallback)
 
@@ -49,7 +49,11 @@ await Promise.all([
     suite('pagecrypt JS API', () => {
         test(encrypt.name, async (t: TestContext) => {
             await encrypt(inputFile, jsOutFile1, TEST_PASSWORD)
-            // TODO: assert that the output file exists
+            const fileStats = await stat(resolve(jsOutFile1))
+            t.assert.ok(
+                new Date().getTime() - fileStats.mtime.getTime() < 30_000,
+                'output file was modified recently',
+            )
         })
 
         test(
@@ -81,7 +85,12 @@ await Promise.all([
         test(encryptHTML.name, async (t: TestContext) => {
             const generatedPassword = generatePassword(20)
             const encrypted = await encryptHTML(inputHTML, generatedPassword)
-            // TODO: verify the output of encryptHTML
+            t.assert.match(encrypted, /<pre class="hidden"/g)
+            t.assert.ok(
+                encrypted.indexOf('<pre class="hidden"') + 1000 <
+                    encrypted.lastIndexOf('</pre>'),
+                'ensure some encrypted content was added and rather than leaving an empty element',
+            )
             await writeFile(jsOutFile2, encrypted)
             JS_API_PASSWORDS[jsOutFile2] = generatedPassword
         })
@@ -89,13 +98,27 @@ await Promise.all([
         test(
             encryptHTML.name + ' custom iterations',
             async (t: TestContext) => {
+                const iterations = 2.1e6
                 const withIterations = await encryptHTML(
                     inputHTML,
                     TEST_PASSWORD,
-                    2.1e6,
+                    iterations,
                 )
-                // TODO: Assert the output of encryptHTML
-                // TODO: assert the iterations were included in the output
+                t.assert.match(
+                    withIterations,
+                    /data-i="[^"]+"/,
+                    'iterations should be added to output HTML',
+                )
+                const outputIterations = (withIterations.match(
+                    /data-i="([^"]+)"/,
+                ) ?? [])[1]
+
+                t.assert.strictEqual(
+                    Number(outputIterations),
+                    iterations,
+                    'iterations should match',
+                )
+
                 await writeFile(jsOutFile3, withIterations)
             },
         )
