@@ -57,10 +57,15 @@ async function getEncryptedPayload(content: string, password: string, iterations
  * @param iterations The number of iterations to derive the key from the password.
  * @returns A promise that will resolve with the encrypted HTML content
  */
-export async function encryptHTML(inputHTML: string, password: string, iterations: number = 2e6) {
+export async function encryptHTML(
+    inputHTML: string,
+    password: string,
+    iterations: number = 2e6,
+    compress?: boolean 
+) {
     return (decryptTemplate as string).replace(
         '<encrypted-payload></encrypted-payload>',
-        `<pre class="hidden" data-i="${iterations.toExponential()}">${await getEncryptedPayload(
+        `<pre class="hidden" ${compress && 'data-c=gzip'} data-i="${iterations.toExponential()}">${await getEncryptedPayload(
             inputHTML,
             password,
             iterations,
