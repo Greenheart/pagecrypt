@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="referrer" content="no-referrer" />
+        <title>PageCrypt — Offline HTML encryption</title>
+        <link rel="stylesheet" href="./style.css" />
+        <script type="module" src="./app.js"></script>
+    </head>
+    <body>
+        <div class="app">
+            <header class="topbar">
+                <a class="brand" href="#">
+                    <span class="brand-mark" aria-hidden="true"
+                        ><svg viewBox="0 0 24 24" fill="none">
+                            <rect
+                                x="5"
+                                y="10"
+                                width="14"
+                                height="11"
+                                rx="3"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            /></svg
+                    ></span>
+                    <span
+                        >PageCrypt<span class="brand-sub" data-i18n="workbench"
+                            >Offline workbench</span
+                        ></span
+                    >
+                </a>
+                <div class="language-picker">
+                    <label for="language" data-i18n="language">Language</label
+                    ><select id="language">
+                        <option value="en" lang="en">English</option>
+                        <option value="zh-CN" lang="zh-CN">简体中文</option>
+                    </select>
+                </div>
+            </header>
+            <section class="hero">
+                <div class="eyebrow" data-i18n="eyebrow">HTML ENCRYPTION</div>
+                <h1 data-i18n="heading">Protect a page with a password.</h1>
+                <p data-i18n="introduction">
+                    Choose an HTML file, set a password, and download your encrypted page.
+                    Everything runs in your browser.
+                </p>
+            </section>
+            <noscript
+                ><div class="notice error">
+                    Enable JavaScript to use PageCrypt. / 请启用 JavaScript 以使用 PageCrypt。
+                </div></noscript
+            >
+            <div id="environmentError" class="notice error" hidden role="alert"></div>
+            <nav class="tabs" role="tablist" data-i18n-label="tabs" aria-label="Tools">
+                <button
+                    id="tabEncrypt"
+                    class="tab active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="encryptPanel"
+                    data-i18n="encryptTab"
+                >
+                    Encrypt
+                </button>
+                <button
+                    id="tabDecrypt"
+                    class="tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="decryptPanel"
+                    tabindex="-1"
+                    data-i18n="decryptTab"
+                >
+                    Decrypt
+                </button>
+                <button
+                    id="tabHelp"
+                    class="tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="helpPanel"
+                    tabindex="-1"
+                    data-i18n="helpTab"
+                >
+                    Help
+                </button>
+            </nav>
+            <main>
+                <section id="encryptPanel" role="tabpanel" aria-labelledby="tabEncrypt">
+                    <div class="layout">
+                        <form id="encryptForm" class="main-column" novalidate>
+                            <fieldset id="encryptFields">
+                                <section class="card">
+                                    <div class="section-heading">
+                                        <span class="step">01</span>
+                                        <h2 data-i18n="importHTML">Add your page</h2>
+                                        <span class="subtle section-note">UTF-8 · HTML</span>
+                                    </div>
+                                    <div class="segmented" role="group" data-i18n-label="inputMode">
+                                        <button
+                                            id="modeFile"
+                                            type="button"
+                                            class="selected"
+                                            aria-pressed="true"
+                                            data-i18n="fileMode"
+                                        >
+                                            Choose a file
+                                        </button>
+                                        <button
+                                            id="modeText"
+                                            type="button"
+                                            aria-pressed="false"
+                                            data-i18n="textMode"
+                                        >
+                                            Paste HTML
+                                        </button>
+                                    </div>
+                                    <div id="fileInputArea">
+                                        <label id="dropZone" class="drop-zone" for="inputFile">
+                                            <span class="file-symbol" aria-hidden="true"
+                                                >&lt;/&gt;</span
+                                            >
+                                            <strong id="fileLabel" data-i18n="chooseHTML"
+                                                >Choose an HTML file or drop it here</strong
+                                            >
+                                            <span id="fileDetail" data-i18n="utf8"
+                                                >UTF-8 HTML files</span
+                                            >
+                                            <input
+                                                id="inputFile"
+                                                class="file-input"
+                                                type="file"
+                                                accept=".html,.htm,text/html"
+                                                data-i18n-label="chooseHTML"
+                                            />
+                                        </label>
+                                    </div>
+                                    <div id="textInputArea" hidden>
+                                        <label
+                                            class="field-label"
+                                            for="inputHTML"
+                                            data-i18n="source"
+                                            >HTML source</label
+                                        >
+                                        <textarea
+                                            id="inputHTML"
+                                            class="code-input"
+                                            rows="9"
+                                            spellcheck="false"
+                                            autocomplete="off"
+                                            placeholder="<!DOCTYPE html>"
+                                        ></textarea>
+                                        <div class="field-foot">
+                                            <span id="textSize" class="subtle">0 B</span
+                                            ><button
+                                                id="loadExample"
+                                                class="text-button"
+                                                type="button"
+                                                data-i18n="example"
+                                            >
+                                                Load an example
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="inputWarnings" class="notice warning" hidden></div>
+                                    <div class="field mt">
+                                        <label
+                                            class="field-label"
+                                            for="outputName"
+                                            data-i18n="outputName"
+                                            >Output file name</label
+                                        ><input
+                                            id="outputName"
+                                            type="text"
+                                            value="encrypted.html"
+                                            autocomplete="off"
+                                            spellcheck="false"
+                                        />
+                                    </div>
+                                </section>
+                                <section class="card">
+                                    <div class="section-heading">
+                                        <span class="step">02</span>
+                                        <h2 data-i18n="passwordTitle">Set a password</h2>
+                                    </div>
+                                    <label class="option"
+                                        ><input id="generateEnabled" type="checkbox" /><span
+                                            ><strong data-i18n="randomPassword"
+                                                >Generate a random password</strong
+                                            ></span
+                                        ></label
+                                    >
+                                    <div id="generatorOptions" class="sub-options" hidden>
+                                        <div class="inline-fields">
+                                            <div class="field">
+                                                <label
+                                                    class="field-label"
+                                                    for="passwordLength"
+                                                    data-i18n="passwordLength"
+                                                    >Password length</label
+                                                ><input
+                                                    id="passwordLength"
+                                                    type="number"
+                                                    value="80"
+                                                    min="1"
+                                                    max="10000"
+                                                    step="1"
+                                                />
+                                            </div>
+                                            <button
+                                                id="generateNow"
+                                                class="button secondary"
+                                                type="button"
+                                                data-i18n="regenerate"
+                                            >
+                                                Generate
+                                            </button>
+                                        </div>
+                                        <label class="option compact"
+                                            ><input id="charsetEnabled" type="checkbox" /><span
+                                                data-i18n="customCharacters"
+                                                >Use a custom character set</span
+                                            ></label
+                                        >
+                                        <div id="charsetArea" hidden>
+                                            <label
+                                                class="field-label"
+                                                for="charset"
+                                                data-i18n="characters"
+                                                >Characters</label
+                                            ><input
+                                                id="charset"
+                                                type="text"
+                                                value="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                                                spellcheck="false"
+                                                autocomplete="off"
+                                            />
+                                            <p class="hint" data-i18n="charactersHint"></p>
+                                        </div>
+                                    </div>
+                                    <div class="field mt">
+                                        <label
+                                            class="field-label"
+                                            for="password"
+                                            data-i18n="password"
+                                            >Password</label
+                                        >
+                                        <div class="password-row">
+                                            <input
+                                                id="password"
+                                                type="password"
+                                                autocomplete="new-password"
+                                                spellcheck="false"
+                                                data-i18n-placeholder="passwordPlaceholder"
+                                            /><button
+                                                type="button"
+                                                data-toggle="password"
+                                                class="small-button"
+                                                aria-pressed="false"
+                                                aria-controls="password"
+                                                data-i18n="show"
+                                            >
+                                                Show</button
+                                            ><button
+                                                id="copyPassword"
+                                                type="button"
+                                                class="small-button"
+                                                data-i18n="copy"
+                                            >
+                                                Copy
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="confirmArea" class="field mt">
+                                        <label
+                                            class="field-label"
+                                            for="confirmPassword"
+                                            data-i18n="confirmPassword"
+                                            >Confirm password</label
+                                        ><input
+                                            id="confirmPassword"
+                                            type="password"
+                                            autocomplete="new-password"
+                                            spellcheck="false"
+                                        />
+                                    </div>
+                                    <p class="hint" data-i18n="passwordHint"></p>
+                                </section>
+                                <section class="card">
+                                    <div class="section-heading">
+                                        <span class="step">03</span>
+                                        <h2 data-i18n="options">Options</h2>
+                                    </div>
+                                    <label class="option"
+                                        ><input id="iterationsEnabled" type="checkbox" /><span
+                                            ><strong data-i18n="customIterations"
+                                                >Customize key derivation iterations</strong
+                                            ></span
+                                        ></label
+                                    >
+                                    <div id="iterationsArea" class="sub-options" hidden>
+                                        <label
+                                            class="field-label"
+                                            for="iterations"
+                                            data-i18n="iterations"
+                                            >PBKDF2 iterations</label
+                                        ><input
+                                            id="iterations"
+                                            type="text"
+                                            inputmode="numeric"
+                                            value="2000000"
+                                            autocomplete="off"
+                                        />
+                                        <p class="hint" data-i18n="iterationsHint"></p>
+                                        <div
+                                            id="iterationWarning"
+                                            class="notice warning"
+                                            hidden
+                                        ></div>
+                                    </div>
+                                    <div class="option-separator"></div>
+                                    <label class="option"
+                                        ><input id="magicEnabled" type="checkbox" /><span
+                                            ><strong data-i18n="magicEnabled"
+                                                >Create a password link</strong
+                                            ></span
+                                        ></label
+                                    >
+                                    <div id="magicArea" class="sub-options" hidden>
+                                        <label
+                                            class="field-label"
+                                            for="deploymentURL"
+                                            data-i18n="deploymentURL"
+                                            >Published page URL</label
+                                        ><input
+                                            id="deploymentURL"
+                                            type="url"
+                                            placeholder="https://example.com/private.html"
+                                            autocomplete="off"
+                                            spellcheck="false"
+                                        />
+                                        <p class="hint" data-i18n="magicHint"></p>
+                                    </div>
+                                    <div class="option-separator"></div>
+                                    <label class="option"
+                                        ><input id="verifyEnabled" type="checkbox" checked /><span
+                                            ><strong data-i18n="verifyEnabled"
+                                                >Verify the encrypted output</strong
+                                            ><small data-i18n="verifyHint"></small></span
+                                    ></label>
+                                </section>
+                            </fieldset>
+                            <div
+                                id="encryptMessage"
+                                class="notice"
+                                role="status"
+                                aria-live="polite"
+                                hidden
+                            ></div>
+                            <div class="actions">
+                                <button
+                                    id="encryptButton"
+                                    class="button primary"
+                                    type="submit"
+                                    data-i18n="encrypt"
+                                >
+                                    Encrypt HTML</button
+                                ><button
+                                    id="cancelEncrypt"
+                                    class="button secondary"
+                                    type="button"
+                                    hidden
+                                    data-i18n="cancel"
+                                >
+                                    Cancel</button
+                                ><button
+                                    id="clearEncrypt"
+                                    class="button quiet"
+                                    type="button"
+                                    data-i18n="clear"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                        </form>
+                        <aside class="sidebar">
+                            <section id="encryptResult" class="card result-card" hidden>
+                                <span class="result-badge" data-i18n="encrypted"
+                                    >Encryption complete</span
+                                >
+                                <h2 id="resultName"></h2>
+                                <p id="resultMeta" class="hint"></p>
+                                <p id="verificationStatus" class="verification"></p>
+                                <button
+                                    id="saveEncrypted"
+                                    class="button primary full"
+                                    type="button"
+                                    data-i18n="saveEncrypted"
+                                >
+                                    Download encrypted HTML
+                                </button>
+                                <label
+                                    class="field-label mt"
+                                    for="resultPassword"
+                                    data-i18n="resultPassword"
+                                    >Password for this page</label
+                                >
+                                <div class="password-row">
+                                    <input
+                                        id="resultPassword"
+                                        type="password"
+                                        readonly
+                                        autocomplete="off"
+                                    /><button
+                                        type="button"
+                                        data-toggle="resultPassword"
+                                        class="small-button"
+                                        aria-pressed="false"
+                                        aria-controls="resultPassword"
+                                        data-i18n="show"
+                                    >
+                                        Show</button
+                                    ><button
+                                        id="copyResultPassword"
+                                        type="button"
+                                        class="small-button"
+                                        data-i18n="copy"
+                                    >
+                                        Copy
+                                    </button>
+                                </div>
+                                <div id="magicResultArea" hidden>
+                                    <label
+                                        class="field-label mt"
+                                        for="magicResult"
+                                        data-i18n="magicLink"
+                                        >Password link</label
+                                    ><textarea
+                                        id="magicResult"
+                                        rows="3"
+                                        readonly
+                                        spellcheck="false"
+                                    ></textarea
+                                    ><button
+                                        id="copyMagic"
+                                        class="button secondary full mt"
+                                        type="button"
+                                        data-i18n="copyLink"
+                                    >
+                                        Copy link
+                                    </button>
+                                </div>
+                                <details class="technical">
+                                    <summary data-i18n="checksum">SHA-256 checksum</summary>
+                                    <textarea
+                                        id="outputHash"
+                                        class="code-input"
+                                        rows="3"
+                                        readonly
+                                        data-i18n-label="checksum"
+                                    ></textarea>
+                                </details>
+                            </section>
+                            <section class="summary-card">
+                                <div class="eyebrow" data-i18n="configuration">
+                                    CURRENT SETTINGS
+                                </div>
+                                <h2 data-i18n="summary">Ready to encrypt</h2>
+                                <dl>
+                                    <div>
+                                        <dt data-i18n="algorithm">Encryption</dt>
+                                        <dd>AES-GCM · 256</dd>
+                                    </div>
+                                    <div>
+                                        <dt data-i18n="keyDerivation">Key derivation</dt>
+                                        <dd>PBKDF2 · SHA-256</dd>
+                                    </div>
+                                    <div>
+                                        <dt data-i18n="iterations">PBKDF2 iterations</dt>
+                                        <dd id="summaryIterations">2,000,000</dd>
+                                    </div>
+                                    <div>
+                                        <dt data-i18n="passwordSource">Password source</dt>
+                                        <dd id="summaryPassword" data-i18n="manual">
+                                            Entered manually
+                                        </dd>
+                                    </div>
+                                </dl>
+                                <p data-i18n="summaryHint"></p>
+                            </section>
+                            <section class="note-card">
+                                <h3 data-i18n="resourcesTitle">Linked resources</h3>
+                                <p data-i18n="resourcesHint"></p>
+                            </section>
+                        </aside>
+                    </div>
+                </section>
+                <section id="decryptPanel" role="tabpanel" aria-labelledby="tabDecrypt" hidden>
+                    <div class="layout">
+                        <form id="decryptForm" class="main-column" novalidate>
+                            <fieldset id="decryptFields">
+                                <section class="card">
+                                    <div class="section-heading">
+                                        <span class="step">01</span>
+                                        <h2 data-i18n="importEncrypted">Add an encrypted page</h2>
+                                    </div>
+                                    <label id="decryptDropZone" class="drop-zone" for="decryptFile"
+                                        ><span class="file-symbol" aria-hidden="true"
+                                            >&lt;*&gt;</span
+                                        ><strong id="decryptFileLabel" data-i18n="chooseEncrypted"
+                                            >Choose an encrypted HTML file or drop it here</strong
+                                        ><span id="decryptFileDetail" data-i18n="encryptedFormat"
+                                            >PageCrypt HTML files</span
+                                        ><input
+                                            id="decryptFile"
+                                            class="file-input"
+                                            type="file"
+                                            accept=".html,.htm,text/html"
+                                            data-i18n-label="chooseEncrypted"
+                                    /></label>
+                                    <div id="payloadInfo" class="notice info" hidden></div>
+                                    <div class="field mt">
+                                        <label
+                                            for="decryptPassword"
+                                            class="field-label"
+                                            data-i18n="password"
+                                            >Password</label
+                                        >
+                                        <div class="password-row">
+                                            <input
+                                                id="decryptPassword"
+                                                type="password"
+                                                autocomplete="off"
+                                                spellcheck="false"
+                                            /><button
+                                                type="button"
+                                                data-toggle="decryptPassword"
+                                                class="small-button"
+                                                aria-pressed="false"
+                                                aria-controls="decryptPassword"
+                                                data-i18n="show"
+                                            >
+                                                Show
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="field mt">
+                                        <label
+                                            for="decryptedName"
+                                            class="field-label"
+                                            data-i18n="decryptedName"
+                                            >Restored file name</label
+                                        ><input
+                                            id="decryptedName"
+                                            type="text"
+                                            value="decrypted.html"
+                                            autocomplete="off"
+                                        />
+                                    </div>
+                                </section>
+                            </fieldset>
+                            <div
+                                id="decryptMessage"
+                                class="notice"
+                                role="status"
+                                aria-live="polite"
+                                hidden
+                            ></div>
+                            <div class="actions">
+                                <button
+                                    id="decryptButton"
+                                    class="button primary"
+                                    type="submit"
+                                    data-i18n="decrypt"
+                                >
+                                    Decrypt HTML</button
+                                ><button
+                                    id="cancelDecrypt"
+                                    class="button secondary"
+                                    type="button"
+                                    hidden
+                                    data-i18n="cancel"
+                                >
+                                    Cancel</button
+                                ><button
+                                    id="clearDecrypt"
+                                    class="button quiet"
+                                    type="button"
+                                    data-i18n="clear"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                            <section id="decryptResult" class="card mt" hidden>
+                                <h2 data-i18n="restoredSource">Restored HTML source</h2>
+                                <p id="decryptedMeta" class="hint"></p>
+                                <textarea
+                                    id="decryptedSource"
+                                    class="code-input mt"
+                                    rows="14"
+                                    readonly
+                                    spellcheck="false"
+                                    data-i18n-label="restoredSource"
+                                ></textarea>
+                                <div class="actions">
+                                    <button
+                                        id="saveDecrypted"
+                                        class="button primary"
+                                        type="button"
+                                        data-i18n="saveDecrypted"
+                                    >
+                                        Download restored HTML</button
+                                    ><button
+                                        id="copyDecrypted"
+                                        class="button secondary"
+                                        type="button"
+                                        data-i18n="copySource"
+                                    >
+                                        Copy source
+                                    </button>
+                                </div>
+                            </section>
+                        </form>
+                        <aside class="sidebar">
+                            <section class="summary-card">
+                                <div class="eyebrow" data-i18n="decryptEyebrow">RESTORE A PAGE</div>
+                                <h2 data-i18n="decryptHeading">View the original HTML.</h2>
+                                <p data-i18n="decryptHint"></p>
+                            </section>
+                        </aside>
+                    </div>
+                </section>
+                <section id="helpPanel" role="tabpanel" aria-labelledby="tabHelp" hidden>
+                    <div class="help-grid">
+                        <section class="card">
+                            <h2 data-i18n="helpTitle">Encrypt a page</h2>
+                            <ol class="steps-list">
+                                <li data-i18n="helpStep1"></li>
+                                <li data-i18n="helpStep2"></li>
+                                <li data-i18n="helpStep3"></li>
+                                <li data-i18n="helpStep4"></li>
+                            </ol>
+                        </section>
+                        <section class="card">
+                            <h2 data-i18n="offlineTitle">Use it offline</h2>
+                            <p class="mt" data-i18n="offlineHelp"></p>
+                            <p data-i18n="compatibilityHelp"></p>
+                            <p data-i18n="languageHelp"></p>
+                        </section>
+                        <section class="card full-span">
+                            <h2 data-i18n="aboutTitle">About PageCrypt</h2>
+                            <p id="version" class="mt"></p>
+                            <p>
+                                <a
+                                    class="text-button"
+                                    href="https://github.com/Greenheart/pagecrypt"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    data-i18n="project"
+                                    >Source on GitHub</a
+                                >
+                                · <span data-i18n="license">LGPL-3.0-or-later</span>
+                            </p>
+                        </section>
+                    </div>
+                </section>
+            </main>
+            <footer>
+                <span>PageCrypt · LGPL-3.0-or-later</span
+                ><span id="runtimeStatus" data-i18n="ready">Ready for offline use</span>
+            </footer>
+        </div>
+        <div id="toast" role="status" aria-live="polite" hidden></div>
+    </body>
+</html>

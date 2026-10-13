@@ -12,12 +12,17 @@
         "build:lib": "tsdown",
         "dev:web": "vite",
         "build:web": "vite build && node scripts/postbuild.ts",
-        "preview:web": "vite preview"
+        "preview:web": "vite preview",
+        "dev:gui": "vite --config vite.workbench.config.js",
+        "build:gui": "pnpm build:web && vite build --config vite.workbench.config.js",
+        "preview:gui": "vite preview --config vite.workbench.config.js",
+        "test:gui": "pnpm build:gui && playwright test"
     },
     "author": "Samuel Plumppu",
     "license": "LGPL-3.0-or-later",
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.5",
+        "@playwright/test": "^1.64.0",
         "@types/node": "^26.1.1",
         "html-minifier-next": "^7.4.0",
         "prettier": "^3.9.5",
