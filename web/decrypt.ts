@@ -3,43 +3,107 @@ import { parse } from '../src/base64'
 function find<T>(selector: string): T {
     const element = document.querySelector(selector) as T
     if (element) return element
-
-    throw new Error(`No element found with selector: "${selector}"`)
+    throw new Error('No element found with selector: ' + selector)
 }
 
-const pwd = find<HTMLInputElement>('input')
-const header = find<HTMLDivElement>('header')
+const pwd = find<HTMLInputElement>('#pwd')
 const msg = find<HTMLParagraphElement>('#msg')
 const form = find<HTMLFormElement>('form')
-const load = find<HTMLDivElement>('#load')
+const unlock = find<HTMLInputElement>('#unlock')
+const languageSelect = find<HTMLSelectElement>('#language')
+
+const messages = {
+    en: {
+        title: 'Protected Page',
+        protected: 'This page is password protected.',
+        password: 'Password',
+        unlock: 'Unlock',
+        unlocking: 'Unlocking…',
+        wrongPassword: 'Incorrect password. Try again.',
+        missingPayload: 'The encrypted content is missing or invalid.',
+        missingCrypto: 'This browser does not support decryption.',
+        language: 'Language',
+    },
+    'zh-CN': {
+        title: '受密码保护的页面',
+        protected: '此页面受密码保护。',
+        password: '输入密码',
+        unlock: '解锁',
+        unlocking: '正在解锁…',
+        wrongPassword: '密码不正确，请重试。',
+        missingPayload: '加密内容缺失或无效。',
+        missingCrypto: '此浏览器不支持解密。',
+        language: '语言',
+    },
+}
+type Language = keyof typeof messages
+type Message = 'protected' | 'wrongPassword' | 'missingPayload' | 'missingCrypto'
+let language: Language = document.documentElement.lang === 'zh-CN' ? 'zh-CN' : 'en'
+let message: Message = 'protected'
+let busy = false
+let ready = false
+
+function render() {
+    const text = messages[language]
+    document.documentElement.lang = language
+    document.title = text.title
+    languageSelect.value = language
+    languageSelect.setAttribute('aria-label', text.language)
+    msg.textContent = text[message]
+    msg.classList.toggle('error', message !== 'protected')
+    pwd.placeholder = text.password
+    pwd.setAttribute('aria-label', text.password)
+    pwd.setAttribute('aria-invalid', String(message === 'wrongPassword'))
+    pwd.disabled = busy || !ready
+    unlock.value = busy ? text.unlocking : text.unlock
+    unlock.disabled = busy || !ready
+    form.setAttribute('aria-busy', String(busy))
+}
+
+languageSelect.addEventListener('change', () => {
+    language = languageSelect.value === 'zh-CN' ? 'zh-CN' : 'en'
+    render()
+})
+pwd.addEventListener('input', () => {
+    if (message === 'wrongPassword') {
+        message = 'protected'
+        render()
+    }
+})
+render()
 
 let salt: Uint8Array<ArrayBuffer>,
     iv: Uint8Array<ArrayBuffer>,
     ciphertext: Uint8Array<ArrayBuffer>,
     iterations: number
 
+const subtle =
+    window.crypto?.subtle ||
+    (window.crypto as unknown as { webkitSubtle: Crypto['subtle'] })?.webkitSubtle
+
 document.addEventListener('DOMContentLoaded', async () => {
-    const pl = find<HTMLPreElement>('pre[data-i]')
-    if (!pl.innerText) {
-        pwd.disabled = true
-        error('No encrypted payload.')
+    if (!subtle) {
+        message = 'missingCrypto'
+        render()
         return
     }
-    iterations = Number(pl.dataset.i)
-    const bytes = parse(pl.innerText)
-    salt = bytes.slice(0, 32)
-    iv = bytes.slice(32, 32 + 16)
-    ciphertext = bytes.slice(32 + 16)
+    const payload = document.querySelector<HTMLPreElement>('pre[data-i]')
+    try {
+        if (!payload?.textContent) throw new Error('Missing payload')
+        iterations = Number(payload.dataset.i)
+        const bytes = parse(payload.textContent.trim())
+        salt = bytes.slice(0, 32)
+        iv = bytes.slice(32, 48)
+        ciphertext = bytes.slice(48)
+    } catch {
+        message = 'missingPayload'
+        render()
+        return
+    }
+    ready = true
+    render()
 
-    /**
-     * Allow passwords to be automatically provided via the URI Fragment.
-     * This greatly improves UX by clicking links instead of having to copy and paste the password manually.
-     * It also does not compromise security since the URI Fragment is not sent across the internet.
-     * Additionally, we delete the URI Fragment from the browser address field when the page is loaded.
-     *
-     * NOTE: However, beware that the password remains as a history entry if you use magic links!
-     * Feel free to submit a PR if you know a workaround for this.
-     */
+    // Password links use the fragment, which is removed from the address bar.
     if (location.hash) {
         const parts = location.href.split('#')
         pwd.value = parts[1]
@@ -49,71 +113,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (sessionStorage.k || pwd.value) {
         await decrypt()
     } else {
-        hide(load)
-        show(form)
-        header.classList.replace('hidden', 'flex')
         pwd.focus()
     }
 })
-
-const subtle =
-    window.crypto?.subtle ||
-    (window.crypto as unknown as { webkitSubtle: Crypto['subtle'] })?.webkitSubtle
-
-if (!subtle) {
-    error('SubtleCrypto is missing')
-    pwd.disabled = true
-}
-
-function show(element: Element) {
-    element.classList.remove('hidden')
-}
-
-function hide(element: Element) {
-    element.classList.add('hidden')
-}
-
-function error(text: string) {
-    msg.innerText = text
-    header.classList.add('red')
-}
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault()
     await decrypt()
 })
 
-async function sleep(milliseconds: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds))
-}
-
 async function decrypt() {
-    // @ts-expect-error This text update is non-critical and we can thus ignore the TS error.
-    load.lastElementChild.innerText = 'Decrypting...'
-    hide(header)
-    hide(form)
-    show(load)
-    await sleep(60)
+    if (!ready || busy) return
+    busy = true
+    message = 'protected'
+    render()
+    await new Promise((resolve) => setTimeout(resolve, 60))
 
     try {
         const decrypted = await decryptFile({ salt, iv, ciphertext, iterations }, pwd.value)
-
         document.write(decrypted)
         document.close()
-    } catch (e) {
-        hide(load)
-        show(form)
-        header.classList.replace('hidden', 'flex')
-
+    } catch {
         if (sessionStorage.k) {
-            // Delete invalid key
             sessionStorage.removeItem('k')
         } else {
-            // Only show when user actually entered a password themselves.
-            error('Wrong password.')
+            message = 'wrongPassword'
         }
-
+        busy = false
         pwd.value = ''
+        render()
         pwd.focus()
     }
 }

@@ -91,7 +91,7 @@ export const messages = {
         compatibilityHelp:
             'If your browser restricts local files, serve the folder on localhost. Web Crypto and Web Workers are required.',
         languageHelp:
-            'The interface is available in English and Simplified Chinese. Generated pages use the PageCrypt unlock template in English.',
+            'The workbench and generated unlock pages are available in English and Simplified Chinese.',
         aboutTitle: 'About PageCrypt',
         version: 'Version {version}',
         project: 'Source on GitHub',
@@ -231,7 +231,7 @@ export const messages = {
             '使用现代浏览器打开构建后的 index.html。界面、加密代码和解锁模板都包含在这一个文件中。',
         compatibilityHelp:
             '如果浏览器限制本地文件，请通过 localhost 提供此目录。运行需要 Web Crypto 和 Web Workers。',
-        languageHelp: '工具界面支持英文和简体中文。生成的网页使用 PageCrypt 的英文解锁模板。',
+        languageHelp: '工具界面和生成的解锁页面均支持英文与简体中文。',
         aboutTitle: '关于 PageCrypt',
         version: '版本 {version}',
         project: 'GitHub 源码',

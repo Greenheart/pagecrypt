@@ -175,8 +175,8 @@ restricts local files, run `pnpm preview:gui` and open the displayed localhost U
 The **Decrypt** tab restores a PageCrypt file as HTML source, which can be inspected and downloaded.
 Images, scripts, and styles referenced by the original page remain separate resources; inline
 them before encryption if the resulting page needs to work entirely offline. Generated files
-use the existing PageCrypt unlock template, including its English interface and password-link
-and session behavior.
+include a minimal unlock page with an English / Simplified Chinese language selector,
+password-link support, and session unlocking.
 
 For development, run `pnpm dev:gui`. The workbench imports `src/core.ts` directly and performs
 encryption and decryption in an inline Web Worker. Web Crypto calls already in progress may

@@ -55,7 +55,7 @@ test.beforeEach(async ({ page }) => {
     await expect(page.locator('#encryptButton')).toBeEnabled()
 })
 
-test('encrypts offline and the downloaded page unlocks with the existing template', async ({
+test('encrypts offline and unlocks through the bilingual password page', async ({
     page,
     context,
 }, testInfo) => {
@@ -86,10 +86,25 @@ test('encrypts offline and the downloaded page unlocks with the existing templat
     await expect(page.locator('#outputHash')).toHaveValue(digest)
     const unlocked = await context.newPage()
     await unlocked.goto(pathToFileURL(path).href)
+    await expect(unlocked.locator('#msg')).toHaveText('This page is password protected.')
+    await unlocked.locator('#language').selectOption('zh-CN')
+    await expect(unlocked.locator('#msg')).toHaveText('此页面受密码保护。')
+    await expect(unlocked.locator('#pwd')).toHaveAttribute('placeholder', '输入密码')
+    await expect(unlocked.locator('#unlock')).toHaveValue('解锁')
+    await unlocked.locator('#pwd').fill('incorrect')
+    await unlocked.locator('#unlock').click()
+    await expect(unlocked.locator('#msg')).toHaveText('密码不正确，请重试。')
+    await unlocked.locator('#language').selectOption('en')
+    await expect(unlocked.locator('#msg')).toHaveText('Incorrect password. Try again.')
     await unlocked.locator('input[type="password"]').fill(password)
+    await unlocked.locator('#language').selectOption('zh-CN')
+    await expect(unlocked.locator('#pwd')).toHaveValue(password)
     await unlocked.locator('input[type="submit"]').click()
     await expect(unlocked.locator('h1')).toHaveText('Private page 🔐 中文')
+    await expect(unlocked).toHaveTitle('Round trip')
     await expect(unlocked.locator('body')).toHaveAttribute('data-unlocked', 'yes')
+    await unlocked.reload()
+    await expect(unlocked.locator('h1')).toHaveText('Private page 🔐 中文')
     expect(networkRequests).toEqual([])
 })
 
