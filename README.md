@@ -10,7 +10,9 @@ Inspired by [MaxLaumeister/PageCrypt](https://github.com/MaxLaumeister/PageCrypt
 npm i -D pagecrypt
 ```
 
-There are 4 different ways to use `pagecrypt`:
+For a graphical interface, see the [offline browser workbench](#offline-browser-workbench).
+
+There are also 4 ways to use `pagecrypt` in code or on the command line:
 
 ### 1. Encrypt HTML in modern browsers, Deno or Node.js using `pagecrypt/core`
 
@@ -148,6 +150,42 @@ package.json:
         "postbuild": "pagecrypt index.html encrypted.html password"
     }
 }
+```
+
+## Offline browser workbench
+
+The workbench lets you encrypt and restore HTML files in your browser. It supports file selection,
+drag and drop, pasted HTML, random passwords, custom key derivation iterations, password links,
+and output verification. English is the default language; choose **简体中文** in the language menu
+to switch to Simplified Chinese. The language preference is remembered when browser storage is
+available. Passwords and file contents stay in the current page's memory.
+
+Build it from a clone of this repository using a current Node.js release:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm build:gui
+```
+
+Open `workbench/build/index.html` in a browser, select your HTML, set a password, and choose
+**Encrypt HTML**. Download the encrypted file and keep the password to unlock it later. The
+built workbench is a single HTML file that can be copied and used offline. If your browser
+restricts local files, run `pnpm preview:gui` and open the displayed localhost URL.
+
+The **Decrypt** tab restores a PageCrypt file as HTML source, which can be inspected and downloaded.
+Images, scripts, and styles referenced by the original page remain separate resources; inline
+them before encryption if the resulting page needs to work entirely offline. Generated files
+include a minimal unlock page with an English / Simplified Chinese language selector,
+password-link support, and session unlocking.
+
+For development, run `pnpm dev:gui`. The workbench imports `src/core.ts` directly and performs
+encryption and decryption in an inline Web Worker. Web Crypto calls already in progress may
+finish in the background after cancellation. Its styles, scripts, and worker are bundled
+locally, with no CDN dependencies. Run its browser tests with:
+
+```sh
+pnpm exec playwright install chromium
+pnpm test:gui
 ```
 
 ## Deploying a SPA or Website Encrypted with `pagecrypt`

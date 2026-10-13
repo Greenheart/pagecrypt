@@ -6,6 +6,8 @@ test/pnpm-lock.yaml
 test/node_modules
 test/out*
 dist
+playwright-report
+test-results
 test/index.html
 
 # npm pack test output

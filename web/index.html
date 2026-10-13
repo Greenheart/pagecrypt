@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,20 +9,18 @@
     <title>Protected Page</title>
 </head>
 <body>
+    <select id="language" aria-label="Language">
+        <option value="en" lang="en">English</option>
+        <option value="zh-CN" lang="zh-CN">简体中文</option>
+    </select>
     <main>
         <div class="box">
-            <div id="load">
-                <p class="spinner"></p><p>Loading...</p>
-            </div>
-            <header class="hidden">
-                <svg id="locked" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-                </svg>
-                <p id="msg">This page is password protected.</p>
+            <header>
+                <p id="msg" role="status" aria-live="polite">This page is password protected.</p>
             </header>
-            <form class="hidden">
-                <input type="password" id="pwd" name="pwd" aria-label="Password" autofocus>
-                <input type="submit" value="Submit">
+            <form>
+                <input type="password" id="pwd" name="pwd" aria-label="Password" placeholder="Password" autocomplete="current-password" spellcheck="false" disabled>
+                <input id="unlock" type="submit" value="Unlock" disabled>
             </form>
         </div>
     </main>
